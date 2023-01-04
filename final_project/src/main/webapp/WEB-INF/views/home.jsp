@@ -5,7 +5,7 @@
 <jsp:include page="./layout/header.jsp"></jsp:include>
 <section>
 	<h1>
-		Hello world!  ㅁㄴㅇㄹㅁㄴㄹㅇㅁㄴㄹ
+		Hello world!  ㅁㄴㅇㄹㅁㄴㄹㅇㅁㄴㄹtest
 	</h1>
 	
 	<P>  The time on the server is ${serverTime}. ㅁㄴㅇㄹ</P>
