@@ -9,5 +9,6 @@
 	</h1>
 	
 	<P>  The time on the server is ${serverTime}. ㅁㄴㅇㄹ</P>
+	<p>test</p>
 </section>
 <jsp:include page="./layout/footer.jsp"></jsp:include>
