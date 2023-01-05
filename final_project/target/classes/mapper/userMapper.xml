@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ezen.finalpj.repository.UserDAO">
+
+	<select id="getUser" resultType="com.ezen.finalpj.domain.UserVO">
+		select * from user where email = #{email}
+	</select>
+
+	<insert id="insertUser">
+		insert into user (email, name, pw, area, nickname, age, gender, phone, ctno_1)
+		value (#{email}, #{name}, #{pw}, #{area}, #{nickname}, #{age}, #{gender}, #{phone}, #{ctno_1})
+	</insert>
+
+</mapper>

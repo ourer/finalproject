@@ -185,6 +185,7 @@
           <version>2.13.0</version>
       </dependency>
       
+      
       <!-- fileupload 설정 -->
       <!-- thumbnailator 0.4.14,commons-fileupload 1.4,commons-io  -->
       <!-- https://mvnrepository.com/artifact/net.coobird/thumbnailator -->

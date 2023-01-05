@@ -30,7 +30,7 @@
                <a class="nav-link" aria-current="page" href="#">로그인</a>
              </li>
              <li class="nav-item">
-               <a class="nav-link" aria-current="page" href="#">회원가입</a>
+               <a class="nav-link" aria-current="page" href="/user/register">회원가입</a>
              </li>
              <li class="nav-item">
                 <div>
@@ -70,7 +70,7 @@
           <a class="nav-link active" aria-current="page" href="#">로그인</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">회원가입</a>
+          <a class="nav-link" href="/user/register">회원가입</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">공지사항</a>
