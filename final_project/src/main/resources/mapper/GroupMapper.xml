@@ -4,5 +4,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ezen.finalpj.repository.GroupDAO">
-	
+	<insert id="insertGrp">
+		insert into smallgroup(name, max_member, detail, ctno, isFree, isFace, city, county) values(#{name}, #{max_member}, #{detail}, #{ctno}, #{isFree}, #{isFace}, #{city}, #{county})
+	</insert>
 </mapper>
