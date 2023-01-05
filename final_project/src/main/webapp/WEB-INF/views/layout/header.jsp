@@ -53,7 +53,7 @@
                </ul>
              </li>
              <li class="nav-item">
-               <a class="nav-link" aria-current="page" href="#">공지사항</a>
+               <a class="nav-link" aria-current="page" href="/board/list">공지사항</a>
              </li>
              <li class="nav-item">
                <a class="nav-link" aria-current="page" href="#">사이트 소개</a>
@@ -63,7 +63,7 @@
        </div>
      </div>
    <div class="logo">
-        <img alt="" src="/resources/img/logo.png" width="200px">
+        <a href="/"><img alt="" src="/resources/img/logo.png" width="200px"></a>
    </div>
       <ul class="nav justify-content-end">
         <li class="nav-item">
@@ -73,7 +73,7 @@
           <a class="nav-link" href="#">회원가입</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">공지사항</a>
+          <a class="nav-link" href="/board/list">공지사항</a>
         </li>
       </ul>
   <div class="container-fluid">
