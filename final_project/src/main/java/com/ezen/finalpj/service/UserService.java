@@ -4,8 +4,11 @@ import java.util.List;
 
 import com.ezen.finalpj.domain.UserVO;
 
-public interface ManagerService {
+public interface UserService {
 
-	List<UserVO> getAllList(String email);
+	UserVO login(UserVO user);
+
+	List<UserVO> getList(UserVO user);
+
 
 }

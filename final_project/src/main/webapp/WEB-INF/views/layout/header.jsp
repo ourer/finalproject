@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,9 +27,11 @@
              <li class="nav-item">
                <a class="nav-link active d-grid gap-2 col-12 mx-auto" aria-current="page" href="#"><button type="button" class="btn btn-outline-warning">소모임 생성</button></a>
              </li>
+             <c:if test="${ses.email == null || ses.email =='' }">
              <li class="nav-item">
-               <a class="nav-link" aria-current="page" href="#">로그인</a>
+               <a class="nav-link" aria-current="page" href="/user/login">로그인</a>
              </li>
+             </c:if>
              <li class="nav-item">
                <a class="nav-link" aria-current="page" href="#">회원가입</a>
              </li>
@@ -36,7 +39,7 @@
                 <div>
                    <img src="https://m.colettemung.com/web/product/big/202009/5b2194624e6fbe01f2bf3541b4935dd4.jpg" class="rounded-circle mx-auto d-block" alt="..." style="width: 150px;">
                   <div class="imgname">
-                  <span id="imgname">윤승히</span>
+                  <span id="imgname">${ses.nickname }</span>
                   <span>님</span></div>
                 </div>
              </li>
@@ -48,7 +51,8 @@
                  마이 페이지
                </a>
                <ul class="dropdown-menu">
-                 <li><a class="dropdown-item" href="#">내 소모임</a></li>
+               
+                 <li><a class="dropdown-item" href="/user/userlist" >내 소모임</a></li>
                  <li><a class="dropdown-item" href="#">내가 찜한 소모임</a></li>
                </ul>
              </li>
@@ -66,9 +70,11 @@
         <img alt="" src="/resources/img/logo.png" width="200px">
    </div>
       <ul class="nav justify-content-end">
+      <c:if test="${ses.email == null || ses.email =='' }">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">로그인</a>
+          <a class="nav-link active" aria-current="page" href="/user/login">로그인</a>
         </li>
+      </c:if>
         <li class="nav-item">
           <a class="nav-link" href="#">회원가입</a>
         </li>
