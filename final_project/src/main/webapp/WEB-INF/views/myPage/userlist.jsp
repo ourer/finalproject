@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <jsp:include page="../layout/header.jsp"></jsp:include>
-
+<!-- waiting 가져오기 -->
 <section>
 	<h1>가입 대기명단</h1>
 	<table>

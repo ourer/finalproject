@@ -27,7 +27,6 @@ public class UserServiceImpl implements UserService {
 	}
 
 
-
 	@Override
 	public int getPageCount(PagingVO pgvo) {
 		log.info("pagecount check");

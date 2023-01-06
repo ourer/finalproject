@@ -58,6 +58,7 @@ public class UserController {
 	//전체 회원 조회x=> 나의 멤버가 아닌 사람들을 조회한다. 어떻게??
 	//grno를 기준으로 나누는건 안다. 여기서는 전체를 불러온다. 그럼 mapper에서 grno가 다른 놈들을 걸르자(실패)
 	//grade가 A인 사람과 다른 grno를 가진 놈을 부른다. 
+	//waiting을 가져와서 ㅕuserlist와 결합해야 한다.
 	@GetMapping("/userlist")
 	public String list(Model model,UserVO user,
 			@RequestParam("pageNo1")int pageNo1,@RequestParam("pageNo2")int pageNo2) {

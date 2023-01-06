@@ -16,6 +16,7 @@ public class PagingHandler {
 	private int totalCount;
 	private PagingVO pgvo;
 	
+	
 	public PagingHandler(PagingVO pgvo,int totalCount) {
 		this.pgvo=pgvo;
 		this.totalCount=totalCount;

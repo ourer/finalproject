@@ -9,7 +9,6 @@ public interface UserService {
 
 	UserVO login(UserVO user);
 
-
 	int getPageCount(PagingVO pgvo);
 
 	List<UserVO> getWaiting(PagingVO pgvo1);

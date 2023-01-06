@@ -25,4 +25,5 @@ public class UserVO {
 	private int ctno_1;
 	private int ctno_2;
 	private int ctno_3;
+	
 }

@@ -15,4 +15,5 @@ public interface UserDAO {
 
 	List<UserVO> selectMemberList(PagingVO pgvo2);
 
+	
 }
