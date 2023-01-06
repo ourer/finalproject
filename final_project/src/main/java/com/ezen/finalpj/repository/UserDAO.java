@@ -9,8 +9,6 @@ public interface UserDAO {
 
 	UserVO getUser(String email);
 
-	List<UserVO> selectList(PagingVO pgvo);
-
 	int pageCount(PagingVO pgvo);
 	
 	List<UserVO> selectWaitingList(PagingVO pgvo1);

@@ -9,13 +9,12 @@ public interface UserService {
 
 	UserVO login(UserVO user);
 
-	List<UserVO> getList(PagingVO pgvo);
 
 	int getPageCount(PagingVO pgvo);
 
-	List<UserVO> getWaiting(PagingVO pgvo1, int wno);
+	List<UserVO> getWaiting(PagingVO pgvo1);
 
-	List<UserVO> getMemberList(PagingVO pgvo2, int wno);
+	List<UserVO> getMemberList(PagingVO pgvo2);
 
 
 }

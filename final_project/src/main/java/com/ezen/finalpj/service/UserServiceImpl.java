@@ -27,11 +27,6 @@ public class UserServiceImpl implements UserService {
 	}
 
 
-	@Override
-	public List<UserVO> getList(PagingVO pgvo) {
-		log.info("user list check");
-		return udao.selectList(pgvo);
-	}
 
 	@Override
 	public int getPageCount(PagingVO pgvo) {
@@ -41,14 +36,14 @@ public class UserServiceImpl implements UserService {
 
 
 	@Override
-	public List<UserVO> getWaiting(PagingVO pgvo1, int wno) {
+	public List<UserVO> getWaiting(PagingVO pgvo1) {
 		log.info("waiting user check");
 		return udao.selectWaitingList(pgvo1);
 	}
 
 
 	@Override
-	public List<UserVO> getMemberList(PagingVO pgvo2, int wno) {
+	public List<UserVO> getMemberList(PagingVO pgvo2) {
 		log.info("memberlist user check");
 		return udao.selectMemberList(pgvo2);
 	}

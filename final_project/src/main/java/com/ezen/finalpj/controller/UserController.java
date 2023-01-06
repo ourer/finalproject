@@ -31,8 +31,6 @@ public class UserController {
 	@Inject
 	private UserService usv;
 	
-	@Inject
-	private WaitingService wsv;
 	
 	@GetMapping("/login")
 	public String loginGet() {
@@ -40,7 +38,9 @@ public class UserController {
 	}
 	@PostMapping("/login")
 	public String loginPost(UserVO user,HttpServletRequest req,RedirectAttributes reAttr) {
-		log.info("login>> "+user.toString());
+		log.info("login id>> "+user.getEmail().toString());
+		log.info("login pw>> "+user.getPw().toString());
+		
 		UserVO loginUser=usv.login(user);
 		log.info("loginUser>>"+loginUser.toString());
 		if(loginUser !=null) {
@@ -60,7 +60,7 @@ public class UserController {
 	//grade가 A인 사람과 다른 grno를 가진 놈을 부른다. 
 	@GetMapping("/userlist")
 	public String list(Model model,UserVO user,
-			@RequestParam("pageNo1")int pageNo1,@RequestParam("pageNo2")int pageNo2,@RequestParam("wno")int wno) {
+			@RequestParam("pageNo1")int pageNo1,@RequestParam("pageNo2")int pageNo2) {
 		
 		PagingVO pgvo1=new PagingVO(pageNo1);
 		PagingVO pgvo2=new PagingVO(pageNo2);
@@ -68,14 +68,14 @@ public class UserController {
 		log.info("pgvo1: "+pgvo1.toString());
 		log.info("pgvo2: "+pgvo2.toString());
 		
-		List<UserVO> list1=usv.getWaiting(pgvo1,wno); 
-		List<UserVO> list2=usv.getMemberList(pgvo2,wno); 
+		List<UserVO> list1=usv.getWaiting(pgvo1); 
+		List<UserVO> list2=usv.getMemberList(pgvo2); 
 		
-		log.info("list : "+list1.get(0).toString());
-		log.info("list : "+list2.get(0).toString());
+		log.info("list1 : "+list1.get(0).toString());
+		log.info("list2 : "+list2.get(0).toString());
 		
-		model.addAttribute("list",list1);
-		model.addAttribute("list",list2);
+		model.addAttribute("list1",list1);
+		model.addAttribute("list2",list2);
 		
 		int totalCount1=usv.getPageCount(pgvo1);
 		int totalCount2=usv.getPageCount(pgvo2);

@@ -4,9 +4,11 @@ import com.ezen.finalpj.domain.PagingVO;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 public class PagingHandler {
 	private int startPage;
 	private int endPage;
