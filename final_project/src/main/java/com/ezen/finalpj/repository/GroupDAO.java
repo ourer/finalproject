@@ -6,4 +6,6 @@ public interface GroupDAO {
 
 	int insertGrp(GroupVO gvo);
 
+	GroupVO selectGrp(int grno);
+
 }

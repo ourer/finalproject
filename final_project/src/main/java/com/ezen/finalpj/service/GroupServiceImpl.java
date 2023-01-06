@@ -23,4 +23,11 @@ public class GroupServiceImpl implements GroupService {
 		return isOk;
 	}
 
+	@Override
+	public GroupVO selectGrp(int grno) {
+		log.info("소모임 메인에 값 호출");
+		GroupVO gvo=gdao.selectGrp(grno);
+		return gvo;
+	}
+
 }

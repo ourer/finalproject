@@ -198,6 +198,7 @@ document.getElementById('grpRegBtn').addEventListener("click", ()=>{
     registerGroup(groupData).then(result => {
         if(result>0){
             alert("모임이 생성되었습니다!");
+            location.href="/";
         }
     })
 
