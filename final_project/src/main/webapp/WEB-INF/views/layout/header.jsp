@@ -48,8 +48,8 @@
                  마이 페이지
                </a>
                <ul class="dropdown-menu">
-                 <li><a class="dropdown-item" href="#">내 소모임</a></li>
-                 <li><a class="dropdown-item" href="#">내가 찜한 소모임</a></li>
+                 <li><a class="dropdown-item" href="/user/mypage">내 소모임</a></li>
+                 <li><a class="dropdown-item" href="/user/like">내가 찜한 소모임</a></li>
                </ul>
              </li>
              <li class="nav-item">

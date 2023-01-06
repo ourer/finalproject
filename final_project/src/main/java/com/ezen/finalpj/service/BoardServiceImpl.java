@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.ezen.finalpj.domain.BoardVO;
+import com.ezen.finalpj.domain.PagingVO;
 import com.ezen.finalpj.repository.BoardDAO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -51,6 +52,18 @@ public class BoardServiceImpl implements BoardService {
 	public int deleteBoard(int bno) {
 		log.info("deleteBoard service chk");
 		return bdao.deleteBoard(bno);
+	}
+
+	@Override
+	public List<BoardVO> getList(PagingVO pgvo) {
+		log.info("boardListpaging service chk");
+		return bdao.selectBoardListPaging(pgvo);
+	}
+
+	@Override
+	public int getListCount() {
+		log.info("boardListCount service chk");
+		return bdao.selectBoardListCount();
 	}
 
 	

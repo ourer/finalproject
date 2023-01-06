@@ -5,6 +5,10 @@
 <jsp:include page="../layout/header.jsp"></jsp:include>
 <section>
 	<form action="/board/modify" method="post" style="margin:30px auto">
+		<div class="form-check form-check-inline">
+		   <input class="form-check-input" type="checkbox" id="pin" name="pin" value='1'>
+		   <label class="form-check-label" for="pin">메인공지</label>
+		</div>
 		<div class="form">
 		    <label for="bno class="col-sm-1 col-form-label">번호</label>
 		    <input type="" class="form-control" name="bno" id="bno" value="${bvo.bno }" readonly="readonly">
@@ -36,3 +40,4 @@
 	</form>
 </section>
 <jsp:include page="../layout/footer.jsp"></jsp:include>
+<script type="text/javascript" src="/resources/js/boardpin.js"></script>

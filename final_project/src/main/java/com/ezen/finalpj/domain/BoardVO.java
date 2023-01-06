@@ -18,4 +18,5 @@ public class BoardVO {
 	private String writer;
 	private String regdate;
 	private int view;
+	private int pin;
 }

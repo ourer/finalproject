@@ -3,6 +3,7 @@ package com.ezen.finalpj.repository;
 import java.util.List;
 
 import com.ezen.finalpj.domain.BoardVO;
+import com.ezen.finalpj.domain.PagingVO;
 
 public interface BoardDAO {
 
@@ -17,6 +18,10 @@ public interface BoardDAO {
 	int updateBoard(BoardVO bvo);
 
 	int deleteBoard(int bno);
+
+	List<BoardVO> selectBoardListPaging(PagingVO pgvo);
+
+	int selectBoardListCount();
 
 	
 
