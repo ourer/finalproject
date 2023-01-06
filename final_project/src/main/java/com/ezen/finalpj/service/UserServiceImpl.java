@@ -5,7 +5,10 @@ import javax.inject.Inject;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.ezen.finalpj.domain.ProfileVO;
+import com.ezen.finalpj.domain.UserDTO;
 import com.ezen.finalpj.domain.UserVO;
+import com.ezen.finalpj.repository.ProfileDAO;
 import com.ezen.finalpj.repository.UserDAO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -16,23 +19,25 @@ public class UserServiceImpl implements UserService {
 	
 	@Inject
 	private UserDAO udao;
+	@Inject
+	private ProfileDAO pdao;
 	
 	@Inject
 	BCryptPasswordEncoder passwordEncoder;
 
 	@Override
-	public boolean register(UserVO uvo) {
+	public int register(UserVO uvo) {
 		log.info(">>> User register check2");
 		UserVO tmpUser = udao.getUser(uvo.getEmail());
 		
 		if(tmpUser != null) {
-			return false;
+			return 0;
 		}
 		if(uvo.getEmail()==null || uvo.getEmail().length()==0) {
-			return false;
+			return 0;
 		}
 		if(uvo.getPw()==null || uvo.getPw().length()==0) {
-			return false;
+			return 0;
 		}
 		
 		String pw = uvo.getPw();
@@ -40,8 +45,25 @@ public class UserServiceImpl implements UserService {
 		uvo.setPw(encodepw);
 		udao.insertUser(uvo);
 		
-		return true;
+		return 1;
 	}
+
+	@Override
+	public int register(UserDTO udto) {
+		log.info("User register(udto) check2");
+		int isOK = udao.insertUser(udto.getUvo());
+		if(isOK > 0 && udto.getPList().size() > 0) {
+			String email = udao.selectOneUser();
+			for(ProfileVO pvo : udto.getPList()) {
+				pvo.setEmail(email);
+				log.info(">>>file :"+ pvo.toString());
+				isOK *= pdao.insertFile(pvo);
+			}
+		}
+		return isOK;
+	}
+
+
 
 
 }

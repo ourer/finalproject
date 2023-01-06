@@ -6,9 +6,10 @@
 		select * from user where email = #{email}
 	</select>
 
-	<insert id="insertUser">
+	<insert id="insertUser" parameterType="com.ezen.finalpj.domain.UserVO">
 		insert into user (email, name, pw, area, nickname, age, gender, phone, ctno_1)
 		value (#{email}, #{name}, #{pw}, #{area}, #{nickname}, #{age}, #{gender}, #{phone}, #{ctno_1})
 	</insert>
+	
 
 </mapper>

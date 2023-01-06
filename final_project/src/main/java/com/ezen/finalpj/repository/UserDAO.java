@@ -6,7 +6,9 @@ public interface UserDAO {
 
 	UserVO getUser(String email);
 
-	void insertUser(UserVO uvo);
+	int insertUser(UserVO uvo);
+
+	String selectOneUser();
 
 
 

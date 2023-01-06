@@ -1,10 +1,15 @@
 package com.ezen.finalpj.service;
 
+
+import com.ezen.finalpj.domain.UserDTO;
 import com.ezen.finalpj.domain.UserVO;
 
 public interface UserService {
 
-	boolean register(UserVO uvo);
+	int register(UserVO uvo);
+
+	int register(UserDTO udto);
+
 
 
 }
