@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ezen.finalpj.repository.ManagerDAO">
-	<select id="selectAllList" resultType="com.ezen.finalpj.domain.UserVO">
+	<!-- <select id="selectAllList" resultType="com.ezen.finalpj.domain.UserVO">
 	select name,area,age,gender from user where email=#{email}
-	</select>
+	</select> -->
 </mapper>

@@ -31,10 +31,10 @@
              <li class="nav-item">
                <a class="nav-link" aria-current="page" href="/user/login">로그인</a>
              </li>
-             </c:if>
              <li class="nav-item">
                <a class="nav-link" aria-current="page" href="#">회원가입</a>
              </li>
+             </c:if>
              <li class="nav-item">
                 <div>
                    <img src="https://m.colettemung.com/web/product/big/202009/5b2194624e6fbe01f2bf3541b4935dd4.jpg" class="rounded-circle mx-auto d-block" alt="..." style="width: 150px;">
@@ -52,7 +52,7 @@
                </a>
                <ul class="dropdown-menu">
                
-                 <li><a class="dropdown-item" href="/user/userlist" >내 소모임</a></li>
+                 <li><a class="dropdown-item" href="/user/userlist?pageNo1=1&pageNo2=1"  >내 소모임</a></li>
                  <li><a class="dropdown-item" href="#">내가 찜한 소모임</a></li>
                </ul>
              </li>
@@ -74,10 +74,10 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="/user/login">로그인</a>
         </li>
-      </c:if>
         <li class="nav-item">
           <a class="nav-link" href="#">회원가입</a>
         </li>
+      </c:if>
         <li class="nav-item">
           <a class="nav-link" href="#">공지사항</a>
         </li>

@@ -8,6 +8,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="selectList" resultType="com.ezen.finalpj.domain.UserVO">
-		select name,area,age,gender from user
+		select name,area,age,gender,grno from user where not grade='A' order by email desc limit #{pageStart},#{qty}
+	</select>
+	
+	<select id="pageCount" resultType="int">
+		select count(grno) from user
+	</select>
+	
+	<select id="selectWaitingList" resultType="com.ezen.finalpj.domain.UserVO">
+		select * from user 
+	</select>
+	<select id="selectMemberList" resultType="com.ezen.finalpj.domain.UserVO">
+		select * from user where order by email desc limit #{pageStart},#{qty}
 	</select>
 </mapper>

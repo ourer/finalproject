@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
+import com.ezen.finalpj.domain.PagingVO;
 import com.ezen.finalpj.domain.UserVO;
 import com.ezen.finalpj.repository.UserDAO;
 
@@ -25,11 +26,34 @@ public class UserServiceImpl implements UserService {
 		return login;
 	}
 
+
 	@Override
-	public List<UserVO> getList(UserVO user) {
+	public List<UserVO> getList(PagingVO pgvo) {
 		log.info("user list check");
-		return udao.selectList(user);
+		return udao.selectList(pgvo);
 	}
+
+	@Override
+	public int getPageCount(PagingVO pgvo) {
+		log.info("pagecount check");
+		return udao.pageCount(pgvo);
+	}
+
+
+	@Override
+	public List<UserVO> getWaiting(PagingVO pgvo1, int wno) {
+		log.info("waiting user check");
+		return udao.selectWaitingList(pgvo1);
+	}
+
+
+	@Override
+	public List<UserVO> getMemberList(PagingVO pgvo2, int wno) {
+		log.info("memberlist user check");
+		return udao.selectMemberList(pgvo2);
+	}
+
+
 
 
 

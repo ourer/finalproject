@@ -16,4 +16,5 @@ public class WaitingVO {
 	private String email;
 	private int grno;
 	private int isOk;
+	private String grade;
 }
