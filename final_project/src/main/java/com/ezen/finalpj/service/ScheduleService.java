@@ -8,5 +8,11 @@ public interface ScheduleService {
 
 	List<ScheduleVO> selectListSch(int grno);
 
+	int insertSch(ScheduleVO svo);
+
+	int selectGrnoSch(int sno);
+
+	int deleteSch(int sno);
+
 
 }

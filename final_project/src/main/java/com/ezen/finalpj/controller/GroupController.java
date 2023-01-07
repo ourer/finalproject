@@ -3,6 +3,8 @@ package com.ezen.finalpj.controller;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,9 +21,11 @@ import com.ezen.finalpj.domain.GroupDTO;
 import com.ezen.finalpj.domain.GroupVO;
 import com.ezen.finalpj.domain.JoinPersonVO;
 import com.ezen.finalpj.domain.ScheduleVO;
+import com.ezen.finalpj.domain.UserVO;
 import com.ezen.finalpj.service.GroupService;
 import com.ezen.finalpj.service.JoinPersonService;
 import com.ezen.finalpj.service.ScheduleService;
+import com.ezen.finalpj.service.WaitingService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -35,6 +39,9 @@ public class GroupController {
 	private ScheduleService ssv;
 	@Inject
 	private JoinPersonService jpsv;
+	@Inject
+	private WaitingService wsv;
+	
 	
 	@GetMapping("/register")
 	public String insertGrpGet() {
@@ -42,8 +49,13 @@ public class GroupController {
 	}
 	
 	@PostMapping(value = "/register", consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
-	public ResponseEntity<String> insertGrpPost(@RequestBody GroupVO gvo) {
+	public ResponseEntity<String> insertGrpPost(@RequestBody GroupVO gvo, HttpServletRequest req) {
+		log.info(gvo.toString());
 		int isOk=gsv.insertGrp(gvo);
+		//user한테 방장 됐으니까 grno 넣어주기
+		//register.jsp에서 hidden으로 ses.email 받아오기
+		//grno가져오기 : uvo의 이메일로 smallgroup에서 같은 이메일 있는 grno 가져오기
+		//DTO로 이메일, grno 넣어주기 
 		log.info("소모임 생성"+(isOk>0?"성공":"실패"));
 		return isOk>0? new ResponseEntity<String>("1", HttpStatus.OK):new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
@@ -52,10 +64,14 @@ public class GroupController {
 	public String selectGrpGet(@RequestParam("grno")int grno, Model model) {
 		GroupVO gvo=gsv.selectGrp(grno);
 		List<ScheduleVO> sList=ssv.selectListSch(grno);
-		log.info(sList.toString());
 		GroupDTO gdto=new GroupDTO(gvo, sList);
 		model.addAttribute("gvo", gdto.getGvo());
 		model.addAttribute("sList", gdto.getSList());
 		return "/group/main";
+	}
+	
+	@GetMapping("/memberList")
+	public String selectMemListGrpGet(@RequestParam("grno")int grno) {
+		return "/group/memberList";
 	}
 }

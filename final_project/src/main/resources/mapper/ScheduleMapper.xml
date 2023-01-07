@@ -7,4 +7,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectListSch" resultType="com.ezen.finalpj.domain.ScheduleVO">
 		select * from schedule where grno=#{grno} and isDone=0 order by meetdate
 	</select>
+	<insert id="insertSch">
+		insert into schedule(grno, meetdate, title, spot, max_member, cost)
+		values(#{grno}, #{meetdate}, #{title}, #{spot}, #{max_member}, #{cost})
+	</insert>
+	<select id="selectGrnoSch" resultType="int">
+		select grno from schedule where sno=#{sno}
+	</select>
+	<delete id="deleteSch">
+		delete from schedule where sno=#{sno}
+	</delete>
 </mapper>

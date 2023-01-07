@@ -177,6 +177,9 @@ document.getElementById('grpRegBtn').addEventListener("click", ()=>{
     //소모임 소개
     let detail=document.getElementById('detail').value;
     console.log(detail);
+    //방장 이메일
+    let email=document.getElementById('email').value;
+    console.log(email);
 
     if(selectedCode=="대분류"||selectedCtno==""||grpName==""||cityVal=="전체"||countyVal==""||isFree==2||isFace==2||detail==""){
         alert("빈 칸을 모두 채워주세요.");
@@ -191,7 +194,8 @@ document.getElementById('grpRegBtn').addEventListener("click", ()=>{
             isFree: isFree,
             isFace: isFace,
             detail: detail,
-            ctno: ctno
+            ctno: ctno,
+            email: email
         }
     }
     console.log(groupData);

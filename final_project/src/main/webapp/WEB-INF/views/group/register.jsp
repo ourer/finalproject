@@ -123,6 +123,7 @@
 				<button type="button" id="grpRegBtn">소모임 생성</button>
 			</div>
 	    </div>
+	    <input type="hidden" name="email" id="email" value="${ses.email }">
 
 </section>
 <script type="text/javascript" src="/resources/js/groupRegister.js"></script>

@@ -25,4 +25,22 @@ public class ScheduleServiceImpl implements ScheduleService {
 		return sList;
 	}
 
+	@Override
+	public int insertSch(ScheduleVO svo) {
+		log.info("스케줄 추가");
+		return sdao.insertSch(svo);
+	}
+
+	@Override
+	public int selectGrnoSch(int sno) {
+		log.info("스케줄에서 grno 가져오기");
+		return sdao.selectGrnoSch(sno);
+	}
+
+	@Override
+	public int deleteSch(int sno) {
+		log.info("스케줄 삭제");
+		return sdao.deleteSch(sno);
+	}
+
 }

@@ -22,4 +22,5 @@ public class GroupVO {
 	private int ctno;
 	private int isFree;
 	private int isFace;
+	private String email;
 }

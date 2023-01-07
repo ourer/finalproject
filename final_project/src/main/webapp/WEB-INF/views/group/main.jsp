@@ -14,7 +14,7 @@
                 <li class="grpNavLi"><a href="#">정보</a></li>
                 <li class="grpNavLi"><a href="#">게시판</a></li>
                 <li class="grpNavLi"><a href="/schedule/register?grno=${gvo.grno }">스케줄 생성</a></li>
-                <li class="grpNavLi"><a href="#">멤버</a></li>
+                <li class="grpNavLi"><a href="/group/memberList?grno=${gvo.grno }">멤버</a></li>
             </ul>
         </div>
         <div class="imgBox">
@@ -52,6 +52,7 @@
 	                    </li>
 	                </ul>
 	                <button>참가</button>
+	                <a href="/schedule/delete?sno=${svo.sno }"><button class="delSchBtn">스케줄 삭제</button></a>
 	            </div>
 	        </div>
 	        </c:forEach>
