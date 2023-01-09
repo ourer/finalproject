@@ -53,7 +53,7 @@
                  마이 페이지
                </a>
                <ul class="dropdown-menu">
-                 <li><a class="dropdown-item" href="/user/testlist" >내 소모임</a></li>
+                 <li><a class="dropdown-item" href="/user/management" >내 소모임</a></li>
                  <li><a class="dropdown-item" href="/user/like">내가 찜한 소모임</a></li>
                </ul>
              </li>

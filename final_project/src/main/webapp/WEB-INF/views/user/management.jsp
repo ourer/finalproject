@@ -60,17 +60,29 @@
 			<tr>
 				<th scope="col">프로필</th>
 				<th scope="col">이름</th>
+				<th scope="col">지역</th>
 				<th scope="col">나이</th>
+				<th scope="col">성별</th>
 				<th scope="col">가입승인</th>
 			</tr>
 			</thead>
 			<tbody class="table-group-divider">
+				<c:forEach items="${list1}" var="user">
 				<tr>
-					<td></td>
-					<td></td>
-					<td></td>
+					
+					<td>비공개</td>
+					<td>${user.name }</td>
+					<td>${user.area }</td>
+					<td>${user.age }</td>
+					<c:if test="${user.gender =='0'}">
+					<td>남자</td>
+					</c:if>
+					<c:if test="${user.gender =='1'}">
+					<td>여자</td>
+					</c:if>
 					<td><button class="btn btn-sm btn-outline-success admit" type="button">승인</button><button class="btn btn-sm btn-outline-danger deny" type="button">거절</button></td>					
 				</tr>
+			</c:forEach>
 			</tbody>
 		</table>
 		<table class="table caption-top text-center" style="margin: 30px auto">
@@ -85,17 +97,28 @@
 			<tr>
 				<th scope="col">프로필</th>
 				<th scope="col">이름</th>
+				<th scope="col">지역</th>
 				<th scope="col">나이</th>
+				<th scope="col">성별</th>
 				<th scope="col">운영진임명</th>
 			</tr>
 			</thead>
 			<tbody class="table-group-divider">
+				<c:forEach items="${list2}" var="user">
 				<tr>
-					<td></td>
-					<td></td>
-					<td></td>
+					<td>비공개</td>
+					<td>${user.name }</td>
+					<td>${user.area }</td>
+					<td>${user.age }</td>
+					<c:if test="${user.gender =='0'}">
+					<td>남자</td>
+					</c:if>
+					<c:if test="${user.gender =='1'}">
+					<td>여자</td>
+					</c:if>
 					<td><button class="btn btn-sm btn-outline-success special" type="button">임명</button><button class="btn btn-sm btn-outline-danger normal" type="button">해제</button></td>					
 				</tr>
+			</c:forEach>
 			</tbody>
 		</table>
 </section>
