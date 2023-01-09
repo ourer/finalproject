@@ -34,6 +34,7 @@ document.getElementById('heartBtn').addEventListener('click', ()=>{
     })
 })
 
+
 async function likeFavorite(favData){
     try {
         const url="/favorite/like";
@@ -53,3 +54,58 @@ async function likeFavorite(favData){
 }
 
 
+function showJoinPeople(){
+	const joinPeople=document.getElementById('joinPeople');
+    console.log(joinPeople.style.display);
+    if(joinPeople.style.display=='block'){
+        joinPeople.style.display='none';
+    } else{
+     joinPeople.style.display='block';
+    }
+    console.log(joinPeople.style.display);
+}
+
+
+document.getElementById('schJoinBtn').addEventListener('click', ()=>{
+    console.log(nowUrl);
+    let grno=nowUrl.substring(nowUrl.lastIndexOf('=')+1);
+    console.log(grno);
+    let sno=document.getElementById("sno").value;
+    console.log(sno);
+    if(grno!=null||sno!=null){
+        joinData={
+            sno: sno,
+            grno: grno
+        }
+    }
+    console.log(joinData);
+    addJoinPerson(joinData).then(result=>{
+        console.log(result);
+        if(result=="1"){
+            alert("스케줄 참가 성공!");
+            //프로필 뿌리기
+            location.href="/group/main?grno="+grno;
+        }else if(result=="2"){
+            alert("스케줄 참가 실패");
+            location.href="/group/main?grno="+grno;
+        }
+    })
+})
+
+async function addJoinPerson(joinData){
+    try {
+        const url="/schedule/join";
+        const config={
+            method: 'post',
+            headers:{
+                'content-type': 'application/json; charset=utf-8'
+            },
+            body: JSON.stringify(joinData)
+        }
+        const resp=await fetch(url, config);
+        const result=resp.text();
+        return result;
+    } catch (error) {
+        console.log(error);
+    }
+}

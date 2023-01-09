@@ -116,7 +116,6 @@
 	                <input type="file" name="file_name" id="file_name">
 	            </div>
 	            <div class="innerThird">
-	                <input type="file" name="file_name" id="file_name">
 	            </div>
 	        </div>
 			<div class="innerGroup">

@@ -12,6 +12,11 @@ public interface UserDAO {
 	List<UserVO> selectMemListUser(int grno);
 
 	UserVO selectCap(int grno);
+	
+	UserVO getUser(String email);
 
+	int insertUser(UserVO uvo);
+	
+	List<UserVO> selectOnlyUser(UserVO user);
 
 }

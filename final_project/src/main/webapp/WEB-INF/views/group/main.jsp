@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <jsp:include page="../layout/header.jsp"></jsp:include>
+<link rel="stylesheet" type="text/css" href="/resources/css/grpMain.css">
+
 <section>
     <div class="firstBox">
         <div class="infoBox">
@@ -13,7 +15,9 @@
             <ul class="grpNavUl">
                 <li class="grpNavLi"><a href="#">정보</a></li>
                 <li class="grpNavLi"><a href="#">게시판</a></li>
+                <c:if test="${ses.email eq gvo.email }">
                 <li class="grpNavLi"><a href="/schedule/register?grno=${gvo.grno }">스케줄 생성</a></li>
+                </c:if>
                 <li class="grpNavLi"><a href="/group/memberList?grno=${gvo.grno }">멤버</a></li>
             </ul>
         </div>
@@ -36,6 +40,7 @@
 	        <div class="scheBox">
 	            <div class="scheTitle">
 					${svo.title }
+					<input type="hidden" id="sno" value="${svo.sno }">
 	            </div>
 	            <div class="scheInner">
 	                <img src="" alt="">
@@ -44,15 +49,21 @@
 	                    <li class="scheInfoLi">장소: ${svo.spot } </li>
 	                    <li class="scheInfoLi">비용: ${svo.cost }</li>
 	                    <li class="scheInfoLi">
-	                        인원 수: <span class="joinMember"></span>/<span class="maxMember">${svo.max_member }</span>
-	                        <i class="fa-solid fa-chevron-down"></i>
-	                        <div class="schePeople">
+	                        인원 수: <span class="joinMember" id="joinMember">${svo.joinmember }</span>/<span class="maxMember">${svo.max_member }</span>
+	                       <button onclick="showJoinPeople()"><i class="fa-solid fa-chevron-down"></i></button>
+	                        <div class="joinPeople" id="joinPeople">
 	                            
 	                        </div>
 	                    </li>
 	                </ul>
-	                <button>참가</button>
-	                <a href="/schedule/delete?sno=${svo.sno }"><button class="delSchBtn">스케줄 삭제</button></a>
+	                <c:choose>
+	                	<c:when test="${ses.email eq gvo.email }">
+			                <a href="/schedule/delete?sno=${svo.sno }"><button class="delSchBtn">스케줄 삭제</button></a>
+	                	</c:when>
+	                	<c:otherwise>
+			               <button class="schJoinBtn" id="schJoinBtn">참가</button>
+	                	</c:otherwise>
+	                </c:choose>
 	            </div>
 	        </div>
 	        </c:forEach>
@@ -64,7 +75,7 @@
         	</c:otherwise>
         </c:choose>
     </div>
-    <button>가입</button>
+    <a href="/group/join?grno=${gvo.grno }"><button>가입</button></a>
 </section>
 <script type="text/javascript">
 	const emailVal='<c:out value="${ses.email }"/>';

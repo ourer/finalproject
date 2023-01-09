@@ -17,4 +17,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="deleteSch">
 		delete from schedule where sno=#{sno}
 	</delete>
+	<update id="updateJoinMem">
+		update schedule set joinmember=joinmember+1 where sno=#{sno}
+	</update>
 </mapper>

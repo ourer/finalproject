@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ezen.finalpj.domain.GroupDTO;
 import com.ezen.finalpj.domain.GroupVO;
@@ -23,6 +24,7 @@ import com.ezen.finalpj.domain.JoinPersonVO;
 import com.ezen.finalpj.domain.ManagerDTO;
 import com.ezen.finalpj.domain.ScheduleVO;
 import com.ezen.finalpj.domain.UserVO;
+import com.ezen.finalpj.domain.WaitingVO;
 import com.ezen.finalpj.service.GroupService;
 import com.ezen.finalpj.service.JoinPersonService;
 import com.ezen.finalpj.service.ScheduleService;
@@ -69,6 +71,7 @@ public class GroupController {
 	public String selectGrpGet(@RequestParam("grno")int grno, Model model) {
 		GroupVO gvo=gsv.selectGrp(grno);
 		List<ScheduleVO> sList=ssv.selectListSch(grno);
+		//int joinCnt=jsv.selectCntJp(sno);
 		GroupDTO gdto=new GroupDTO(gvo, sList);
 		model.addAttribute("gvo", gdto.getGvo());
 		model.addAttribute("sList", gdto.getSList());
@@ -80,9 +83,27 @@ public class GroupController {
 		//방장 가져오기
 		UserVO capUvo=usv.selectCapGet(grno);
 		log.info(capUvo.toString());
-		model.addAttribute("capUser", capUvo);
+		model.addAttribute("capUvo", capUvo);
 		List<UserVO> uList=usv.selectMemListUserGet(grno);
 		model.addAttribute("uList", uList);
 		return "/group/memberList";
+	}
+	
+	@GetMapping("/join")
+	public String joinGrpGet(@RequestParam("grno")int grno, Model model, HttpServletRequest req) {
+		HttpSession ses=req.getSession();
+		UserVO uvo=(UserVO)ses.getAttribute("ses");
+		model.addAttribute("uvo", uvo);
+		model.addAttribute("grno", grno);
+		return "/group/join";
+	}
+	
+	@PostMapping("/join")
+	public String joinGrpPost(WaitingVO wvo, RedirectAttributes reAttr) {
+		log.info(wvo.toString());
+		int isOk=wsv.insertMemWaitPost(wvo);
+		log.info("소모임 가입 신청"+(isOk>0?"성공":"실패"));
+		reAttr.addAttribute("grno", wvo.getGrno());
+		return "redirect:/group/main";
 	}
 }
