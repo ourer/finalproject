@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,23 +27,27 @@
              <li class="nav-item">
                <a class="nav-link active d-grid gap-2 col-12 mx-auto" aria-current="page" href="#"><button type="button" class="btn btn-outline-warning">소모임 생성</button></a>
              </li>
-             <li class="nav-item">
-               <a class="nav-link" aria-current="page" href="#">로그인</a>
-             </li>
-             <li class="nav-item">
-               <a class="nav-link" aria-current="page" href="/user/register">회원가입</a>
-             </li>
+             <c:if test="${ses.email == null }">
+	             <li class="nav-item">
+	               <a class="nav-link" aria-current="page" href="/user/login">로그인</a>
+	             </li>
+	             <li class="nav-item">
+	               <a class="nav-link" aria-current="page" href="/user/register">회원가입</a>
+	             </li>
+             </c:if>
              <li class="nav-item">
                 <div>
                    <img src="https://m.colettemung.com/web/product/big/202009/5b2194624e6fbe01f2bf3541b4935dd4.jpg" class="rounded-circle mx-auto d-block" alt="..." style="width: 150px;">
                   <div class="imgname">
-                  <span id="imgname">윤승히</span>
+                  <span id="imgname">${ses.name }</span>
                   <span>님</span></div>
                 </div>
              </li>
+              <c:if test="${ses.email != null }">
              <li class="nav-item">
-               <a class="nav-link" aria-current="page" href="#">로그아웃</a>
+               <a class="nav-link" aria-current="page" href="/user/logout">로그아웃</a>
              </li>
+             </c:if>
              <li class="nav-item dropdown">
                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                  마이 페이지
@@ -66,12 +71,22 @@
         <img alt="" src="/resources/img/logo.png" width="200px">
    </div>
       <ul class="nav justify-content-end">
+      <c:if test="${ses.email == null }">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">로그인</a>
+          <a class="nav-link active" aria-current="page" href="/user/login">로그인</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/user/register">회원가입</a>
         </li>
+      </c:if>
+      <c:if test="${ses.email != null }">
+      	<li class="nav-item">
+   		 	<a class="nav-link" aria-current="page" href="#">${ses.name } 마이페이지</a>
+   		 </li>
+   		 <li class="nav-item">
+          	<a class="nav-link active" aria-current="page" href="/user/logout">로그아웃</a>
+        </li>
+      </c:if>
         <li class="nav-item">
           <a class="nav-link" href="#">공지사항</a>
         </li>

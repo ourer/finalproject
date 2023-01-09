@@ -41,7 +41,9 @@ public class UserServiceImpl implements UserService {
 		}
 		
 		String pw = uvo.getPw();
+		log.info(">>>serviceImpl : "+pw);
 		String encodepw = passwordEncoder.encode(pw);
+		log.info(">>>serviceImpl : "+encodepw);
 		uvo.setPw(encodepw);
 		udao.insertUser(uvo);
 		
@@ -51,9 +53,16 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int register(UserDTO udto) {
 		log.info("User register(udto) check2");
+		String pw = udto.getUvo().getPw();
+		log.info(">>>serviceImpl : "+pw);
+		String encodepw = passwordEncoder.encode(pw);
+		log.info(">>>serviceImpl : "+encodepw);
+		udto.getUvo().setPw(encodepw);
+//		udao.insertUser(udto.getUvo());
 		int isOK = udao.insertUser(udto.getUvo());
 		if(isOK > 0 && udto.getPList().size() > 0) {
-			String email = pdao.selectOneUser();
+			String email = udto.getUvo().getEmail();
+			log.info(email);
 			for(ProfileVO pvo : udto.getPList()) {
 				pvo.setEmail(email);
 				log.info(">>>file :"+ pvo.toString());
@@ -65,12 +74,12 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserVO isUser(String email, String pw) {
-		UserVO user = udao.getUser(email);
+		UserVO uvo = udao.getUser(email);
+		log.info(">>>ServiceImpl : "+uvo.toString());
+		if(uvo == null) return null;
 		
-		if(user == null) return null;
-		
-		if(passwordEncoder.matches(pw, user.getPw())) {
-			return user;
+		if(passwordEncoder.matches(pw, uvo.getPw())) {
+			return uvo;
 		}else {
 			return null;
 		}

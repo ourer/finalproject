@@ -1,6 +1,7 @@
 package com.ezen.finalpj.controller;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -73,6 +74,10 @@ public class UserController {
 		 int isOK = 0;
 		 if(files[0].getSize() > 0) { 
 		 pList = ph.uploadFiles(files);
+		 for(ProfileVO pvo : pList) {
+			 pvo.setEmail(uvo.getEmail());
+		 }
+		 log.info(pList.toString());
 		 UserDTO udto = new UserDTO(uvo, pList);
 		 isOK = usv.register(udto); 
 		 }else {
@@ -80,7 +85,7 @@ public class UserController {
 		 isOK = usv.register(uvo); 
 		 }
 			 
-		 reAttr.addFlashAttribute("msg", isOK > 0 ? "성공" : "실패");
+		 reAttr.addFlashAttribute("msg", isOK > 0 ? "0" : "1");
 		 log.info("User Register : "+ (isOK > 0?"OK":"FAIL"));
 		 return "redirect:/";
 	  }
@@ -101,10 +106,10 @@ public class UserController {
 			 ses.setAttribute("ses", isUser);
 			 
 			 mv.setViewName("/home");
-			 mv.addObject("msg", "1");
+			 mv.addObject("msglogin", "1");
 		 }else {
 			 mv.setViewName("user/login");
-			 mv.addObject("msg","0");
+			 mv.addObject("msglogin","0");
 		 }
 		 
 		 return mv;

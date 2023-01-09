@@ -13,7 +13,7 @@
 		<button type="button" id="trigger" class="btn btn-outline-primary btn-block d-block">Files Upload</button>
 		</div>
 		<div class="col-12" id="fileZone">
-			파일이 첨부되면 해당 파일에 대한 정보가 표시됨 
+			<!-- 파일이 첨부되면 해당 파일에 대한 정보가 표시됨  -->
 		</div>
 		이름:<input type="text" class="form-control" id="name" placeholder="이름" name="name">
 		비밀번호:<input type="password" class="form-control" id="pw" name="pw">

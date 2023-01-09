@@ -1,9 +1,9 @@
 console.log("user register.js ");
 
 const msg='<c:out value="${msg}"/>';
-if(msg==="실패"){
+if(msg==='1'){
 	alert("회원가입에 실패했습니다.");
-}else if(msg == "성공"){
+}else if(msg == '0'){
 	alert("회원가입에 성공했습니다.");		
 }
 
