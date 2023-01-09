@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ezen.finalpj.repository.FavoriteDAO">
+	<select id="selectFavorite" resultType="int">
+		select count(fno) from favorite where grno=#{grno} and email=#{email}
+	</select>
+	<delete id="deleteFavorite">
+		delete from favorite where grno=#{grno} and email=#{email}
+	</delete>
+	<insert id="insertFavorite">
+		insert into favorite(grno, email) values(#{grno}, #{email})
+	</insert>
+</mapper>

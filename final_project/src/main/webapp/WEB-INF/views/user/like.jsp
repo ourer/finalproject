@@ -1,10 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
 <jsp:include page="../layout/header.jsp"></jsp:include>
 <section>
-		<ul class="nav nav-tabs">
+		<ul class="nav nav-tabs" style="margin: 30px auto">
 		 <li class="nav-item dropdown"><h3>마이페이지</h3></li>
 		  <li class="nav-item dropdown">
 		    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">나의 소모임</a>
@@ -24,11 +23,13 @@
 		  <div class="col-sm-6">
 		    <div class="card">
 		      <div class="card-body">
+		      <c:if test="${ses.email != null }">
 				<img src="https://m.colettemung.com/web/product/big/202009/5b2194624e6fbe01f2bf3541b4935dd4.jpg" class="rounded-circle mx-auto d-block" alt="..." style="width: 140px;">		        
 		        <div class="text-center">
-		        	<span>윤승희</span>
+		        	<span>${ses.name }</span>
 		        	<span>님</span>
 		        </div>
+		       </c:if>
 		      </div>
 		    </div>
 		  </div>

@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
 <jsp:include page="../layout/header.jsp"></jsp:include>
 <section>
 		<ul class="nav nav-tabs" style="margin: 30px auto">
@@ -24,11 +23,13 @@
 		  <div class="col-sm-6">
 		    <div class="card">
 		      <div class="card-body">
+		      <c:if test="${ses.email != null }">
 				<img src="https://m.colettemung.com/web/product/big/202009/5b2194624e6fbe01f2bf3541b4935dd4.jpg" class="rounded-circle mx-auto d-block" alt="..." style="width: 140px;">		        
 		        <div class="text-center">
-		        	<span>윤승희</span>
+		        	<span>${ses.name }</span>
 		        	<span>님</span>
 		        </div>
+		        </c:if>
 		      </div>
 		    </div>
 		  </div>
@@ -69,7 +70,8 @@
 					<td></td>
 					<td></td>
 					<td></td>
-					<td><button class="btn btn-sm btn-outline-success admit" type="button">승인</button><button class="btn btn-sm btn-outline-danger deny" type="button">거절</button></td>					
+					<td><button class="btn btn-sm btn-outline-success admit" type="button">승인</button>
+					<button class="btn btn-sm btn-outline-danger deny" type="button">거절</button></td>					
 				</tr>
 			</tbody>
 		</table>
@@ -94,7 +96,8 @@
 					<td></td>
 					<td></td>
 					<td></td>
-					<td><button class="btn btn-sm btn-outline-success special" type="button">임명</button><button class="btn btn-sm btn-outline-danger normal" type="button">해제</button></td>					
+					<td><button class="btn btn-sm btn-outline-success special" type="button">임명</button>
+					<button class="btn btn-sm btn-outline-danger normal" type="button">해제</button></td>					
 				</tr>
 			</tbody>
 		</table>
