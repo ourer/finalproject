@@ -1,5 +1,7 @@
 package com.ezen.finalpj.domain;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,5 +27,6 @@ public class UserVO {
 	private int ctno_1;
 	private int ctno_2;
 	private int ctno_3;
-	
+	private int isCap;
+	private List<WaitingVO> waitList;
 }

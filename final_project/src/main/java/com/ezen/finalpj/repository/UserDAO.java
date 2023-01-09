@@ -15,5 +15,9 @@ public interface UserDAO {
 
 	List<UserVO> selectMemberList(PagingVO pgvo2);
 
+	List<UserVO> selectOnlyUser(UserVO user);
+
+
+
 	
 }

@@ -31,17 +31,7 @@
 				</tr>
 			</c:forEach>
 	</table>
-	<div>
-	<c:if test="${pgh1.prev }">
-		<a href="/user/userlist?pageNo1=${pgh1.startPage-1 }&pageNo2=${pgh2.pgvo.pageNo } ">◀</a>
-	</c:if>
-	<c:forEach begin="${pgh1.startPage }" end="${pgh1.endPage }" var="i">
-		<a href="/user/userlist?pageNo1=${i }&pageNo2=${pgh2.pgvo.pageNo }">${i } ｜</a>
-	</c:forEach>
-	<c:if test="${pgh1.next }">
-		<a href="/user/userlist?pageNo1=${pgh1.endPage+1 }&pageNo2=${pgh2.pgvo.pageNo } ">▶</a>
-	</c:if>
-	</div>
+
 </section>
 	<br>
 	<br>
@@ -78,16 +68,6 @@
 				</tr>
 			</c:forEach>
 	</table>
-	<div>
-		<c:if test="${pgh2.prev }">
-			<a href="/user/userlist?pageNo2=${pgh2.startPage-1 }&pageNo1=${pgh1.pgvo.pageNo } ">◀</a>
-		</c:if>
-		<c:forEach begin="${pgh2.startPage }" end="${pgh2.endPage }" var="j">
-			<a href="/user/userlist?pageNo2=${j }&pageNo1=${pgh1.pgvo.pageNo }">${j } ｜</a>
-		</c:forEach>
-		<c:if test="${pgh2.next }">
-			<a href="/user/userlist?pageNo2=${pgh2.endPage+1 }&pageNo1=${pgh1.pgvo.pageNo } ">▶</a>
-		</c:if>
-	</div>
-	<jsp:include page="../layout/footer.jsp"></jsp:include>
+
 	</section>
+	<jsp:include page="../layout/footer.jsp"></jsp:include>

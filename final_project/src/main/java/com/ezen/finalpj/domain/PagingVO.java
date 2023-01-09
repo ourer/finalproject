@@ -11,7 +11,6 @@ public class PagingVO {
 	private int pageNo;
 	private int qty;
 	
-	
 	public PagingVO() {
 		this(1,5);
 	}

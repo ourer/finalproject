@@ -3,6 +3,8 @@ package com.ezen.finalpj.service;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
 
@@ -46,6 +48,24 @@ public class UserServiceImpl implements UserService {
 		log.info("memberlist user check");
 		return udao.selectMemberList(pgvo2);
 	}
+
+
+	@Override
+	public List<UserVO> getOnlyList(UserVO user) {
+		log.info("waiting list user check");
+		return udao.selectOnlyUser(user);
+	}
+
+
+	@Override
+	public UserVO getMyOnlyuser(HttpServletRequest req) {
+		UserVO user=(UserVO)req.getSession().getAttribute("ses");
+		log.info("ses : "+user.getEmail().toString());
+		return user;
+	}
+
+
+
 
 
 

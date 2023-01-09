@@ -52,8 +52,8 @@
                </a>
                <ul class="dropdown-menu">
                
-                 <li><a class="dropdown-item" href="/user/userlist?pageNo1=1&pageNo2=1"  >내 소모임</a></li>
-                 <li><a class="dropdown-item" href="#">내가 찜한 소모임</a></li>
+                 <li><a class="dropdown-item" href="/user/userlist?pageNo1=1&pageNo2=1" >내 소모임</a></li>
+                 <li><a class="dropdown-item" href="/user/testlist">내가 찜한 소모임</a></li>
                </ul>
              </li>
              <li class="nav-item">
