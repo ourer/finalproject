@@ -8,8 +8,6 @@ public interface UserDAO {
 
 	int insertUser(UserVO uvo);
 
-	String selectOneUser();
-
 
 
 }

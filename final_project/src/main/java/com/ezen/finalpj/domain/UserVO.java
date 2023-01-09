@@ -22,11 +22,10 @@ public class UserVO {
 	private int gender;
 	private String phone;
 	private String isDel;
-	private int grno;
 	private int ctno_1;
 	private int ctno_2;
 	private int ctno_3;
-	private String grade;
+	private int isCap;
 	
 
 }

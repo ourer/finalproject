@@ -3,6 +3,8 @@ package com.ezen.finalpj.controller;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -61,23 +63,60 @@ public class UserController {
 //	}
 	
 	 @PostMapping("/register") 
-	 	public String register(UserVO uvo, RedirectAttributes reAttr, @RequestParam(name="files", required =false) MultipartFile[] files){
+	 	public String register(UserVO uvo, RedirectAttributes reAttr, @RequestParam(name="files", required =false)MultipartFile[] files){
+		 
 		 log.info(">>> User Register check 1");
-		 log.info(">>>User : "+uvo.getEmail());
+		 log.info(">>>User : "+uvo.toString());
 		 log.info(">>>files: "+files.toString()); 
 		 List<ProfileVO> pList = null;
+//		 int isOK = usv.register(uvo);
 		 int isOK = 0;
 		 if(files[0].getSize() > 0) { 
-			 pList = ph.uploadFiles(files); 
+		 pList = ph.uploadFiles(files);
 		 UserDTO udto = new UserDTO(uvo, pList);
-		 isOK = usv.register(udto);
+		 isOK = usv.register(udto); 
 		 }else {
-			 log.info("file null");
-			 isOK = usv.register(uvo);
+		 log.info("file null"); 
+		 isOK = usv.register(uvo); 
 		 }
+			 
 		 reAttr.addFlashAttribute("msg", isOK > 0 ? "성공" : "실패");
 		 log.info("User Register : "+ (isOK > 0?"OK":"FAIL"));
 		 return "redirect:/";
 	  }
+	 
+	 @GetMapping("/login")
+	 public ModelAndView loginGet(ModelAndView mv) {
+		 mv.setViewName("/user/login");
+		 return mv;
+	 }
+	 
+	 @PostMapping("/login")
+	 public ModelAndView loginPost(ModelAndView mv, String email, String pw, HttpServletRequest req) {
+		 log.info(">>>email : "+email+" pw : "+ pw);
+		 UserVO isUser = usv.isUser(email, pw);
+		 
+		 if(isUser != null) {
+			 HttpSession ses = req.getSession();
+			 ses.setAttribute("ses", isUser);
+			 
+			 mv.setViewName("/home");
+			 mv.addObject("msg", "1");
+		 }else {
+			 mv.setViewName("user/login");
+			 mv.addObject("msg","0");
+		 }
+		 
+		 return mv;
+	 }
+	 
+	 @GetMapping("/logout")
+	 public ModelAndView logoutGet(ModelAndView mv, HttpServletRequest req) {
+		 req.getSession().removeAttribute("ses");
+		 req.getSession().invalidate();
+		 mv.addObject("msg", "0");
+		 mv.setViewName("redirect:/");
+		 return mv;
+	 }
 
 }

@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserService {
 		log.info("User register(udto) check2");
 		int isOK = udao.insertUser(udto.getUvo());
 		if(isOK > 0 && udto.getPList().size() > 0) {
-			String email = udao.selectOneUser();
+			String email = pdao.selectOneUser();
 			for(ProfileVO pvo : udto.getPList()) {
 				pvo.setEmail(email);
 				log.info(">>>file :"+ pvo.toString());
@@ -63,7 +63,17 @@ public class UserServiceImpl implements UserService {
 		return isOK;
 	}
 
-
-
+	@Override
+	public UserVO isUser(String email, String pw) {
+		UserVO user = udao.getUser(email);
+		
+		if(user == null) return null;
+		
+		if(passwordEncoder.matches(pw, user.getPw())) {
+			return user;
+		}else {
+			return null;
+		}
+	}
 
 }

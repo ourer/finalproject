@@ -6,4 +6,6 @@ public interface ProfileDAO {
 
 	int insertFile(ProfileVO pvo);
 
+	String selectOneUser();
+
 }

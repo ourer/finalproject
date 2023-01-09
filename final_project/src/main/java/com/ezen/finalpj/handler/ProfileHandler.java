@@ -29,8 +29,10 @@ public class ProfileHandler {
 		log.info(">>>date : " +date);
 		String today = date.toString();
 		today = today.replace("-", File.separator);
+
 		
 		File folders = new File(UP_DIR, today);
+
 		
 		if(!folders.exists()) {
 			folders.mkdirs();

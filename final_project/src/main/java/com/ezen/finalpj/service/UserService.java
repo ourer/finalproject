@@ -10,6 +10,8 @@ public interface UserService {
 
 	int register(UserDTO udto);
 
+	UserVO isUser(String email, String pw);
+
 
 
 }
