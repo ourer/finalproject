@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ezen.finalpj.repository.GroupDAO">
+	<insert id="insertGrp">
+		insert into smallgroup(name, max_member, detail, ctno, isFree, isFace, city, county, email) values(#{name}, #{max_member}, #{detail}, #{ctno}, #{isFree}, #{isFace}, #{city}, #{county}, #{email})
+	</insert>
+	<select id="selectGrp" resultType="com.ezen.finalpj.domain.GroupVO">
+		select * from smallgroup where grno=#{grno}
+	</select>
+	<select id="selectGrnoGrp" resultType="int">
+		select grno from smallgroup where email=#{email}
+	</select>
+</mapper>

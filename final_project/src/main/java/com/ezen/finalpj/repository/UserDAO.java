@@ -2,22 +2,23 @@ package com.ezen.finalpj.repository;
 
 import java.util.List;
 
-import com.ezen.finalpj.domain.PagingVO;
+import com.ezen.finalpj.domain.ManagerDTO;
 import com.ezen.finalpj.domain.UserVO;
 
 public interface UserDAO {
 
+	int updateCap(ManagerDTO managerDTO);
+
+	List<UserVO> selectMemListUser(int grno);
+
+	UserVO selectCap(int grno);
+	
 	UserVO getUser(String email);
 
-	int pageCount(PagingVO pgvo);
+	int insertUser(UserVO uvo);
 	
-	List<UserVO> selectWaitingList(PagingVO pgvo1);
-
-	List<UserVO> selectMemberList(PagingVO pgvo2);
-
 	List<UserVO> selectOnlyUser(UserVO user);
 
+	List<UserVO> selectSecoundUser(UserVO user);
 
-
-	
 }

@@ -4,12 +4,15 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.ezen.finalpj.domain.PagingVO;
+import com.ezen.finalpj.domain.ManagerDTO;
+import com.ezen.finalpj.domain.ProfileVO;
+import com.ezen.finalpj.domain.UserDTO;
 import com.ezen.finalpj.domain.UserVO;
+import com.ezen.finalpj.repository.ProfileDAO;
 import com.ezen.finalpj.repository.UserDAO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -17,42 +20,96 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 public class UserServiceImpl implements UserService {
-	
 	@Inject
 	private UserDAO udao;
+	@Inject
+	private ProfileDAO pdao;
+	
+	@Inject
+	BCryptPasswordEncoder passwordEncoder;
+
+	@Override
+	public int updateCapUser(ManagerDTO managerDTO) {
+		log.info("방장 업데이트");
+		return udao.updateCap(managerDTO);
+	}
+
+	@Override
+	public List<UserVO> selectMemListUserGet(int grno) {
+		log.info("소모임 멤버 리스트");
+		return udao.selectMemListUser(grno);
+	}
+
+	@Override
+	public UserVO selectCapGet(int grno) {
+		log.info("방장 추출");
+		return udao.selectCap(grno);
+	}
+	
 	
 	@Override
-	public UserVO login(UserVO user) {
-		UserVO login=udao.getUser(user.getEmail());
-		log.info("login check2");
-		return login;
+	public int register(UserDTO udto) {
+		log.info("User register(udto) check2");
+		String pw = udto.getUvo().getPw();
+		log.info(">>>serviceImpl : "+pw);
+		String encodepw = passwordEncoder.encode(pw);
+		log.info(">>>serviceImpl : "+encodepw);
+		udto.getUvo().setPw(encodepw);
+//		udao.insertUser(udto.getUvo());
+		int isOK = udao.insertUser(udto.getUvo());
+		if(isOK > 0 && udto.getPList().size() > 0) {
+			String email = udto.getUvo().getEmail();
+			log.info(email);
+			for(ProfileVO pvo : udto.getPList()) {
+				pvo.setEmail(email);
+				log.info(">>>file :"+ pvo.toString());
+				isOK *= pdao.insertFile(pvo);
+			}
+		}
+		return isOK;
 	}
 
-
 	@Override
-	public int getPageCount(PagingVO pgvo) {
-		log.info("pagecount check");
-		return udao.pageCount(pgvo);
+	public UserVO isUser(String email, String pw) {
+		UserVO uvo = udao.getUser(email);
+		log.info(">>>ServiceImpl : "+uvo.toString());
+		if(uvo == null) return null;
+		
+		if(passwordEncoder.matches(pw, uvo.getPw())) {
+			return uvo;
+		}else {
+			return null;
+		}
 	}
-
-
+	
 	@Override
-	public List<UserVO> getWaiting(PagingVO pgvo1) {
-		log.info("waiting user check");
-		return udao.selectWaitingList(pgvo1);
+	public int register(UserVO uvo) {
+		log.info(">>> User register check2");
+		UserVO tmpUser = udao.getUser(uvo.getEmail());
+		
+		if(tmpUser != null) {
+			return 0;
+		}
+		if(uvo.getEmail()==null || uvo.getEmail().length()==0) {
+			return 0;
+		}
+		if(uvo.getPw()==null || uvo.getPw().length()==0) {
+			return 0;
+		}
+		
+		String pw = uvo.getPw();
+		log.info(">>>serviceImpl : "+pw);
+		String encodepw = passwordEncoder.encode(pw);
+		log.info(">>>serviceImpl : "+encodepw);
+		uvo.setPw(encodepw);
+		udao.insertUser(uvo);
+		
+		return 1;
 	}
-
-
+	
 	@Override
-	public List<UserVO> getMemberList(PagingVO pgvo2) {
-		log.info("memberlist user check");
-		return udao.selectMemberList(pgvo2);
-	}
-
-
-	@Override
-	public List<UserVO> getOnlyList(UserVO user) {
-		log.info("waiting list user check");
+	public List<UserVO> getOnlyList1(UserVO user) {
+		log.info("waiting1 list user check");
 		return udao.selectOnlyUser(user);
 	}
 
@@ -64,11 +121,10 @@ public class UserServiceImpl implements UserService {
 		return user;
 	}
 
-
-
-
-
-
-
+	@Override
+	public List<UserVO> getOnlyList2(UserVO user) {
+		log.info("waiting2 list user check");
+		return udao.selectSecoundUser(user);
+	}
 
 }

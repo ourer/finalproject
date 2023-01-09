@@ -1,16 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-	<form action="/user/login"  method="post">
-		EMAIL: <input type="text" name="email"> <br>
-		PASSWORD: <input type="text" name="pw"> <br>
-		<button type="submit">로그인</button>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%-- <%@ page session="false" %> --%>
+<jsp:include page="../layout/header.jsp"></jsp:include>
+<section>
+	<form action="/user/login" method="post">
+	ID: <input type="text" name="email"> <br>
+	PASSWORD: <input type="password" name="pw"> <br>
+	<button type="submit">LOGIN</button>
 	</form>
-</body>
-</html>
+</section>
+
+<script type="text/javascript">
+	const msglogin = '<c:out value="${msglogin}"/>';
+	if(msglogin==='0'){
+		console.log(msglogin);
+		alert("로그인에 실패했습니다.");
+	}else(msglogin=='1') {
+		console.log(msglogin);
+		alert("로그인에 성공했습니다.");
+	}
+	</script>
+
+<jsp:include page="../layout/footer.jsp"></jsp:include>

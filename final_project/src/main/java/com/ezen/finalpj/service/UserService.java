@@ -3,31 +3,30 @@ package com.ezen.finalpj.service;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
-import com.ezen.finalpj.domain.PagingVO;
+import com.ezen.finalpj.domain.ManagerDTO;
 import com.ezen.finalpj.domain.UserDTO;
 import com.ezen.finalpj.domain.UserVO;
-import com.ezen.finalpj.domain.WaitingVO;
 
 public interface UserService {
 
-	UserVO login(UserVO user);
+	int updateCapUser(ManagerDTO managerDTO);
 
-	int getPageCount(PagingVO pgvo);
+	List<UserVO> selectMemListUserGet(int grno);
 
-	List<UserVO> getWaiting(PagingVO pgvo1);
+	UserVO selectCapGet(int grno);
 
-	List<UserVO> getMemberList(PagingVO pgvo2);
+	int register(UserDTO udto);
 
-	List<UserVO> getOnlyList(UserVO user);
-
+	UserVO isUser(String email, String pw);
+	
+	int register(UserVO uvo);
+	
+	List<UserVO> getOnlyList1(UserVO user);
+	
+	List<UserVO> getOnlyList2(UserVO user);
+	
 	UserVO getMyOnlyuser(HttpServletRequest req);
-
-
-
-
-
 
 
 }
