@@ -8,4 +8,6 @@ public interface GroupDAO {
 
 	GroupVO selectGrp(int grno);
 
+	int selectGrnoGrp(String email);
+
 }

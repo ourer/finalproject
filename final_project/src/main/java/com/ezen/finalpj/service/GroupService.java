@@ -7,5 +7,7 @@ public interface GroupService {
 	int insertGrp(GroupVO gvo);
 
 	GroupVO selectGrp(int grno);
+
+	int selectGrnoGrp(String email);
 	
 }

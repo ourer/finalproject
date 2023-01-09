@@ -30,4 +30,10 @@ public class GroupServiceImpl implements GroupService {
 		return gvo;
 	}
 
+	@Override
+	public int selectGrnoGrp(String email) {
+		log.info("소모임 grno 호출");
+		return gdao.selectGrnoGrp(email);
+	}
+
 }

@@ -8,7 +8,6 @@
 	</h1>
 	
 	<P>  The time on the server is ${serverTime}. ㅁㄴㅇㄹ</P>
-	<a href="/group/register">소모임 생성</a>
 	<a href="/group/main?grno=1">소모임 메인</a>
 </section>
 <jsp:include page="./layout/footer.jsp"></jsp:include>

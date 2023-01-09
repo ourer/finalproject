@@ -10,4 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectGrp" resultType="com.ezen.finalpj.domain.GroupVO">
 		select * from smallgroup where grno=#{grno}
 	</select>
+	<select id="selectGrnoGrp" resultType="int">
+		select grno from smallgroup where email=#{email}
+	</select>
 </mapper>

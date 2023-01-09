@@ -24,7 +24,7 @@
          <div class="offcanvas-body">
            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
              <li class="nav-item">
-               <a class="nav-link active d-grid gap-2 col-12 mx-auto" aria-current="page" href="#"><button type="button" class="btn btn-outline-warning">소모임 생성</button></a>
+               <a class="nav-link active d-grid gap-2 col-12 mx-auto" aria-current="page" href="/group/register"><button type="button" class="btn btn-outline-warning">소모임 생성</button></a>
              </li>
              <li class="nav-item">
                <a class="nav-link" aria-current="page" href="#">로그인</a>

@@ -20,11 +20,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.ezen.finalpj.domain.GroupDTO;
 import com.ezen.finalpj.domain.GroupVO;
 import com.ezen.finalpj.domain.JoinPersonVO;
+import com.ezen.finalpj.domain.ManagerDTO;
 import com.ezen.finalpj.domain.ScheduleVO;
 import com.ezen.finalpj.domain.UserVO;
 import com.ezen.finalpj.service.GroupService;
 import com.ezen.finalpj.service.JoinPersonService;
 import com.ezen.finalpj.service.ScheduleService;
+import com.ezen.finalpj.service.UserService;
 import com.ezen.finalpj.service.WaitingService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -41,7 +43,8 @@ public class GroupController {
 	private JoinPersonService jpsv;
 	@Inject
 	private WaitingService wsv;
-	
+	@Inject
+	private UserService usv;
 	
 	@GetMapping("/register")
 	public String insertGrpGet() {
@@ -54,8 +57,10 @@ public class GroupController {
 		int isOk=gsv.insertGrp(gvo);
 		//user한테 방장 됐으니까 grno 넣어주기
 		//register.jsp에서 hidden으로 ses.email 받아오기
-		//grno가져오기 : uvo의 이메일로 smallgroup에서 같은 이메일 있는 grno 가져오기
-		//DTO로 이메일, grno 넣어주기 
+		//grno가져오기 : gvo의 이메일로 smallgroup에서 같은 이메일 있는 grno 가져오기
+		int grno=gsv.selectGrnoGrp(gvo.getEmail());
+		//DTO로 이메일, grno 넣어주기
+		isOk*=usv.updateCapUser(new ManagerDTO(gvo.getEmail(), grno));
 		log.info("소모임 생성"+(isOk>0?"성공":"실패"));
 		return isOk>0? new ResponseEntity<String>("1", HttpStatus.OK):new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
@@ -71,7 +76,13 @@ public class GroupController {
 	}
 	
 	@GetMapping("/memberList")
-	public String selectMemListGrpGet(@RequestParam("grno")int grno) {
+	public String selectMemListGrpGet(@RequestParam("grno")int grno, Model model) {
+		//방장 가져오기
+		UserVO capUvo=usv.selectCapGet(grno);
+		log.info(capUvo.toString());
+		model.addAttribute("capUser", capUvo);
+		List<UserVO> uList=usv.selectMemListUserGet(grno);
+		model.addAttribute("uList", uList);
 		return "/group/memberList";
 	}
 }
