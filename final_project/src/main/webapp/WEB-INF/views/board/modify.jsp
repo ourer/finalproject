@@ -13,7 +13,7 @@
 <section>
 	<form action="/board/modify" method="post" style="margin:30px auto">
 		<div class="form-check form-check-inline">
-		   <input class="form-check-input" type="checkbox" id="pin" name="pin" value='1' checked="checked">
+		   <input class="form-check-input" type="checkbox" id="pin" name="pin" value='1'>
 		   <label class="form-check-label" for="pin">메인공지</label>
 		</div>
 		<div class="form">
