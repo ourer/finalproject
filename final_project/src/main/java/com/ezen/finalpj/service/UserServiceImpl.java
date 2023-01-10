@@ -108,9 +108,9 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public List<UserVO> getOnlyList1(UserVO user) {
+	public List<UserDTO> getOnlyList1(UserDTO userandfile) {
 		log.info("waiting1 list user check");
-		return udao.selectOnlyUser(user);
+		return udao.selectOnlyUser(userandfile);
 	}
 
 
@@ -122,9 +122,15 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<UserVO> getOnlyList2(UserVO user) {
+	public List<UserDTO> getOnlyList2(UserDTO userandfile) {
 		log.info("waiting2 list user check");
-		return udao.selectSecoundUser(user);
+		return udao.selectSecoundUser(userandfile);
+	}
+
+	@Override
+	public List<ProfileVO> getProfileList(UserDTO udto) {
+		List<ProfileVO> pList=(List<ProfileVO>)udto.getPList();
+		return pList;
 	}
 
 }

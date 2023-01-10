@@ -129,18 +129,20 @@ public class UserController {
 		}
 		
 		@GetMapping("/management")
-		public String list(Model model,UserVO uvo, HttpServletRequest req) {
+		public String list(Model model,UserDTO udto, HttpServletRequest req) {
 			HttpSession ses=req.getSession();
-			String email=uvo.getEmail();
+			String email=udto.getUvo().getEmail();
+			log.info("uvo의 email : "+email);
 			ses.setAttribute("email", email);
 			UserVO user=usv.getMyOnlyuser(req);
-//			List<ProfileVO> pList=ph.uploadFiles(null);
+			List<ProfileVO> pList=usv.getProfileList(udto);
+			UserDTO userandfile=new UserDTO(user, pList);
 			//session에서 email 정보추출
 			//email 정보를 들고, service 에게 요청 
 			// mapper에게 email과 일치하는 isOk = 0와 (해결)
 			//grno 요청
-			List<UserVO> list1=usv.getOnlyList1(user);
-			List<UserVO> list2=usv.getOnlyList2(user);
+			List<UserDTO> list1=usv.getOnlyList1(userandfile);
+			List<UserDTO> list2=usv.getOnlyList2(userandfile);
 			log.info("only user");
 			model.addAttribute("list1", list1);
 			model.addAttribute("list2", list2);

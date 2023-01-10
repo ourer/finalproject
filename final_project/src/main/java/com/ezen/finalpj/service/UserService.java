@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import com.ezen.finalpj.domain.ManagerDTO;
+import com.ezen.finalpj.domain.ProfileVO;
 import com.ezen.finalpj.domain.UserDTO;
 import com.ezen.finalpj.domain.UserVO;
 
@@ -22,11 +23,13 @@ public interface UserService {
 	
 	int register(UserVO uvo);
 	
-	List<UserVO> getOnlyList1(UserVO user);
+	List<UserDTO> getOnlyList1(UserDTO userandfile);
 	
-	List<UserVO> getOnlyList2(UserVO user);
+	List<UserDTO> getOnlyList2(UserDTO userandfile);
 	
 	UserVO getMyOnlyuser(HttpServletRequest req);
+
+	List<ProfileVO> getProfileList(UserDTO udto);
 
 
 }

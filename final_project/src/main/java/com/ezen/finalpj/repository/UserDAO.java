@@ -3,6 +3,7 @@ package com.ezen.finalpj.repository;
 import java.util.List;
 
 import com.ezen.finalpj.domain.ManagerDTO;
+import com.ezen.finalpj.domain.UserDTO;
 import com.ezen.finalpj.domain.UserVO;
 
 public interface UserDAO {
@@ -17,8 +18,8 @@ public interface UserDAO {
 
 	int insertUser(UserVO uvo);
 	
-	List<UserVO> selectOnlyUser(UserVO user);
+	List<UserDTO> selectOnlyUser(UserDTO userandfile);
 
-	List<UserVO> selectSecoundUser(UserVO user);
+	List<UserDTO> selectSecoundUser(UserDTO userandfile);
 
 }
