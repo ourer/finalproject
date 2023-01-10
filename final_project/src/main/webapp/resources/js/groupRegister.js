@@ -130,6 +130,7 @@ function ctnoNum(ctnoVal){
     return ctno;
 }
 
+
 document.getElementById('grpRegBtn').addEventListener("click", ()=>{
     //카테고리 코드
     let codeTag=document.getElementById('code');
@@ -180,6 +181,7 @@ document.getElementById('grpRegBtn').addEventListener("click", ()=>{
     //방장 이메일
     let email=document.getElementById('email').value;
     console.log(email);
+    
 
     if(selectedCode=="대분류"||selectedCtno==""||grpName==""||cityVal=="전체"||countyVal==""||isFree==2||isFace==2||detail==""){
         alert("빈 칸을 모두 채워주세요.");
@@ -225,3 +227,25 @@ async function registerGroup(groupData){
         console.log(error);
     }
 }
+    // $.ajax({
+    // 	type: "post",
+    //     url: "/group/register",
+    //     data: groupData,
+    //     contentType: false,               // * 중요 *
+    //     processData: false,               // * 중요 *
+    //     enctype : 'multipart/form-data',  // * 중요 *
+    //     success: function(data) {
+    //       if (result.SUCCESS == true) {
+    //        alert("성공");
+    //        location.href="/";
+    //       } else {
+    //        alert("실패");
+    //        }
+    //     }
+    // });
+    // registerGroup(groupData).then(result => {
+    //     if(result>0){
+    //         alert("모임이 생성되었습니다!");
+    //         location.href="/";
+    //     }
+    // })

@@ -3,7 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <jsp:include page="../layout/header.jsp"></jsp:include>
 <section>
-	
 		<div class="outerBox">
 	        <div class="innerGroup">
 	            <div class="innerFirst">
@@ -108,22 +107,11 @@
 	                <textarea name="detail" id="detail" cols="30" rows="10"></textarea>
 	            </div>
 	        </div>
-	        <div class="innerGroup">
-	            <div class="innerFirst">
-	                <h3>소모임 대표 이미지 등록</h3>
-	            </div>
-	            <div class="innerSecond">
-	                <input type="file" name="file_name" id="file_name">
-	            </div>
-	            <div class="innerThird">
-	            </div>
-	        </div>
 			<div class="innerGroup">
 				<button type="button" id="grpRegBtn">소모임 생성</button>
 			</div>
 	    </div>
 	    <input type="hidden" name="email" id="email" value="${ses.email }">
-
 </section>
 <script type="text/javascript" src="/resources/js/groupRegister.js"></script>
 <jsp:include page="../layout/footer.jsp"></jsp:include>

@@ -1,7 +1,5 @@
 package com.ezen.finalpj.domain;
 
-import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,8 +11,14 @@ import lombok.ToString;
 @NoArgsConstructor
 @Setter
 @Getter
-public class GroupDTO {
-	private GroupVO gvo;
-	private List<ScheduleVO> sList;
-	private SgMainVO smvo;
+public class GboardVO {
+	private int gbno;
+	private String title;
+	private String content;
+	private String writer;
+	private String regdate;
+	private int view;
+	private String cate;
+	private int grno;
+
 }

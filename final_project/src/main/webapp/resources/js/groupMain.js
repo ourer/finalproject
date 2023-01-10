@@ -65,8 +65,9 @@ function showJoinPeople(){
     console.log(joinPeople.style.display);
 }
 
-
-document.getElementById('schJoinBtn').addEventListener('click', ()=>{
+const schJoinBtn=document.getElementById('schJoinBtn');
+if(schJoinBtn!=null){
+schJoinBtn.addEventListener('click', ()=>{
     console.log(nowUrl);
     let grno=nowUrl.substring(nowUrl.lastIndexOf('=')+1);
     console.log(grno);
@@ -91,6 +92,7 @@ document.getElementById('schJoinBtn').addEventListener('click', ()=>{
         }
     })
 })
+}
 
 async function addJoinPerson(joinData){
     try {
@@ -109,3 +111,52 @@ async function addJoinPerson(joinData){
         console.log(error);
     }
 }
+
+
+document.getElementById('trigger').addEventListener('click',()=>{
+    document.getElementById('files').click();
+})
+
+const regExp=new RegExp("\.(exe|sh|bat|msi|dll|js)$");
+const regExpImg=new RegExp("\.(jpg|png|jpeg|gif)$");
+const maxsize=1024*1024*20;
+
+function fileSizeValidation(fileName, fileSize){
+    if(regExp.test(fileName)){
+        return 0;
+    }else if(!regExpImg.test(fileName)){
+        return 0;
+    }else if(fileSize>maxsize){
+        return 0;
+    }else{
+        return 1;
+    }
+}
+
+document.addEventListener('change',(e)=>{
+    if(e.target.id=='files'){
+        const files=document.getElementById('files').files;
+        console.log(files);
+
+        let div=document.getElementById('fileZone');
+        div.innerHTML='';
+        let ul='<ul class="list-group list-group-flush">';
+        let isOk=1; //처음부터 0으로 들어가면 모든 값이 0이 되므로 곱하기 위해서 1로 설정
+        for(let file of files){
+            let validResult=fileSizeValidation(file.name, file.size);
+            isOk*=validResult; //0의 값이 1개라도 들어오면 0이 되도록 -> 모든 첨부파일의 결과가 1이어야 통과 
+            ul+=`<li class="list-group-item d-flex justify-content-between align-items-start">`;
+            //업로드 가능 여부 표시
+            ul+=`${validResult?'<div class="fw-bold">업로드 가능':'<div class="fw-bold text-danger">업로드 불가'}</div>`;
+            ul+=`${file.name}`;
+            ul+=`<span class="badge bg-${validResult?'success':'danger'} rounded-pill">${file.size} Bytes</span>`;
+            ul+=`<button type="submit">등록</button>`;
+        }
+        ul+=`</ul>`;
+        div.innerHTML=ul;
+
+        if(isOk==0){
+            document.getElementById('grpRegBtn').disabled=true;
+        }
+    }
+})

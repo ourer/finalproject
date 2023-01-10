@@ -5,6 +5,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.ezen.finalpj.domain.GroupVO;
+import com.ezen.finalpj.domain.SgMainVO;
 import com.ezen.finalpj.repository.GroupDAO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -35,5 +36,26 @@ public class GroupServiceImpl implements GroupService {
 		log.info("소모임 grno 호출");
 		return gdao.selectGrnoGrp(email);
 	}
+
+	@Override
+	public int insertSgMain(SgMainVO smvo) {
+		log.info("소모임 메인 등록");
+		gdao.deleteSgMain(smvo.getGrno());
+		return gdao.insertSgMain(smvo);
+	}
+
+	@Override
+	public SgMainVO selectSgMain(int grno) {
+		log.info("소모임 메인 호출");
+		return gdao.selectSgMain(grno);
+	}
+
+	@Override
+	public int deleteSgMain(int grno) {
+		log.info("소모임 메인 삭제");
+		return gdao.deleteSgMain(grno);
+	}
+
+
 
 }
