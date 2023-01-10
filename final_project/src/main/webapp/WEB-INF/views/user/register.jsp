@@ -4,7 +4,7 @@
 <%@ page session="false" %>
 <jsp:include page="../layout/header.jsp"></jsp:include>
 <section>
-<h2>회원가입</h2>
+<h2 style="margin-top: 30px">회원가입</h2>
 	<form action="/user/register" method="post" enctype="multipart/form-data">
 		이메일: <input type="text" class="form-control" id="email" placeholder="email" name="email">
 		프로필사진:	
@@ -17,7 +17,7 @@
 		</div>
 		이름:<input type="text" class="form-control" id="name" placeholder="이름" name="name">
 		비밀번호:<input type="password" class="form-control" id="pw" name="pw">
-		지역:<input type="text" class="form-control" id="area" name="area">
+		지역:<input type="text" class="form-control" id="area" name="area" placeholder="00시 00구(군)">
 		닉네임:<input type="text" class="form-control" id="NickName" name="nickname">
 		나이:<input type="text" class="form-control" id="age" name="age">
  		성별:
@@ -33,7 +33,7 @@
 		    여자
 		  </label>
 		</div>
-		전화번호:<input type="text" class="form-control" id="Phone" name="phone">
+		전화번호:<input type="text" class="form-control" id="Phone" name="phone" placeholder="-제외하고 입력">
 		
 		관심사1: 
 		<div class="innerSecond">

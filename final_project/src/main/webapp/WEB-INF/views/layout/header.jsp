@@ -47,7 +47,6 @@
              <li class="nav-item">
                <a class="nav-link" aria-current="page" href="/user/logout">로그아웃</a>
              </li>
-             </c:if>
              <li class="nav-item dropdown">
                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                  마이 페이지
@@ -57,6 +56,7 @@
                  <li><a class="dropdown-item" href="/user/like">내가 찜한 소모임</a></li>
                </ul>
              </li>
+             </c:if>
              <li class="nav-item">
                <a class="nav-link" aria-current="page" href="/board/list">공지사항</a>
              </li>

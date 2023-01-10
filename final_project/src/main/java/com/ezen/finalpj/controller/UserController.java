@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ezen.finalpj.domain.CategoryVO;
 import com.ezen.finalpj.domain.ProfileVO;
 import com.ezen.finalpj.domain.UserDTO;
 import com.ezen.finalpj.domain.UserVO;
@@ -136,13 +137,27 @@ public class UserController {
 	}
 		
 	@GetMapping("/myinfo")
-	public String userMyinfoGet() {
+	public String userMyinfoGet(Model model) {
+		List<CategoryVO> ctList = usv.getCtList();
+		model.addAttribute("ctList", ctList);
 		return "/user/myinfo";
 	}
 	
-	@GetMapping("modifymyinfo")
+	@GetMapping("/modify")
 	public String userModifyMyinfoGet() {
-		return "/user/modifymyinfo";
+		return "/user/modify";
+	}
+	
+	@PostMapping("/modify")
+	public String modifyMyinfoPost(UserVO uvo, RedirectAttributes reAttr, HttpServletRequest req) {
+		log.info(uvo.toString());
+		int isOk = usv.modifyMyinfo(uvo);
+		reAttr.addFlashAttribute("msg", isOk>0?"1":"0");
+		log.info("개인정보수정 >>> "+(isOk>0?"수정성공":"수정실패"));
+		if(isOk>0) {
+			req.getSession().setAttribute("ses", uvo);
+		}
+		return "redirect:/user/mypage";
 	}
 		
 	@GetMapping("/management")

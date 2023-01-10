@@ -24,7 +24,7 @@
 		    <a class="nav-link" href="/user/myinfo">개인정보수정</a>
 		  </li>
 		</ul>
-		 <form action="/user/myinfo" style="margin: 30px auto">
+		 <form action="/user/modify" style="margin: 30px auto" method="post">
 		  <h4>개인정보수정</h4>
 			<div class="form">
 			    <label for="email" class="col-sm-1 col-form-label">아이디</label>
@@ -40,7 +40,7 @@
 		    </div>
 			<div class="form">
 			    <label for="nickname" class="col-sm-1 col-form-label">닉네임</label>
-			    <input type="text" class="form-control" id="nickname" name="nickname" value="${ses.nickname }">
+			    <input type="text" class="form-control" id="nickname" name="nickname" value="${ses.nickname }" readonly="readonly">
 		    </div>
 			<div class="form">
 			    <label for="age" class="col-sm-1 col-form-label">나이</label>
@@ -48,11 +48,11 @@
 		    </div>
 			<div class="form">
 			    <label for="gender" class="col-sm-1 col-form-label">성별</label>
-			    <input type="text" class="form-control" id="gender" name="gender" value="${ses.gender == 0? "남자":"여자" }" readonly="readonly">
+			    <input type="text" class="form-control" id="gender" name="gender" value="${ses.gender }" readonly="readonly">
 		    </div>
 			<div class="form">
 			    <label for="phone" class="col-sm-1 col-form-label">연락처</label>
-			    <input type="text" class="form-control" id="phone" name="phone" value="${ses.phone.substring(0,3)}-${ses.phone.substring(3,7)}-${ses.phone.substring(7)}">
+			    <input type="text" class="form-control" id="phone" name="phone" value="${ses.phone }">
 		    </div>
 		    <div class="row g-3">
 				<div class="innerSecond col-auto">관심사1:

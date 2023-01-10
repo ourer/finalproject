@@ -42,4 +42,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <select id="selectOnlyUser" resultType="com.ezen.finalpj.domain.UserVO" resultMap="test">
 select * from user join waiting on user.email=waiting.email where isOk=0 and grno=#{isCap}
 </select>
+
+<update id="updateMyinfo">
+	update user set area=#{area}, phone=#{phone}, ctno_1=#{ctno_1}, ctno_2=#{ctno_2}, ctno_3=#{ctno_3} where email=#{email}
+</update>
+<select id="selectCtList" resultType="com.ezen.finalpj.domain.CategoryVO">
+	select * from category
+</select>
 </mapper>

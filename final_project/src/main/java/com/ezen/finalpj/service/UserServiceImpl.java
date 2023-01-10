@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.ezen.finalpj.domain.CategoryVO;
 import com.ezen.finalpj.domain.ManagerDTO;
 import com.ezen.finalpj.domain.ProfileVO;
 import com.ezen.finalpj.domain.UserDTO;
@@ -120,4 +121,18 @@ public class UserServiceImpl implements UserService {
 		log.info("ses : "+user.getEmail().toString());
 		return user;
 	}
+
+	@Override
+	public int modifyMyinfo(UserVO uvo) {
+		log.info("modify myinfo user check");
+		return udao.updateMyinfo(uvo);
+	}
+
+	@Override
+	public List<CategoryVO> getCtList() {
+		log.info("myinfo ctList user check");
+		return udao.selectCtList();
+	}
+
+	
 }
