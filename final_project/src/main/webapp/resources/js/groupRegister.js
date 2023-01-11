@@ -197,7 +197,8 @@ document.getElementById('grpRegBtn').addEventListener("click", ()=>{
             isFace: isFace,
             detail: detail,
             ctno: ctno,
-            email: email
+            email: email,
+            code: selectedCode
         }
     }
     console.log(groupData);

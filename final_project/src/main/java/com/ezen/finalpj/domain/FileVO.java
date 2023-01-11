@@ -11,17 +11,11 @@ import lombok.ToString;
 @NoArgsConstructor
 @Setter
 @Getter
-public class GroupVO {
-	private int grno;
+public class FileVO {
+	private int gbno;
+	private long size;
 	private String name;
-	private int max_member;
-	private String city;
-	private String county;
-	private String detail;
+	private String dir;
 	private String regdate;
-	private int ctno;
-	private int isFree;
-	private int isFace;
-	private String email;
-	private String code;
+	private String uuid;
 }

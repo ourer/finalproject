@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
 <jsp:include page="../layout/header.jsp"></jsp:include>
 <section>
     <div class="outerBox">
@@ -11,7 +10,7 @@
                     <h3>닉네임</h3>
                 </div>
                 <div class="innerSecond">
-                    <input type="text" name="nickname" value="${uvo.nickname}" readonly>
+                    <input type="text" name="nickname" value="${ses.nickname}" readonly>
                 </div>
             </div>
             <div class="innerGroup">
@@ -19,7 +18,7 @@
                     <h3>이름</h3>
                 </div>
                 <div class="innerSecond">
-                    <input type="text" name="name" value="${uvo.name}" readonly>
+                    <input type="text" name="name" value="${ses.name}" readonly>
                 </div>
             </div>
             <div class="innerGroup">
@@ -27,7 +26,7 @@
                     <h3>나이</h3>
                 </div>
                 <div class="innerSecond">
-                    <input type="text" name="age" value="${uvo.age}" readonly>
+                    <input type="text" name="age" value="${ses.age}" readonly>
                 </div>
             </div>
             <div class="innerGroup">
@@ -36,7 +35,7 @@
                 </div>
                 <div class="innerSecond">
                 <c:choose>
-                	<c:when test="${uvo.gender eq 0 }">
+                	<c:when test="${ses.gender eq 0 }">
 	                    <input type="text" name="gender" value="남자" readonly>
                 	</c:when>
                 	<c:otherwise>
@@ -50,7 +49,7 @@
                     <h3>전화번호</h3>
                 </div>
                 <div class="innerSecond">
-                    <input type="text" name="phone" value="${uvo.phone}">
+                    <input type="text" name="phone" value="${ses.phone}">
                 </div>
             </div>
             <div class="innerGroup">
@@ -58,14 +57,26 @@
                     <h3>유의사항</h3>
                 </div>
                 <div class="innerSecond">
-                    <input type="checkbox" class="check">아울러 공지사항을 확인했습니다.<br>
-                    <input type="checkbox" class="check">다른 회원들로부터 신고가 3회누적되면 활동에 제한이 생길 수 있습니다.<br>
-                    <input type="checkbox" class="check">적극적으로 모임 활동에 참여해주세요.<br>
-                    <input type="checkbox" class="check">영리목적의 모임이라면 관리자에게 신고해주세요..<br>
+                	<label for="check1">
+	                    <input type="checkbox" class="check" id="check1">아울러 공지사항을 확인했습니다.
+                	</label>
+                	<br>
+                	<label for="check2">
+                    	<input type="checkbox" class="check" id="check2">다른 회원들로부터 신고가 3회누적되면 활동에 제한이 생길 수 있습니다.
+	                 </label>
+	                 <br>
+                	<label for="check3">
+                    	<input type="checkbox" class="check" id="check3">적극적으로 모임 활동에 참여해주세요.
+                    </label>
+                    <br>
+                	<label for="check4">
+	                    <input type="checkbox" class="check" id="check4">영리목적의 모임이라면 관리자에게 신고해주세요.
+                    </label>
+                    <br>
                 </div>
             </div>
             <button type="button" id="grpJoinBtn">가입</button>
-            <input type="hidden" name="email" value="${uvo.email }">
+            <input type="hidden" name="email" value="${ses.email }">
             <input type="hidden" name="grno" value="${grno}" id="grno">
         </form>
 </div>

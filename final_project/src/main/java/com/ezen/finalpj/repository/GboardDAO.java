@@ -18,4 +18,6 @@ public interface GboardDAO {
 
 	int deleteGbrd(int gbno);
 
+	int selectMaxGbno();
+
 }

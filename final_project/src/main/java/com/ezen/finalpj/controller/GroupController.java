@@ -4,8 +4,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,13 +14,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ezen.finalpj.domain.GroupDTO;
 import com.ezen.finalpj.domain.GroupVO;
-import com.ezen.finalpj.domain.JoinPersonVO;
 import com.ezen.finalpj.domain.ManagerDTO;
 import com.ezen.finalpj.domain.ScheduleVO;
 import com.ezen.finalpj.domain.SgMainVO;
@@ -124,9 +120,6 @@ public class GroupController {
 	
 	@GetMapping("/join")
 	public String joinGrpGet(@RequestParam("grno")int grno, Model model, HttpServletRequest req) {
-		HttpSession ses=req.getSession();
-		UserVO uvo=(UserVO)ses.getAttribute("ses");
-		model.addAttribute("uvo", uvo);
 		model.addAttribute("grno", grno);
 		return "/group/join";
 	}

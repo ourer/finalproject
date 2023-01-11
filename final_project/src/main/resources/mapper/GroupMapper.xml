@@ -5,7 +5,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.ezen.finalpj.repository.GroupDAO">
 	<insert id="insertGrp">
-		insert into smallgroup(name, max_member, detail, ctno, isFree, isFace, city, county, email) values(#{name}, #{max_member}, #{detail}, #{ctno}, #{isFree}, #{isFace}, #{city}, #{county}, #{email})
+		insert into smallgroup(name, max_member, detail, ctno, isFree, isFace, city, county, email, code) values(#{name}, #{max_member}, #{detail}, #{ctno}, #{isFree}, #{isFace}, #{city}, #{county}, #{email}, #{code})
 	</insert>
 	<select id="selectGrp" resultType="com.ezen.finalpj.domain.GroupVO">
 		select * from smallgroup where grno=#{grno}

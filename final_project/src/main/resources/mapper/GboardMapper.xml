@@ -19,4 +19,7 @@
 	<delete id="deleteGbrd">
 		delete from gboard where gbno=#{gbno}
 	</delete>
+	<select id="selectMaxGbno" resultType="int">
+		select max(gbno) from gboard
+	</select>
 </mapper>
