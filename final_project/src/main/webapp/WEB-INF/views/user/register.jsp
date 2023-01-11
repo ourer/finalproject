@@ -33,7 +33,7 @@
 		    여자
 		  </label>
 		</div>
-		전화번호:<input type="text" class="form-control" id="Phone" name="phone">
+		전화번호:<input type="text" class="form-control" id="Phone" name="phone" oninput="hypenTel(this)" maxlength="13">
 		
 		관심사1: 
 		<div class="innerSecond">
@@ -104,5 +104,12 @@
 </section>
 
 <script type="text/javascript" src="/resources/js/UserRegister.js"></script>
+<script type="text/javascript">
+const hypenTel = (target) => {
+	 target.value = target.value
+	   .replace(/[^0-9]/g, '')
+	   .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
+}
+</script>
 <jsp:include page="../layout/footer.jsp"></jsp:include>
 

@@ -48,5 +48,4 @@ select * from user join waiting on user.email=waiting.email where isOk=0 and grn
 <select id="selectSecoundUser" resultType="com.ezen.finalpj.domain.UserVO" resultMap="test">
 select * from user join waiting on user.email=waiting.email where isOk=1 and grno=#{isCap}
 </select>
-
 </mapper>

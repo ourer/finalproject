@@ -1,19 +1,13 @@
-package com.ezen.finalpj.repository;
+package com.ezen.finalpj.service;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import com.ezen.finalpj.domain.ProfileVO;
 
-public interface ProfileDAO {
-
-	int insertFile(ProfileVO pvo);
-
-	String selectOneUser();
+public interface ProfileService {
 
 	ProfileVO selectProfile(String email);
 
 	ProfileVO selectPersonalProfile(String email);
 
-	
 }

@@ -23,13 +23,12 @@ public interface UserService {
 	
 	int register(UserVO uvo);
 	
-	List<UserDTO> getOnlyList1(UserDTO userandfile);
+	List<UserVO> getOnlyList1(UserVO user);
 	
-	List<UserDTO> getOnlyList2(UserDTO userandfile);
+	List<UserVO> getOnlyList2(UserVO user);
 	
 	UserVO getMyOnlyuser(HttpServletRequest req);
 
-	List<ProfileVO> getProfileList(UserDTO udto);
 
 
 }

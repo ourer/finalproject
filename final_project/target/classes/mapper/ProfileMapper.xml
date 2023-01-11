@@ -9,4 +9,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       values(#{email}, #{size}, #{name}, #{dir} ,#{uuid}) 
    </insert>
    
+   <select id="selectProfile" resultType="com.ezen.finalpj.domain.ProfileVO">
+   	select * from profile where email=#{email}
+   </select>
+   
+   <select id="selectPersonalProfile" resultType="com.ezen.finalpj.domain.ProfileVO">
+   	select * from profile where email=#{email}
+   </select>
+   
+   
+   
 </mapper>
