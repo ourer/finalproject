@@ -37,7 +37,7 @@
 		    <div class="card">
 		      <div class="card-body text-center">
 		        <h3>내 소모임 관리</h3>
-		        <a href="/user/management"> 개</a>
+		        <a href="/user/management">내가 방장이 될 상인가?</a>
 		      </div>
 		    </div>
 		    <div class="card">

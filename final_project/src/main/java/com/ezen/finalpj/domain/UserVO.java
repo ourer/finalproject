@@ -29,5 +29,8 @@ public class UserVO {
 	private int ctno_3;
 	private int isCap;
 	private List<WaitingVO> waitList;
+	private String ctcode_1;
+	private String ctcode_2;
+	private String ctcode_3;
 
 }

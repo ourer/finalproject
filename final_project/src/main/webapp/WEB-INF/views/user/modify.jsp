@@ -56,7 +56,7 @@
 		    </div>
 		    <div class="row g-3">
 				<div class="innerSecond col-auto">관심사1:
-                   <select class="form-select" name="code" id="code" onchange="spreadCtno(this.selectedIndex)">
+                   <select class="form-select" name="code" id="code1" onchange="spreadCtno(this.selectedIndex)">
                        <option value="대분류">대분류</option>
                        <option value="A">운동</option>
                        <option value="B">아웃도어/여행</option>
@@ -76,7 +76,7 @@
                    </select>
                    </div>
 			<div class="innerSecond2 col-auto">관심사2:
-                   <select class="form-select" name="code" id="code" onchange="spreadCtno(this.selectedIndex)">
+                   <select class="form-select" name="code" id="code2" onchange="spreadCtno(this.selectedIndex)">
                       <option value="대분류">대분류</option>
                       <option value="A">운동</option>
                       <option value="B">아웃도어/여행</option>
@@ -96,7 +96,7 @@
                    </select>
                </div>
 			<div class="innerSecond3 col-auto">관심사3: 
-                 <select class="form-select" name="code" id="code" onchange="spreadCtno(this.selectedIndex)">
+                 <select class="form-select" name="code" id="code3" onchange="spreadCtno(this.selectedIndex)">
                       <option value="대분류">대분류</option>
                       <option value="A">운동</option>
                       <option value="B">아웃도어/여행</option>
@@ -123,3 +123,75 @@
 </section>
 <jsp:include page="../layout/footer.jsp"></jsp:include>
 <script type="text/javascript" src="/resources/js/UserRegister.js"></script>
+<script type="text/javascript">
+//카테고리 선택옵션 고정
+let ctnoAllList = [
+    ...ctnoList[0],
+    ...ctnoList[1],
+    ...ctnoList[2],
+    ...ctnoList[3],
+    ...ctnoList[4],
+    ...ctnoList[5],
+    ...ctnoList[6],
+    ...ctnoList[7],
+    ...ctnoList[8],
+    ...ctnoList[9],
+    ...ctnoList[10],
+    ...ctnoList[11],
+    ...ctnoList[12],
+]
+
+let ctno1 = '<c:out value="${ses.ctno_1 }"/>';
+let ctno2 = '<c:out value="${ses.ctno_2 }"/>';
+let ctno3 = '<c:out value="${ses.ctno_3 }"/>';
+console.log(ctno1); //번호 22
+
+let ctcode1 = '<c:out value="${ses.ctcode_1 }"/>';
+let ctcode2 = '<c:out value="${ses.ctcode_2 }"/>';
+let ctcode3 = '<c:out value="${ses.ctcode_3 }"/>';
+console.log(ctcode1); //코드 E
+
+ctnoAllList[ctno1];
+console.log(ctnoAllList[ctno1]); //텍스트 뮤지컬/오페라
+
+let option1 = document.getElementById('code1'); //<select>대분류
+let option2 = document.getElementById('code2'); //<select>대분류
+let option3 = document.getElementById('code3'); //<select>대분류
+console.log(option1);
+
+let ctno_1 = option1.options[option1.selectedIndex].value;
+console.log(ctno_1); //현재 고정되어있는 옵션 >> 대분류
+console.log(option1.length); //13
+
+for(var i=0; i<option1.length; i++){
+    //console.log(ctcode1);
+    //console.log(option1[i]);
+    if(option1[i].value == ctcode1){
+        option1[i].selected = true;
+        //console.log(ctnoList[i]); // 선택된 중분류 목록
+        //console.log(ctnoAllList[ctno1]); // 선택된 중분류
+        // ctno.options[i] : 중분류의 i번째 옵션
+        ctno = option1.nextElementSibling; // 해당되는 중분류 select 요소
+        for(j=ctno.length-1; j>=0; j--) ctno.options[j] = null; // 기존에 있던 중분류 옵션 초기화
+        for(j=0; j<ctnoList[i].length; j++) ctno.options[j]=new Option(ctnoList[i][j], ctnoList[i][j]);
+    }
+}
+
+for(var i=0; i<option2.length; i++){
+	if(option2[i].value == ctcode2){
+		option2[i].selected = true;
+        ctno = option2.nextElementSibling;
+        for(j=ctno.length-1; j>=0; j--) ctno.options[j] = null;
+        for(j=0; j<ctnoList[i].length; j++) ctno.options[j]=new Option(ctnoList[i][j], ctnoList[i][j]);
+	}
+}
+
+for(var i=0; i<option3.length; i++){
+	if(option3[i].value == ctcode3){
+		option3[i].selected = true;
+        ctno = option3.nextElementSibling;
+        for(j=ctno.length-1; j>=0; j--) ctno.options[j] = null;
+        for(j=0; j<ctnoList[i].length; j++) ctno.options[j]=new Option(ctnoList[i][j], ctnoList[i][j]);
+	}
+}
+</script>

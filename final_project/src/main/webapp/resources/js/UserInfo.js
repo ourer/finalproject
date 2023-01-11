@@ -1,12 +1,3 @@
-console.log("user register.js ");
-
-const msg='<c:out value="${msg}"/>';
-if(msg==='1'){
-	alert("회원가입에 실패했습니다.");
-}else if(msg == '0'){
-	alert("회원가입에 성공했습니다.");		
-}
-
 document.addEventListener('change',(e)=>{
     console.log(e.target.name);
     if(e.target.name=='code'){
@@ -23,6 +14,8 @@ document.addEventListener('change',(e)=>{
 	    }
     }
 })
+
+
 
 //카테고리 중분류 
 let ctnoList=new Array();
@@ -43,7 +36,6 @@ ctnoList[12]=new Array("강아지", "고양이", "물고기", "소동물");
 
 //ctno int로 변경하기
 function ctnoNum(ctnoVal){
-    let ctno=0;
     switch (ctnoVal) {
         case "조깅": ctno=1; break;
         case "헬스": ctno=2; break;
@@ -104,57 +96,73 @@ function ctnoNum(ctnoVal){
     return ctno;
 }
 
-//파일 업로드 버튼을 누르면 파일 첨부 창이 나타나도록
-document.getElementById('trigger').addEventListener('click',()=>{
-    document.getElementById('files').click();
-});
 
-//파일에 대한 정규 표현식을 이용한 생성자 함수 만들기 
-//fileupload시 형식을 제한하는 함수
-//실행파일 금지, 이미지 파일만 가능하도록
+//카테고리 선택옵션 고정
+let ctnoAllList = [
+    ...ctnoList[0],
+    ...ctnoList[1],
+    ...ctnoList[2],
+    ...ctnoList[3],
+    ...ctnoList[4],
+    ...ctnoList[5],
+    ...ctnoList[6],
+    ...ctnoList[7],
+    ...ctnoList[8],
+    ...ctnoList[9],
+    ...ctnoList[10],
+    ...ctnoList[11],
+    ...ctnoList[12],
+]
 
-const regExp=new RegExp("\.(exe|sh|bat|msi|dll|js)$"); //해당 형식의 확장자는 금지
-const regExpImg=new RegExp("\.(jpg|jpeg|png|gif)$"); //이미지 파일만 가능
-const maxsize=1024*1024*20;  //20MB보다 큰지 체크
+let ctno1 = '<c:out value="${ses.ctno_1 }"/>';
+let ctno2 = '<c:out value="${ses.ctno_2 }"/>';
+let ctno3 = '<c:out value="${ses.ctno_3 }"/>';
+console.log(ctno1); //번호 22
 
-function fileSizeValidation(name, size){
-    if(regExp.test(name)){
-        return 0;
-    }else if(!regExpImg.test(name)){
-        return 0;
-    }else if(size>maxsize){
-        return 0;
-    }else{
-        return 1;
+let ctcode1 = '<c:out value="${ses.ctcode_1 }"/>';
+let ctcode2 = '<c:out value="${ses.ctcode_2 }"/>';
+let ctcode3 = '<c:out value="${ses.ctcode_3 }"/>';
+console.log(ctcode1); //코드 E
+
+ctnoAllList[ctno1];
+console.log(ctnoAllList[ctno1]); //텍스트 뮤지컬/오페라
+
+let option1 = document.getElementById('code1'); //<select>대분류
+let option2 = document.getElementById('code2'); //<select>대분류
+let option3 = document.getElementById('code3'); //<select>대분류
+console.log(option1);
+let options1 = document.getElementById('ctno1'); //<select>중분류
+let options2 = document.getElementById('ctno2'); //<select>중분류
+let options3 = document.getElementById('ctno3'); //<select>중분류
+console.log(options1);
+
+let ctno_1 = option1.options[option1.selectedIndex].value;
+console.log(ctno_1); //현재 고정되어있는 옵션 >> 대분류
+console.log(option1.length); //13
+
+for(var i=0; i<option1.length; i++){
+    //console.log(ctcode1);
+    //console.log(option1[i]);
+    if(option1[i].value == ctcode1){
+        option1[i].selected = true;
     }
 }
 
-document.addEventListener('change',(e)=>{
-    if(e.target.id=="files"){
-        //비활성화 -> 첨부되면 안 되는 파일이 들어왔을때 클릭되는 것을 방지하기 위해서
-        document.getElementById('userJoinBtn').disabled=false;
-        //input type="file"로 가지고 오는 element: fileObject 객체로 리턴
-        const fileObject = document.getElementById('files').files;
-        console.log(fileObject);
+for(var i=0; i<option2.length; i++){
+	if(option2[i].value == ctcode2){
+		option2[i].selected = true;
+	}
+}
 
-        let div=document.getElementById('fileZone');
-        div.innerHTML='';
-        let ul='<ul class="list-group list-group-flush">';
-        let isOK=1; //처음부터 0으로 들어가면 모든 값이 0이 되므로 곱하기 위해서 1로 설정
-        for(let profile of fileObject){
-            let validResult=fileSizeValidation(profile.name, profile.size);
-            isOK *= validResult; //0의 값이 1개라도 들어오면 0이 되도록 -> 모든 첨부파일의 결과가 1이어야 통과 
-            ul+=`<li class="list-group-item d-flex justify-content-between align-items-start">`;
-            //업로드 가능 여부 표시
-            ul+=`${validResult?'<div class="fw-bold">업로드 가능':'<div class="fw-bold text-danger">업로드 불가'}</div>`;
-            ul+=`${profile.name}`;
-            ul+=`<span class="badge bg-${validResult?'success':'danger'} rounded-pill">${profile.size} Bytes</span>`;
-        }
-        ul+=`</ul>`;
-        div.innerHTML=ul;
+for(var i=0; i<option3.length; i++){
+	if(option3[i].value == ctcode3){
+		option3[i].selected = true;
+	}
+}
 
-        if(isOK==0){
-            document.getElementById('userJoinBtn').disabled=true;
-        }
-    }
-})
+for(var i=0; i<options1.length; i++){
+	console.log(options1[i].value);
+	if(options1[i].value == ctno1){
+		options1[i].selected = true;
+	}
+}

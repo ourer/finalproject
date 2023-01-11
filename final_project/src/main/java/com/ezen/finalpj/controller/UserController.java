@@ -106,7 +106,7 @@ public class UserController {
 		 if(isUser != null) {
 			 HttpSession ses = req.getSession();
 			 ses.setAttribute("ses", isUser);
-			 
+			 log.info(isUser.toString());
 			 mv.setViewName("/home");
 			 mv.addObject("msglogin", "1");
 		 }else {
@@ -157,6 +157,12 @@ public class UserController {
 		if(isOk>0) {
 			req.getSession().setAttribute("ses", uvo);
 		}
+		return "redirect:/user/mypage";
+	}
+	
+	@GetMapping("/delete")
+	public String deleteUserGet(RedirectAttributes reAttr, @RequestParam("email")String email) {
+		
 		return "redirect:/user/mypage";
 	}
 		
