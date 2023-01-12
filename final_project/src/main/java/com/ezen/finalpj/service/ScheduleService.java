@@ -16,5 +16,7 @@ public interface ScheduleService {
 
 	int updateJoinMemPost(int sno);
 
+	int selectMaxSnoSch();
+
 
 }

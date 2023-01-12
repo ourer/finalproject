@@ -5,8 +5,12 @@ import com.ezen.finalpj.domain.WaitingVO;
 
 public interface WaitingService {
 
-	//int insertManagerWaitPost(UserVO uvo);
-
 	int insertMemWaitPost(WaitingVO wvo);
+	
+	int remove(String email);
+
+	int accept(UserVO uvo);
+
+	int refuse(String email);
 
 }

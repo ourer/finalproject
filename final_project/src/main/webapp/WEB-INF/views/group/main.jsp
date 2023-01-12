@@ -77,8 +77,8 @@
 	                    <li class="scheInfoLi">비용: ${svo.cost }</li>
 	                    <li class="scheInfoLi">
 	                        인원 수: <span class="joinMember" id="joinMember">${svo.joinmember }</span>/<span class="maxMember">${svo.max_member }</span>
-	                       <button onclick="showJoinPeople()"><i class="fa-solid fa-chevron-down"></i></button>
-	                        <div class="joinPeople" id="joinPeople">
+	                       <button onclick="showJoinPeople(${svo.sno});"><i class="fa-solid fa-chevron-down"></i></button>
+	                        <div class="joinPeople" id="joinPeople${svo.sno }" data-sno="${svo.sno}">
 	                            
 	                        </div>
 	                    </li>
@@ -115,4 +115,7 @@
 	}
 </script>
 <script type="text/javascript" src="/resources/js/groupMain.js"></script>
+<script type="text/javascript">
+	getJoinPersonList();
+</script>
 <jsp:include page="../layout/footer.jsp"></jsp:include>

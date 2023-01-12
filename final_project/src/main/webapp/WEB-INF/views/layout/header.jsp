@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,7 +41,7 @@
              </c:if>
              <li class="nav-item">
                 <div>
-                   <img src="https://m.colettemung.com/web/product/big/202009/5b2194624e6fbe01f2bf3541b4935dd4.jpg" class="rounded-circle mx-auto d-block" alt="..." style="width: 150px;">
+                   <img src="/upload/${fn:replace(pvo.dir,'\\','/')}/${pvo.uuid}_th_${pvo.name}" class="rounded-circle mx-auto d-block" alt="..." style="width: 150px;">
                   <div class="imgname">
                   <span id="imgname">${ses.name }</span>
                   <span>님</span></div>
@@ -55,7 +57,7 @@
                  마이 페이지
                </a>
                <ul class="dropdown-menu">
-                 <li><a class="dropdown-item" href="/user/testlist" >내 소모임</a></li>
+                 <li><a class="dropdown-item" href="/user/management/${ses.email }" >내 소모임</a></li>
                  <li><a class="dropdown-item" href="/user/like">내가 찜한 소모임</a></li>
                </ul>
              </li>
@@ -64,6 +66,9 @@
              </li>
              <li class="nav-item">
                <a class="nav-link" aria-current="page" href="#">사이트 소개</a>
+             </li>
+             <li class="nav-item">
+               <a class="nav-link" aria-current="page" href="/category/categorymain">소모임 리스트</a>
              </li>
            </ul>
          </div>

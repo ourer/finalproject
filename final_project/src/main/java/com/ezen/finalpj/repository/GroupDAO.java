@@ -1,5 +1,7 @@
 package com.ezen.finalpj.repository;
 
+import java.util.List;
+
 import com.ezen.finalpj.domain.GroupVO;
 import com.ezen.finalpj.domain.SgMainVO;
 
@@ -16,6 +18,14 @@ public interface GroupDAO {
 	SgMainVO selectSgMain(int grno);
 
 	int deleteSgMain(int grno);
+	
+	GroupVO seletSg(int ctno);
+
+	List<GroupVO> selectGroup(int ctno);
+
+	List<GroupVO> getAllList();
+
+	List<GroupVO> CategoryOne(String code);
 
 
 }

@@ -1,18 +1,21 @@
 package com.ezen.finalpj.controller;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,7 +26,9 @@ import com.ezen.finalpj.domain.ProfileVO;
 import com.ezen.finalpj.domain.UserDTO;
 import com.ezen.finalpj.domain.UserVO;
 import com.ezen.finalpj.handler.ProfileHandler;
+import com.ezen.finalpj.service.ProfileService;
 import com.ezen.finalpj.service.UserService;
+import com.ezen.finalpj.service.WaitingService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -37,6 +42,12 @@ public class UserController {
 	
 	@Inject
 	private ProfileHandler ph;
+	
+	@Inject
+	private ProfileService psv;
+	
+	@Inject
+	private WaitingService wsv;
 	
 	
 	@GetMapping("/")
@@ -106,6 +117,11 @@ public class UserController {
 			 HttpSession ses = req.getSession();
 			 ses.setAttribute("ses", isUser);
 			 
+			 //model로 넘겨주게 되면 해당 페이지에서만 프로필이 드러나게 된다
+			 //그러므로 model에 넘겨주지 말고 ses로 넘겨줘서 해당 이메일에 따라 그 프로필을 볼 수 있게 하자!
+			 ProfileVO pvo=psv.selectPersonalProfile(email);
+			 ses.setAttribute("pvo", pvo);
+			 
 			 mv.setViewName("/home");
 			 mv.addObject("msglogin", "1");
 		 }else {
@@ -140,29 +156,64 @@ public class UserController {
 			return "/user/myinfo";
 		}
 		
-		@GetMapping("/management")
-		public String userManagementGet() {
-			return "/user/management";
+	 @GetMapping(value="/management/{email}")
+      public String getUserList(Model model,HttpServletRequest req,@PathVariable("email")String email) {
+         
+         HttpSession ses=req.getSession();
+         ses.setAttribute("email", email);
+         
+         UserVO user=usv.getMyOnlyuser(req);
+         log.info("uvo test : "+user.getEmail());
+         
+         List<UserVO> list1=usv.getOnlyList1(user);
+         System.out.println(list1);
+         List<UserVO> list2=usv.getOnlyList2(user);
+         log.info("only user");
+         
+         //profileVO list 초기화
+         ArrayList<ProfileVO> profileList1=new ArrayList<ProfileVO>();
+         ArrayList<ProfileVO> profileList2=new ArrayList<ProfileVO>();
+         
+         for(UserVO uvo: list1) {
+            ProfileVO pvo = psv.selectProfile(uvo.getEmail());
+            profileList1.add(pvo);
+         }
+         log.info("프로필1 리스트 : "+profileList1.toString());
+         
+         for(UserVO uvo: list2) {
+            ProfileVO pvo = psv.selectProfile(uvo.getEmail());
+            profileList2.add(pvo);
+         }
+         log.info("프로필2 리스트 : "+profileList2.toString());
+         model.addAttribute("profileList1",profileList1);
+         model.addAttribute("profileList2",profileList2);
+         
+         model.addAttribute("list1", list1);
+         model.addAttribute("list2", list2);
+         return "/user/management";
+      }
+	 
+	 @DeleteMapping(value = "/remove/{email}", produces = {MediaType.TEXT_PLAIN_VALUE})
+		public ResponseEntity<String> removeUser(@PathVariable("email")String email) {
+			log.info("my user remove email : "+email);
+			int isOk=wsv.remove(email);
+			return isOk>0? new ResponseEntity<String>("1",HttpStatus.OK): new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	 
+	 @GetMapping("/modify")
+		public String userModifyMyinfoGet() {
+			return "/user/modify";
 		}
-
 		
-		//전체 회원 조회x=> 나의 멤버가 아닌 사람들을 조회한다. 어떻게??
-		//grno를 기준으로 나누는건 안다. 여기서는 전체를 불러온다. 그럼 mapper에서 grno가 다른 놈들을 걸르자(실패)
-		//grade가 A인 사람과 다른 grno를 가진 놈을 부른다. 
-		//waiting을 가져와서 ㅕuserlist와 결합해야 한다.
-		@GetMapping("/testlist")
-		public String list(Model model,UserVO uvo, HttpServletRequest req) {
-			//session에서 email 정보추출
-			HttpSession ses=req.getSession();
-			String email=uvo.getEmail();
-			ses.setAttribute("email", email);
-			UserVO user=usv.getMyOnlyuser(req);
-			//email 정보를 들고, service 에게 요청 
-			// mapper에게 email과 일치하는 isOk = 0와 (해결)
-			//grno 요청
-			List<UserVO> list=usv.getOnlyList(user);
-			log.info("only user");
-			model.addAttribute("list", list);
-			return "/myPage/testlist";
+		@PostMapping("/modify")
+		public String modifyMyinfoPost(UserVO uvo, RedirectAttributes reAttr, HttpServletRequest req) {
+			log.info(uvo.toString());
+			int isOk = usv.modifyMyinfo(uvo);
+			reAttr.addFlashAttribute("msg", isOk>0?"1":"0");
+			log.info("개인정보수정 >>> "+(isOk>0?"수정성공":"수정실패"));
+			if(isOk>0) {
+				req.getSession().setAttribute("ses", uvo);
+			}
+			return "redirect:/user/mypage";
 		}
 }

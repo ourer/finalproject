@@ -14,7 +14,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="getUser" resultType="com.ezen.finalpj.domain.UserVO"> 
-      select * from user where email = #{email} 
+      select * ,(select code from category where category.ctno = user.ctno_1) as "ctcode_1" 
+      ,(select code from category where category.ctno = user.ctno_2) as "ctcode_2" 
+      ,(select code from category where category.ctno = user.ctno_3) as "ctcode_3" from user where email = #{email}
    </select>
    
    <insert id="insertUser" parameterType="com.ezen.finalpj.domain.UserVO"> 
@@ -23,23 +25,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    </insert>
 	
 	<resultMap type="com.ezen.finalpj.domain.UserVO" id="test">
-<result property="email" column="email"/>
-<result property="name" column="name"/>
-<result property="pw" column="pw"/>
-<result property="area" column="area"/>
-<result property="nickname" column="nickname"/>
-<result property="age" column="age"/>
-<result property="gender" column="gender"/>
-<result property="phone" column="phone"/>
-<result property="isDel" column="isDel"/>
-<result property="ctno_1" column="ctno_1"/>
-<result property="ctno_2" column="ctno_2"/>
-<result property="ctno_3" column="ctno_3"/>
-<result property="isCap" column="isCap"/>
-<collection property="waitList" column="email=email" javaType="List" ofType="WaitingVO" select="selectOnlyUser"/>
-</resultMap>
+		<result property="email" column="email"/>
+		<result property="name" column="name"/>
+		<result property="pw" column="pw"/>
+		<result property="area" column="area"/>
+		<result property="nickname" column="nickname"/>
+		<result property="age" column="age"/>
+		<result property="gender" column="gender"/>
+		<result property="phone" column="phone"/>
+		<result property="isDel" column="isDel"/>
+		<result property="ctno_1" column="ctno_1"/>
+		<result property="ctno_2" column="ctno_2"/>
+		<result property="ctno_3" column="ctno_3"/>
+		<result property="isCap" column="isCap"/>
+		<collection property="waitList" column="email=email" javaType="List" ofType="WaitingVO" select="selectOnlyUser"/>
+	</resultMap>
 
-<select id="selectOnlyUser" resultType="com.ezen.finalpj.domain.UserVO" resultMap="test">
-select * from user join waiting on user.email=waiting.email where isOk=0 and grno=#{isCap}
-</select>
+	<select id="selectOnlyUser" resultType="com.ezen.finalpj.domain.UserVO" resultMap="test">
+		select * from user join waiting on user.email=waiting.email where isOk=0 and grno=#{isCap}
+	</select>
+
+	<select id="selectSecoundUser" resultType="com.ezen.finalpj.domain.UserVO" resultMap="test">
+		select * from user join waiting on user.email=waiting.email where isOk=1 and grno=#{isCap}
+	</select>
+	<update id="updateMyinfo">
+		update user set area=#{area}, phone=#{phone}, ctno_1=#{ctno_1}, ctno_2=#{ctno_2}, ctno_3=#{ctno_3}, ctcode_1=#{ctcode_1}, ctcode_2=#{ctcode_2}, ctcode_3=#{ctcode_3} where email=#{email}
+	</update>
 </mapper>

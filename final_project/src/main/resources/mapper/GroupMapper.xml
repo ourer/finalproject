@@ -22,4 +22,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="deleteSgMain">
 		delete from sgmain where grno=#{grno}
 	</delete>
+	<select id="getAllList" resultType="com.ezen.finalpj.domain.GroupVO">
+		select * from smallgroup
+	</select>
+	<select id="CategoryOne" resultType="com.ezen.finalpj.domain.GroupVO">
+		select * from smallgroup where code=#{code};
+	</select>
 </mapper>

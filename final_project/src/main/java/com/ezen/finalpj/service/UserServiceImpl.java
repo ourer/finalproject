@@ -107,9 +107,10 @@ public class UserServiceImpl implements UserService {
 		return 1;
 	}
 	
+
 	@Override
-	public List<UserVO> getOnlyList(UserVO user) {
-		log.info("waiting list user check");
+	public List<UserVO> getOnlyList1(UserVO user) {
+		log.info("waiting1 list user check");
 		return udao.selectOnlyUser(user);
 	}
 
@@ -119,5 +120,17 @@ public class UserServiceImpl implements UserService {
 		UserVO user=(UserVO)req.getSession().getAttribute("ses");
 		log.info("ses : "+user.getEmail().toString());
 		return user;
+	}
+
+	@Override
+	public List<UserVO> getOnlyList2(UserVO user) {
+		log.info("waiting2 list user check");
+		return udao.selectSecoundUser(user);
+	}
+	
+	@Override
+	public int modifyMyinfo(UserVO uvo) {
+		log.info("modify myinfo user check");
+		return udao.updateMyinfo(uvo);
 	}
 }

@@ -49,4 +49,10 @@ public class ScheduleServiceImpl implements ScheduleService {
 		return sdao.updateJoinMem(sno);
 	}
 
+	@Override
+	public int selectMaxSnoSch() {
+		log.info("sno 가져오기");
+		return sdao.selectMaxSno();
+	}
+
 }

@@ -18,5 +18,9 @@ public interface UserDAO {
 	int insertUser(UserVO uvo);
 	
 	List<UserVO> selectOnlyUser(UserVO user);
+	
+	List<UserVO> selectSecoundUser(UserVO user);
+	
+	int updateMyinfo(UserVO uvo);
 
 }

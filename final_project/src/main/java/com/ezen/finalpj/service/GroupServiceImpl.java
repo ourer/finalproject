@@ -1,5 +1,7 @@
 package com.ezen.finalpj.service;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
@@ -56,6 +58,16 @@ public class GroupServiceImpl implements GroupService {
 		return gdao.deleteSgMain(grno);
 	}
 
+	@Override
+	public List<GroupVO> getAllList() {
+		log.info("group List check 2");
+		return gdao.getAllList();
+	}
 
+	@Override
+	public List<GroupVO> CategoryOne(String code) {
+		log.info("group SelectOne List check 2");
+		return gdao.CategoryOne(code);
+	}
 
 }

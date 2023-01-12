@@ -16,13 +16,26 @@ public class WaitingServiceImpl implements WaitingService {
 	@Inject
 	private WaitingDAO wdao;
 
-	/*
-	 * @Override public int insertManagerWaitPost(UserVO uvo) { return
-	 * wdao.insertManagerWaitPost(uvo); }
-	 */
-
 	@Override
 	public int insertMemWaitPost(WaitingVO wvo) {
 		return wdao.insertMemWaitPost(wvo);
+	}
+	
+	@Override
+	public int remove(String email) {
+		log.info("waiting user remove");
+		return wdao.deleteUser(email);
+	}
+
+	@Override
+	public int accept(UserVO uvo) {
+		log.info("waiting user accept");
+		return wdao.acceptUser(uvo);
+	}
+
+	@Override
+	public int refuse(String email) {
+		log.info("waiting user refuse");
+		return wdao.refuseUser(email);
 	}
 }

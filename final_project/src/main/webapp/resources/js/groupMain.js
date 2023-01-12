@@ -54,8 +54,8 @@ async function likeFavorite(favData){
 }
 
 
-function showJoinPeople(){
-	const joinPeople=document.getElementById('joinPeople');
+function showJoinPeople(sno){
+	const joinPeople=document.getElementById(`joinPeople${sno}`);
     console.log(joinPeople.style.display);
     if(joinPeople.style.display=='block'){
         joinPeople.style.display='none';
@@ -84,12 +84,12 @@ schJoinBtn.addEventListener('click', ()=>{
         console.log(result);
         if(result=="1"){
             alert("스케줄 참가 성공!");
-            //프로필 뿌리기
-            location.href="/group/main?grno="+grno;
+            location.reload();
         }else if(result=="2"){
             alert("스케줄 참가 실패");
             location.href="/group/main?grno="+grno;
         }
+       //getJoinPersonList();
     })
 })
 }
@@ -112,6 +112,45 @@ async function addJoinPerson(joinData){
     }
 }
 
+//화면에 뿌리기
+async function spreadJoinPerson(){
+    try {
+        const resp=await fetch('/schedule/list');
+        const result=await resp.json();
+        return result;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+//리스트 가져오기
+function getJoinPersonList(){
+    spreadJoinPerson().then(result=>{
+        console.log(result);
+        for(let r of result){
+            console.log(r);
+            console.log(r.sno);
+            let divJP=document.getElementById(`joinPeople${r.sno}`);
+            if(divJP != null){
+                console.log(divJP);
+                //console.log(r.pdir);
+                let pDir=r.pdir.replace(/\\/g, '/');
+                console.log(pDir);
+                console.log(divJP.dataset.sno);
+                
+                let div='';
+                if(divJP.dataset.sno==r.sno){
+                    div=`<div class="joinPerson">`;
+                    div+=`<img src="/upload/${pDir}/${r.puuid}_${r.pname}" class="rounded-circle mx-auto d-block" alt="..." style="width: 140px;">`;
+                    div+=`<span>${r.uname}</span></div>`;
+                }
+                
+                divJP.innerHTML+=div;
+
+            }
+        }
+    })
+}
 
 document.getElementById('trigger').addEventListener('click',()=>{
     document.getElementById('files').click();

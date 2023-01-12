@@ -1,5 +1,7 @@
 package com.ezen.finalpj.controller;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -10,12 +12,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ezen.finalpj.domain.JoinPersonDTO;
 import com.ezen.finalpj.domain.JoinPersonVO;
 import com.ezen.finalpj.domain.ScheduleVO;
 import com.ezen.finalpj.domain.UserVO;
@@ -40,15 +44,23 @@ public class ScheduleController {
 	}
 	
 	@PostMapping("/register")
-	public String insertSchPost(ScheduleVO svo, RedirectAttributes reAttr) {
+	public String insertSchPost(ScheduleVO svo, RedirectAttributes reAttr, HttpServletRequest req) {
 		log.info(svo.toString());		
-		 if(svo.getCost()==null||svo.getMax_member()== 2||svo.getMeetdate()==null||
+		 if(svo.getCost()==null||svo.getMax_member() < 2||svo.getMeetdate()==null||
 		     svo.getSpot()==null||svo.getTitle()==null) {
 			 reAttr.addFlashAttribute("schMsg", "0");
 			 reAttr.addAttribute("grno", svo.getGrno());
 			 return "redirect:/schedule/register";
 		 }else {
 			 int isOk=ssv.insertSch(svo);
+			 int sno=ssv.selectMaxSnoSch();
+			 JoinPersonVO jvo=new JoinPersonVO();
+			 jvo.setSno(sno);
+			 jvo.setGrno(svo.getGrno());
+			 HttpSession ses=req.getSession();
+			 UserVO uvo=(UserVO)ses.getAttribute("ses");
+			 jvo.setEmail(uvo.getEmail());
+			 isOk*=jsv.insertJpPost(jvo);
 			 log.info("스케줄 등록"+(isOk>0?"성공":"실패"));
 			 reAttr.addAttribute("grno", svo.getGrno());
 			 return "redirect:/group/main";
@@ -81,6 +93,13 @@ public class ScheduleController {
 		}else {
 			return new ResponseEntity<String>("2", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+	}
+	
+	@GetMapping(value = "/list", produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<List<JoinPersonDTO>> selectListJpGet(){
+		List<JoinPersonDTO> jList=jsv.selectListJp();
+		log.info(jList.toString());
+		return new ResponseEntity<List<JoinPersonDTO>>(jList, HttpStatus.OK);
 	}
 
 }

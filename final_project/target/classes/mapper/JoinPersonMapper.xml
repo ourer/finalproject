@@ -6,4 +6,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="insertJp">
 		insert into joinperson(email, grno, sno) values(#{email}, #{grno}, #{sno})
 	</insert>
+	<select id="selectList" resultType="com.ezen.finalpj.domain.JoinPersonDTO">
+		select schedule.sno as sno, user.name as uName, profile.name as pName, profile.dir  as pDir, profile.uuid as pUuid from joinperson 
+		join schedule on schedule.sno=joinperson.sno 
+		join user on user.email=joinperson.email 
+		join profile on profile.email=user.email
+	</select>
 </mapper>
