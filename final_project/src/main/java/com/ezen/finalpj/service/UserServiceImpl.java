@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.ezen.finalpj.domain.CategoryVO;
+import com.ezen.finalpj.domain.FavoriteVO;
 import com.ezen.finalpj.domain.ManagerDTO;
 import com.ezen.finalpj.domain.ProfileVO;
 import com.ezen.finalpj.domain.UserDTO;
@@ -108,9 +108,10 @@ public class UserServiceImpl implements UserService {
 		return 1;
 	}
 	
+
 	@Override
-	public List<UserVO> getOnlyList(UserVO user) {
-		log.info("waiting list user check");
+	public List<UserVO> getOnlyList1(UserVO user) {
+		log.info("waiting1 list user check");
 		return udao.selectOnlyUser(user);
 	}
 
@@ -123,16 +124,21 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public List<UserVO> getOnlyList2(UserVO user) {
+		log.info("waiting2 list user check");
+		return udao.selectSecoundUser(user);
+	}
+	
+	@Override
 	public int modifyMyinfo(UserVO uvo) {
 		log.info("modify myinfo user check");
 		return udao.updateMyinfo(uvo);
 	}
 
 	@Override
-	public List<CategoryVO> getCtList() {
-		log.info("myinfo ctList user check");
-		return udao.selectCtList();
+	public int deleteUser(String email) {
+		log.info("delete user check");
+		return udao.deleteUser(email);
 	}
 
-	
 }

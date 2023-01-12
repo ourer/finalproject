@@ -14,5 +14,7 @@ public interface ScheduleService {
 
 	int deleteSch(int sno);
 
+	int updateJoinMemPost(int sno);
+
 
 }

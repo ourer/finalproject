@@ -2,7 +2,7 @@ package com.ezen.finalpj.repository;
 
 import java.util.List;
 
-import com.ezen.finalpj.domain.CategoryVO;
+import com.ezen.finalpj.domain.FavoriteVO;
 import com.ezen.finalpj.domain.ManagerDTO;
 import com.ezen.finalpj.domain.UserVO;
 
@@ -19,10 +19,11 @@ public interface UserDAO {
 	int insertUser(UserVO uvo);
 	
 	List<UserVO> selectOnlyUser(UserVO user);
-
+	
+	List<UserVO> selectSecoundUser(UserVO user);
+	
 	int updateMyinfo(UserVO uvo);
 
-	List<CategoryVO> selectCtList();
-
+	int deleteUser(String email);
 
 }

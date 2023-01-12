@@ -9,11 +9,11 @@
 		    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">나의 소모임</a>
 		    <ul class="dropdown-menu">
 		      <li><a class="dropdown-item" href="/user/mypage">목록</a></li>
-		      <li><a class="dropdown-item" href="/user/management">관리</a></li>
+		      <li><a class="dropdown-item" href="/user/management/${ses.email }">관리</a></li>
 		    </ul>
 		  </li>
 		  <li class="nav-item">
-		    <a class="nav-link" href="/user/like">찜</a>
+		    <a class="nav-link" href="/favorite/mylike/${ses.email }">찜</a>
 		  </li>
 		  <li class="nav-item">
 		    <a class="nav-link" href="/user/myinfo">개인정보수정</a>
@@ -47,7 +47,7 @@
 		    </div>
 			<div class="form">
 			    <label for="phone" class="col-sm-1 col-form-label">연락처</label>
-			    <input type="text" class="form-control" id="phone" name="phone" value="${ses.phone.substring(0,3)}-${ses.phone.substring(3,7)}-${ses.phone.substring(7)}" readonly="readonly">
+			    <input type="text" class="form-control" id="Phone" name="phone" value="${ses.phone }" readonly="readonly">
 		    </div>
 			<div class="row g-3">
 				<div class="innerSecond col-auto">관심사1:
@@ -120,6 +120,7 @@
 <jsp:include page="../layout/footer.jsp"></jsp:include>
 <script type="text/javascript" src="/resources/js/UserRegister.js"></script>
 <script type="text/javascript">
+
 //카테고리 선택옵션 고정
 let ctnoAllList = [
     ...ctnoList[0],
@@ -151,9 +152,14 @@ ctnoAllList[ctno1];
 console.log(ctnoAllList[ctno1]); //텍스트 뮤지컬/오페라
 
 let option1 = document.getElementById('code1'); //<select>대분류
-let option2 = document.getElementById('code2'); //<select>대분류
-let option3 = document.getElementById('code3'); //<select>대분류
+let option2 = document.getElementById('code2');
+let option3 = document.getElementById('code3');
 console.log(option1);
+
+let options1 = document.getElementById('ctno1'); //<select>중분류
+let options2 = document.getElementById('ctno2');
+let options3 = document.getElementById('ctno3');
+console.log(options1);
 
 let ctno_1 = option1.options[option1.selectedIndex].value;
 console.log(ctno_1); //현재 고정되어있는 옵션 >> 대분류
@@ -170,6 +176,12 @@ for(var i=0; i<option1.length; i++){
         ctno = option1.nextElementSibling; // 해당되는 중분류 select 요소
         for(j=ctno.length-1; j>=0; j--) ctno.options[j] = null; // 기존에 있던 중분류 옵션 초기화
         for(j=0; j<ctnoList[i].length; j++) ctno.options[j]=new Option(ctnoList[i][j], ctnoList[i][j]);
+        for(var j=0; j<options1.length; j++){
+        if(options1[j].value == ctnoAllList[ctno1]){
+        	options1[j].selected = true;
+        }
+        	
+        }
     }
 }
 
@@ -179,6 +191,12 @@ for(var i=0; i<option2.length; i++){
         ctno = option2.nextElementSibling;
         for(j=ctno.length-1; j>=0; j--) ctno.options[j] = null;
         for(j=0; j<ctnoList[i].length; j++) ctno.options[j]=new Option(ctnoList[i][j], ctnoList[i][j]);
+        for(var j=0; j<options2.length; j++){
+            if(options2[j].value == ctnoAllList[ctno2]){
+            	options2[j].selected = true;
+            }
+            	
+            }
 	}
 }
 
@@ -188,6 +206,12 @@ for(var i=0; i<option3.length; i++){
         ctno = option3.nextElementSibling;
         for(j=ctno.length-1; j>=0; j--) ctno.options[j] = null;
         for(j=0; j<ctnoList[i].length; j++) ctno.options[j]=new Option(ctnoList[i][j], ctnoList[i][j]);
+        for(var j=0; j<options3.length; j++){
+            if(options3[j].value == ctnoAllList[ctno3]){
+            	options3[j].selected = true;
+            }
+            	
+            }
 	}
 }
 </script>

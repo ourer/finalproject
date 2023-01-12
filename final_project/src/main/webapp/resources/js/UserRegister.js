@@ -8,8 +8,8 @@ if(msg==='1'){
 }
 
 document.addEventListener('change',(e)=>{
-    console.log(e.target.name);
-    if(e.target.name=='code'){
+    console.log(e.target.id);
+    if(e.target.id=='code'){
         console.log(e.target.nextElementSibling);
         sel = e.target.nextElementSibling;
         index = e.target.selectedIndex;

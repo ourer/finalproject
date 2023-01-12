@@ -4,8 +4,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,13 +14,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ezen.finalpj.domain.GroupDTO;
 import com.ezen.finalpj.domain.GroupVO;
-import com.ezen.finalpj.domain.JoinPersonVO;
 import com.ezen.finalpj.domain.ManagerDTO;
 import com.ezen.finalpj.domain.ScheduleVO;
+import com.ezen.finalpj.domain.SgMainVO;
 import com.ezen.finalpj.domain.UserVO;
+import com.ezen.finalpj.domain.WaitingVO;
+import com.ezen.finalpj.handler.SgMainHandler;
 import com.ezen.finalpj.service.GroupService;
 import com.ezen.finalpj.service.JoinPersonService;
 import com.ezen.finalpj.service.ScheduleService;
@@ -45,6 +47,8 @@ public class GroupController {
 	private WaitingService wsv;
 	@Inject
 	private UserService usv;
+	@Inject
+	private SgMainHandler smh;
 	
 	@GetMapping("/register")
 	public String insertGrpGet() {
@@ -64,15 +68,43 @@ public class GroupController {
 		log.info("소모임 생성"+(isOk>0?"성공":"실패"));
 		return isOk>0? new ResponseEntity<String>("1", HttpStatus.OK):new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
+
 	
 	@GetMapping("/main")
 	public String selectGrpGet(@RequestParam("grno")int grno, Model model) {
 		GroupVO gvo=gsv.selectGrp(grno);
 		List<ScheduleVO> sList=ssv.selectListSch(grno);
-		GroupDTO gdto=new GroupDTO(gvo, sList);
+		//int joinCnt=jsv.selectCntJp(sno);
+		SgMainVO smvo=gsv.selectSgMain(grno);
+		GroupDTO gdto=new GroupDTO(gvo, sList, smvo);
 		model.addAttribute("gvo", gdto.getGvo());
 		model.addAttribute("sList", gdto.getSList());
+		model.addAttribute("smvo", gdto.getSmvo());
 		return "/group/main";
+	}
+	
+	@PostMapping("image")
+	public String insertMainSmPost(@RequestParam(name = "grno")int grno, @RequestParam(name="files", required = false)MultipartFile file, RedirectAttributes reAttr) {
+		log.info(file.toString());
+		SgMainVO smvo=null;
+		if(file.getSize()>0) {
+			smvo=smh.uploadMainFile(file);
+			smvo.setGrno(grno);
+			int isOk=gsv.insertSgMain(smvo);
+			log.info(isOk>0?"메인 등록 성공":"메인 등록 실패");
+		}else {
+			reAttr.addFlashAttribute("imgMsg", "err");
+		}
+		reAttr.addAttribute("grno", grno);
+		return "redirect:/group/main";
+	}
+	
+	@GetMapping("/image/delete")
+	public String deleteSgMainGet(@RequestParam("grno")int grno, RedirectAttributes reAttr) {
+		int isOk=gsv.deleteSgMain(grno);
+		log.info("메인 삭제 성공"+(isOk>0?"성공":"실패"));
+		reAttr.addAttribute("grno", grno);
+		return "redirect:/group/main";
 	}
 	
 	@GetMapping("/memberList")
@@ -84,5 +116,20 @@ public class GroupController {
 		List<UserVO> uList=usv.selectMemListUserGet(grno);
 		model.addAttribute("uList", uList);
 		return "/group/memberList";
+	}
+	
+	@GetMapping("/join")
+	public String joinGrpGet(@RequestParam("grno")int grno, Model model, HttpServletRequest req) {
+		model.addAttribute("grno", grno);
+		return "/group/join";
+	}
+	
+	@PostMapping("/join")
+	public String joinGrpPost(WaitingVO wvo, RedirectAttributes reAttr) {
+		log.info(wvo.toString());
+		int isOk=wsv.insertMemWaitPost(wvo);
+		log.info("소모임 가입 신청"+(isOk>0?"성공":"실패"));
+		reAttr.addAttribute("grno", wvo.getGrno());
+		return "redirect:/group/main";
 	}
 }

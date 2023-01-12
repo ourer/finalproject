@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.ezen.finalpj.domain.CategoryVO;
+import com.ezen.finalpj.domain.FavoriteVO;
 import com.ezen.finalpj.domain.ManagerDTO;
 import com.ezen.finalpj.domain.UserDTO;
 import com.ezen.finalpj.domain.UserVO;
@@ -23,12 +23,15 @@ public interface UserService {
 	
 	int register(UserVO uvo);
 	
-	List<UserVO> getOnlyList(UserVO user);
+	List<UserVO> getOnlyList1(UserVO user);
+	
+	List<UserVO> getOnlyList2(UserVO user);
 	
 	UserVO getMyOnlyuser(HttpServletRequest req);
-
+	
 	int modifyMyinfo(UserVO uvo);
 
-	List<CategoryVO> getCtList();
+	int deleteUser(String email);
 
+	
 }

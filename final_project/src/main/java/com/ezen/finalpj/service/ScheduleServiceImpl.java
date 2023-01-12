@@ -43,4 +43,10 @@ public class ScheduleServiceImpl implements ScheduleService {
 		return sdao.deleteSch(sno);
 	}
 
+	@Override
+	public int updateJoinMemPost(int sno) {
+		log.info("스케줄 참가 인원 추가");
+		return sdao.updateJoinMem(sno);
+	}
+
 }

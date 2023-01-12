@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,6 +11,8 @@
 <link rel="stylesheet" type="text/css" href="/resources/css/header.css">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+
 </head>
 <body>
    <nav class="navbar">
@@ -35,10 +39,16 @@
                   <a class="nav-link" aria-current="page" href="/user/register">회원가입</a>
                 </li>
              </c:if>
-             <c:if test="${ses.email != null }">
+              <c:if test="${ses.email != null }">
              <li class="nav-item">
                 <div>
-                   <img src="https://m.colettemung.com/web/product/big/202009/5b2194624e6fbe01f2bf3541b4935dd4.jpg" class="rounded-circle mx-auto d-block" alt="..." style="width: 150px;">
+                   <c:if test="${pvo.uuid == null}">
+						<img src="/resources/img/blank-profile.png" class="rounded-circle mx-auto d-block" alt="..." style="width: 140px;">
+					</c:if>
+							
+					<c:if test="${pvo.uuid != null}">
+					<img src="/upload/${fn:replace(pvo.dir,'\\','/')}/${pvo.uuid}_th_${pvo.name}" class="rounded-circle mx-auto d-block" alt="..." style="width: 140px;"> 
+					</c:if>		
                   <div class="imgname">
                   <span id="imgname">${ses.name }</span>
                   <span>님</span></div>
@@ -52,8 +62,9 @@
                  마이 페이지
                </a>
                <ul class="dropdown-menu">
-                 <li><a class="dropdown-item" href="/user/mypage" >내 소모임</a></li>
-                 <li><a class="dropdown-item" href="/user/like">내가 찜한 소모임</a></li>
+                 <li><a class="dropdown-item" href="/user/mypage" >내가 활동하는 소모임</a></li>
+                 <li><a class="dropdown-item" href="/user/management/${ses.email }" >내 소모임 관리</a></li>
+                 <li><a class="dropdown-item" href="/favorite/mylike/${ses.email }">내가 찜한 소모임</a></li>
                </ul>
              </li>
              </c:if>
@@ -61,14 +72,17 @@
                <a class="nav-link" aria-current="page" href="/board/list">공지사항</a>
              </li>
              <li class="nav-item">
-               <a class="nav-link" aria-current="page" href="/board/company">사이트 소개</a>
+               <a class="nav-link" aria-current="page" href="#">사이트 소개</a>
+             </li>
+             <li class="nav-item">
+               <a class="nav-link" aria-current="page" href="/category/categorymain">소모임 리스트</a>
              </li>
            </ul>
          </div>
        </div>
      </div>
    <div class="logo">
-        <a href="/"><img alt="" src="/resources/img/logo.png" width="200px"></a>
+         <a href="/"><img alt="" src="/resources/img/logo.png" width="200px"></a>
    </div>
       <ul class="nav justify-content-end">
       <c:if test="${ses.email == null }">

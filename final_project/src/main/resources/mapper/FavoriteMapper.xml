@@ -13,4 +13,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="insertFavorite">
 		insert into favorite(grno, email) values(#{grno}, #{email})
 	</insert>
+	<select id="selectGroupList" resultType="com.ezen.finalpj.domain.GroupVO">
+		select * from smallgroup join favorite on smallgroup.grno = favorite.grno where favorite.email = #{email}
+	</select>
 </mapper>
