@@ -1,19 +1,25 @@
 package com.ezen.finalpj.controller;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -22,7 +28,9 @@ import com.ezen.finalpj.domain.ProfileVO;
 import com.ezen.finalpj.domain.UserDTO;
 import com.ezen.finalpj.domain.UserVO;
 import com.ezen.finalpj.handler.ProfileHandler;
+import com.ezen.finalpj.service.ProfileService;
 import com.ezen.finalpj.service.UserService;
+import com.ezen.finalpj.service.WaitingService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -36,6 +44,12 @@ public class UserController {
 	
 	@Inject
 	private ProfileHandler ph;
+	
+	@Inject
+	private ProfileService psv;
+	
+	@Inject
+	private WaitingService wsv;
 	
 	
 	@GetMapping("/")
@@ -105,11 +119,16 @@ public class UserController {
 			 HttpSession ses = req.getSession();
 			 ses.setAttribute("ses", isUser);
 			 
+			 //model로 넘겨주게 되면 해당 페이지에서만 프로필이 드러나게 된다
+			 //그러므로 model에 넘겨주지 말고 ses로 넘겨줘서 해당 이메일에 따라 그 프로필을 볼 수 있게 하자!
+			 ProfileVO pvo=psv.selectPersonalProfile(email);
+			 ses.setAttribute("pvo", pvo);
+			 
+			 mv.addObject("msglogin","1");
 			 mv.setViewName("/home");
-			 mv.addObject("msglogin", "1");
 		 }else {
-			 mv.setViewName("user/login");
 			 mv.addObject("msglogin","0");
+			 mv.setViewName("user/login");
 		 }
 		 
 		 return mv;
@@ -123,5 +142,100 @@ public class UserController {
 		 mv.setViewName("redirect:/");
 		 return mv;
 	 }
+	 
+	 @GetMapping("/mypage")
+		public String userMypageGet() {
+			return "/user/mypage";
+		}
+		
+		@GetMapping("/like")
+		public String userLikeGet() {
+			return "/user/like";
+		}
+		
+		@GetMapping("/myinfo")
+		public String userMyinfoGet() {
+			return "/user/myinfo";
+		}
+		
+	 @GetMapping(value="/management/{email}")
+      public String getUserList(Model model,HttpServletRequest req,@PathVariable("email")String email) {
+         
+         HttpSession ses=req.getSession();
+         ses.setAttribute("email", email);
+         
+         UserVO user=usv.getMyOnlyuser(req);
+         log.info("uvo test : "+user.getEmail());
+         
+         List<UserVO> list1=usv.getOnlyList1(user);
+         System.out.println(list1);
+         List<UserVO> list2=usv.getOnlyList2(user);
+         log.info("only user");
+         
+         //profileVO list 초기화
+         ArrayList<ProfileVO> profileList1=new ArrayList<ProfileVO>();
+         ArrayList<ProfileVO> profileList2=new ArrayList<ProfileVO>();
+         
+         for(UserVO uvo: list1) {
+            ProfileVO pvo = psv.selectProfile(uvo.getEmail());
+            profileList1.add(pvo);
+         }
+         log.info("프로필1 리스트 : "+profileList1.toString());
+         
+         for(UserVO uvo: list2) {
+            ProfileVO pvo = psv.selectProfile(uvo.getEmail());
+            profileList2.add(pvo);
+         }
+         log.info("프로필2 리스트 : "+profileList2.toString());
+         model.addAttribute("profileList1",profileList1);
+         model.addAttribute("profileList2",profileList2);
+         
+         model.addAttribute("list1", list1);
+         model.addAttribute("list2", list2);
+         return "/user/management";
+      }
+	 
+	 @DeleteMapping(value = "/remove/{email}", produces = {MediaType.TEXT_PLAIN_VALUE})
+		public ResponseEntity<String> removeUser(@PathVariable("email")String email) {
+			log.info("my user remove email : "+email);
+			int isOk=wsv.remove(email);
+			return isOk>0? new ResponseEntity<String>("1",HttpStatus.OK): new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	 
+	 @GetMapping("/modify")
+		public String userModifyMyinfoGet() {
+			return "/user/modify";
+		}
+		
+	@PostMapping("/modify")
+	public String modifyMyinfoPost(UserVO uvo, RedirectAttributes reAttr, HttpServletRequest req) {
+		log.info(uvo.toString());
+		int isOk = usv.modifyMyinfo(uvo);
+		reAttr.addFlashAttribute("msg", isOk>0?"1":"0");
+		log.info("개인정보수정 >>> "+(isOk>0?"수정성공":"수정실패"));
+		if(isOk>0) {
+			req.getSession().setAttribute("ses", uvo);
+		}
+		return "redirect:/user/mypage";
+	}
+	
+	//아이디 중복확인
+	@PostMapping("/emailCheck")
+	@ResponseBody
+	public int emailCheck(@RequestParam("email") String email) {
+		int cnt = usv.emailCheck(email);
+		System.out.println(cnt);
+		return cnt;
+	}
+	
+	//닉네임 중복확인
+	@PostMapping("/nicknameCheck")
+	@ResponseBody
+	public int idCheck(@RequestParam("nickname") String nickname) {		
+		int cnt = usv.nicknameCheck(nickname);
+		return cnt;
 
+	}
+	
+	
 }

@@ -1,10 +1,15 @@
 package com.ezen.finalpj.service;
 
-import javax.inject.Inject;
+import java.util.List;
 
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.ezen.finalpj.domain.ManagerDTO;
 import com.ezen.finalpj.domain.ProfileVO;
 import com.ezen.finalpj.domain.UserDTO;
 import com.ezen.finalpj.domain.UserVO;
@@ -16,40 +21,32 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 public class UserServiceImpl implements UserService {
-	
 	@Inject
 	private UserDAO udao;
 	@Inject
 	private ProfileDAO pdao;
-	
 	@Inject
 	BCryptPasswordEncoder passwordEncoder;
 
 	@Override
-	public int register(UserVO uvo) {
-		log.info(">>> User register check2");
-		UserVO tmpUser = udao.getUser(uvo.getEmail());
-		
-		if(tmpUser != null) {
-			return 0;
-		}
-		if(uvo.getEmail()==null || uvo.getEmail().length()==0) {
-			return 0;
-		}
-		if(uvo.getPw()==null || uvo.getPw().length()==0) {
-			return 0;
-		}
-		
-		String pw = uvo.getPw();
-		log.info(">>>serviceImpl : "+pw);
-		String encodepw = passwordEncoder.encode(pw);
-		log.info(">>>serviceImpl : "+encodepw);
-		uvo.setPw(encodepw);
-		udao.insertUser(uvo);
-		
-		return 1;
+	public int updateCapUser(ManagerDTO managerDTO) {
+		log.info("방장 업데이트");
+		return udao.updateCap(managerDTO);
 	}
 
+	@Override
+	public List<UserVO> selectMemListUserGet(int grno) {
+		log.info("소모임 멤버 리스트");
+		return udao.selectMemListUser(grno);
+	}
+
+	@Override
+	public UserVO selectCapGet(int grno) {
+		log.info("방장 추출");
+		return udao.selectCap(grno);
+	}
+	
+	
 	@Override
 	public int register(UserDTO udto) {
 		log.info("User register(udto) check2");
@@ -84,5 +81,74 @@ public class UserServiceImpl implements UserService {
 			return null;
 		}
 	}
+	
+	@Override
+	public int register(UserVO uvo) {
+		log.info(">>> User register check2");
+		UserVO tmpUser = udao.getUser(uvo.getEmail());
+		
+		if(tmpUser != null) {
+			return 0;
+		}
+		if(uvo.getEmail()==null || uvo.getEmail().length()==0) {
+			return 0;
+		}
+		if(uvo.getPw()==null || uvo.getPw().length()==0) {
+			return 0;
+		}
+		
+		String pw = uvo.getPw();
+		log.info(">>>serviceImpl : "+pw);
+		String encodepw = passwordEncoder.encode(pw);
+		log.info(">>>serviceImpl : "+encodepw);
+		uvo.setPw(encodepw);
+		udao.insertUser(uvo);
+		
+		return 1;
+	}
+	
+
+	@Override
+	public List<UserVO> getOnlyList1(UserVO user) {
+		log.info("waiting1 list user check");
+		return udao.selectOnlyUser(user);
+	}
+
+
+	@Override
+	public UserVO getMyOnlyuser(HttpServletRequest req) {
+		UserVO user=(UserVO)req.getSession().getAttribute("ses");
+		log.info("ses : "+user.getEmail().toString());
+		return user;
+	}
+
+	@Override
+	public List<UserVO> getOnlyList2(UserVO user) {
+		log.info("waiting2 list user check");
+		return udao.selectSecoundUser(user);
+	}
+	
+	@Override
+	public int modifyMyinfo(UserVO uvo) {
+		log.info("modify myinfo user check");
+		return udao.updateMyinfo(uvo);
+	}
+
+	@Override
+	public int emailCheck(String email) {
+		int cnt = udao.emailCheck(email);
+		log.info("email check");
+		return cnt;
+	}
+
+	@Override
+	public int nicknameCheck(String nickname) {
+		int cnt = udao.nicknameCheck(nickname);
+		System.out.println("cnt: " + cnt);
+		return cnt;
+	}
+
+
+
 
 }

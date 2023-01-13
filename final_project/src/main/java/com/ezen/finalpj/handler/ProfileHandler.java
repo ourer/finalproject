@@ -21,7 +21,7 @@ import net.coobird.thumbnailator.Thumbnails;
 @AllArgsConstructor
 @Component
 public class ProfileHandler {
-	private final String UP_DIR = "D:\\_finalweb\\_profile\\profileUpload";
+	private final String UP_DIR = "C:\\_finalweb\\_profile\\profileUpload";
 
 	public List<ProfileVO> uploadFiles(MultipartFile[] files){
 		// 파일경로 설정

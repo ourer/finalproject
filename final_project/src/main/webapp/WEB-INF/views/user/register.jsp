@@ -1,12 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
+
 <jsp:include page="../layout/header.jsp"></jsp:include>
+<script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
+<style>
+	.nickName_OK{
+		color:#008000;
+		display: none;
+	}
+	.nickName_NO{
+		color:#6A82FB; 
+		display: none;
+	}
+</style>
 <section>
 <h2>회원가입</h2>
-	<form action="/user/register" method="post" enctype="multipart/form-data">
-		이메일: <input type="text" class="form-control" id="email" placeholder="email" name="email">
+	<form action="/user/register" method="post" enctype="multipart/form-data" onsubmit="return joinCheck(this)">
+		아이디: <input type="text" class="form-control" id="email" placeholder="email@ourer.com" name="email">
+		<button type="button" onclick="emailCheck()">이메일 중복확인</button><br>
+<!-- 		<span class="email_OK">사용 가능한 아이디입니다.</span>
+		<span class="email_NO">이미 사용중인 아이디입니다.</span><br> -->
 		프로필사진:	
  		<div class="col-12 d-grid">
 		<input class="form-control" type="file" style="display: none;" id="files" name="files">
@@ -16,9 +30,20 @@
 			<!-- 파일이 첨부되면 해당 파일에 대한 정보가 표시됨  -->
 		</div>
 		이름:<input type="text" class="form-control" id="name" placeholder="이름" name="name">
-		비밀번호:<input type="password" class="form-control" id="pw" name="pw">
-		지역:<input type="text" class="form-control" id="area" name="area">
-		닉네임:<input type="text" class="form-control" id="NickName" name="nickname">
+		비밀번호:<input type="password" class="form-control pw" id="pw" name="pw">
+		<!-- 비밀번호 체크 -->
+		비밀번호 확인:<input type="password" class="form-control pw" id="pw2" name="pw2">
+		<font id = "checkPw" size = "3"></font> <br>
+		
+ 		지역:<input type="text" class="form-control" id="area" name="area">
+
+		닉네임:<input type="text" class="form-control" id="nickname" name="nickname" oninput="checkNickName()">
+		<!-- id ajax 중복체크 -->
+		<span class="nickName_OK">사용 가능한 닉네임입니다.</span>
+		<span class="nickName_NO">누군가 이 닉네임을 사용하고 있어요.</span><br>
+		<!-- 닉네임 체크 -->
+		<!-- <button class="nameChk" type="button" id="nameChk" onclick="fn_nameChk();" value="N">닉네임 중복확인</button> <br> -->
+		
 		나이:<input type="text" class="form-control" id="age" name="age">
  		성별:
 		<div class="form-check">
@@ -33,7 +58,7 @@
 		    여자
 		  </label>
 		</div>
-		전화번호:<input type="text" class="form-control" id="Phone" name="phone">
+		전화번호:<input type="text" class="form-control" id="Phone" name="phone" oninput="hypenTel(this)" maxlength="13">
 		
 		관심사1: 
 		<div class="innerSecond">
@@ -103,6 +128,21 @@
 	
 </section>
 
-<script type="text/javascript" src="/resources/js/UserRegister.js"></script>
+<script type="text/javascript" src="/resources/js/UserRegister.js?version=4"></script>
+<script type="text/javascript">
+const hypenTel = (target) => {
+    target.value = target.value
+      .replace(/[^0-9]/g, '')
+      .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
+}
+</script>
+<script type="text/javascript">
+const msg='<c:out value="${msg}"/>';
+if(msg==='1'){
+	alert("회원가입에 실패했습니다.");
+}else if(msg == '0'){
+	alert("회원가입에 성공했습니다.");		
+}
+</script>
 <jsp:include page="../layout/footer.jsp"></jsp:include>
 
