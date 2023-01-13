@@ -23,4 +23,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectMaxSno" resultType="int">
 		select max(sno) from schedule
 	</select>
+	<update id="updateJoinMemDelete">
+		update schedule set joinmember=joinmember-1 where sno=#{sno}
+	</update>
+
 </mapper>

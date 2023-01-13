@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -102,4 +103,12 @@ public class ScheduleController {
 		return new ResponseEntity<List<JoinPersonDTO>>(jList, HttpStatus.OK);
 	}
 
+	@DeleteMapping(value = "/cancel/{jno}", produces = {MediaType.TEXT_PLAIN_VALUE})
+	public ResponseEntity<String> deleteJpDelete(@PathVariable("jno")int jno){
+		int sno=jsv.selectSnoJp(jno);
+		int isOk=jsv.deleteJp(jno);
+		isOk*=ssv.updateJoinMemDelete(sno);
+		log.info(isOk>0?"스케줄 참가 취소 성공":"스케줄 참가취소 실패");
+		return isOk>0? new ResponseEntity<String>("1", HttpStatus.OK): new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
 }

@@ -2,6 +2,7 @@ package com.ezen.finalpj.repository;
 
 import java.util.List;
 
+import com.ezen.finalpj.domain.CapUserDTO;
 import com.ezen.finalpj.domain.ManagerDTO;
 import com.ezen.finalpj.domain.UserVO;
 
@@ -22,5 +23,7 @@ public interface UserDAO {
 	List<UserVO> selectSecoundUser(UserVO user);
 	
 	int updateMyinfo(UserVO uvo);
+
+	//CapUserDTO selectCap(int grno);
 
 }

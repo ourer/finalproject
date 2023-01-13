@@ -55,4 +55,10 @@ public class ScheduleServiceImpl implements ScheduleService {
 		return sdao.selectMaxSno();
 	}
 
+	@Override
+	public int updateJoinMemDelete(int sno) {
+		log.info("스케줄 참가 인원 삭제");
+		return sdao.updateJoinMemDelete(sno);
+	}
+
 }

@@ -20,4 +20,8 @@ public interface ScheduleDAO {
 
 	int selectMaxSno();
 
+	int selectSno(int jno);
+
+	int updateJoinMemDelete(int sno);
+
 }

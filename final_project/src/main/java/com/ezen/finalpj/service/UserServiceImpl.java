@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.ezen.finalpj.domain.CapUserDTO;
 import com.ezen.finalpj.domain.ManagerDTO;
 import com.ezen.finalpj.domain.ProfileVO;
 import com.ezen.finalpj.domain.UserDTO;
@@ -133,4 +134,25 @@ public class UserServiceImpl implements UserService {
 		log.info("modify myinfo user check");
 		return udao.updateMyinfo(uvo);
 	}
+
+//	@Override
+//	public CapUserDTO selectCapGet(int grno) {
+//		CapUserDTO capUdto=new CapUserDTO();
+//		UserVO uvo=udao.selectCap(grno);
+//		log.info(uvo.toString());
+//		ProfileVO pvo=pdao.selectProfile(uvo.getEmail());
+//		capUdto.setGrno(uvo.getIsCap());
+//		capUdto.setUEmail(uvo.getEmail());
+//		capUdto.setUName(uvo.getName());
+//		capUdto.setUNickname(uvo.getNickname());
+//		capUdto.setUAge(uvo.getAge());
+//		capUdto.setUPhone(uvo.getPhone());
+//		capUdto.setUArea(uvo.getArea());
+//		capUdto.setUGender(uvo.getGender());
+//		capUdto.setPDir(pvo.getDir());
+//		capUdto.setPUuid(pvo.getUuid());
+//		capUdto.setPName(pvo.getName());
+//		log.info(capUdto.toString());
+//		return capUdto;
+//	}
 }

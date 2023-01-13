@@ -1,5 +1,7 @@
 package com.ezen.finalpj.repository;
 
+import java.util.List;
+
 import com.ezen.finalpj.domain.FavoriteVO;
 
 public interface FavoriteDAO {
@@ -9,5 +11,7 @@ public interface FavoriteDAO {
 	int deleteFavorite(FavoriteVO fvo);
 
 	int insertFavorite(FavoriteVO fvo);
+
+	List<FavoriteVO> selectListFavorite(int grno);
 
 }

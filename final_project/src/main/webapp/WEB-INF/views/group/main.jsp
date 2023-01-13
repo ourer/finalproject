@@ -12,7 +12,16 @@
             <div class="grpNameBox">
                 <span class="grpName">${gvo.name }</span>
                 <button id="shareBtn" onclick="copyUrl()"><i class="fa-solid fa-share-nodes"></i></button>
-                <button id="heartBtn"><i class="fa-regular fa-heart"></i>${favMsg }</button>
+                <button id="heartBtn">
+               	<c:choose>
+               	<c:when test="${fvo ne null }">
+                	<i class="fa-solid fa-heart"></i>
+               	</c:when>
+	            <c:otherwise>
+                	<i class="fa-regular fa-heart"></i>                		
+	            </c:otherwise>
+               	</c:choose>
+                </button>
             </div>
             <ul class="grpNavUl">
                 <li class="grpNavLi"><a href="#">정보</a></li>
@@ -86,12 +95,13 @@
 	                <c:choose>
 	                	<c:when test="${ses.email eq gvo.email }">
 			                <a href="/schedule/delete?sno=${svo.sno }"><button class="delSchBtn">스케줄 삭제</button></a>
+			               <button class="schJoinBtn" id="schJoinBtn${svo.sno }" disabled>참가</button>
 	                	</c:when>
 	                	<c:when test="${svo.joinmember eq svo.max_member }">
-			               <button class="schJoinBtn" disabled>마감</button>
+			               <button class="schJoinBtn" id="schJoinBtn${svo.sno }" disabled>마감</button>
 	                	</c:when>
 	                	<c:otherwise>
-			               <button class="schJoinBtn" id="schJoinBtn">참가</button>
+			               <button class="schJoinBtn" id="schJoinBtn${svo.sno }">참가</button>
 	                	</c:otherwise>
 	                </c:choose>
 	            </div>

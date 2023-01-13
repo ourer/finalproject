@@ -11,4 +11,8 @@ public interface JoinPersonDAO {
 
 	List<JoinPersonDTO> selectList();
 
+	int deleteJp(int jno);
+
+	int selectSno(int jno);
+
 }

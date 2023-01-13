@@ -18,5 +18,8 @@ public interface ScheduleService {
 
 	int selectMaxSnoSch();
 
+	int updateJoinMemDelete(int sno);
+
+
 
 }

@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -17,16 +19,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ezen.finalpj.domain.CapUserDTO;
+import com.ezen.finalpj.domain.FavoriteVO;
 import com.ezen.finalpj.domain.GroupDTO;
 import com.ezen.finalpj.domain.GroupVO;
 import com.ezen.finalpj.domain.ManagerDTO;
+import com.ezen.finalpj.domain.ProfileVO;
 import com.ezen.finalpj.domain.ScheduleVO;
 import com.ezen.finalpj.domain.SgMainVO;
 import com.ezen.finalpj.domain.UserVO;
 import com.ezen.finalpj.domain.WaitingVO;
 import com.ezen.finalpj.handler.SgMainHandler;
+import com.ezen.finalpj.service.FavoriteService;
 import com.ezen.finalpj.service.GroupService;
 import com.ezen.finalpj.service.JoinPersonService;
+import com.ezen.finalpj.service.ProfileService;
 import com.ezen.finalpj.service.ScheduleService;
 import com.ezen.finalpj.service.UserService;
 import com.ezen.finalpj.service.WaitingService;
@@ -49,6 +56,10 @@ public class GroupController {
 	private UserService usv;
 	@Inject
 	private SgMainHandler smh;
+	@Inject
+	private FavoriteService fsv;
+	@Inject
+	private ProfileService psv;
 	
 	@GetMapping("/register")
 	public String insertGrpGet() {
@@ -71,15 +82,27 @@ public class GroupController {
 
 	
 	@GetMapping("/main")
-	public String selectGrpGet(@RequestParam("grno")int grno, Model model) {
+	public String selectGrpGet(@RequestParam("grno")int grno, Model model, HttpServletRequest req) {
 		GroupVO gvo=gsv.selectGrp(grno);
 		List<ScheduleVO> sList=ssv.selectListSch(grno);
 		//int joinCnt=jsv.selectCntJp(sno);
 		SgMainVO smvo=gsv.selectSgMain(grno);
-		GroupDTO gdto=new GroupDTO(gvo, sList, smvo);
-		model.addAttribute("gvo", gdto.getGvo());
-		model.addAttribute("sList", gdto.getSList());
-		model.addAttribute("smvo", gdto.getSmvo());
+		//GroupDTO gdto=new GroupDTO(gvo, sList, smvo);
+		List<FavoriteVO> fList=fsv.selectListFavorite(grno);
+		HttpSession ses=req.getSession();
+		UserVO uvo=(UserVO)ses.getAttribute("ses");
+		if(uvo!=null) {
+			String email=uvo.getEmail();
+			for(FavoriteVO f:fList) {
+				if(f.getEmail().equals(email)) {
+					model.addAttribute("fvo", f);
+				}
+			}
+		}
+		model.addAttribute("gvo", gvo);
+		model.addAttribute("sList", sList);
+		model.addAttribute("smvo", smvo);
+		//model.addAttribute("fList", fList);
 		return "/group/main";
 	}
 	
@@ -108,14 +131,27 @@ public class GroupController {
 	}
 	
 	@GetMapping("/memberList")
-	public String selectMemListGrpGet(@RequestParam("grno")int grno, Model model) {
+	public void selectMemListGrpGet(RedirectAttributes reAttr, @RequestParam(name="grno", required=false)int grno, Model model, HttpServletRequest req) {
 		//방장 가져오기
-		UserVO capUvo=usv.selectCapGet(grno);
-		log.info(capUvo.toString());
-		model.addAttribute("capUvo", capUvo);
-		List<UserVO> uList=usv.selectMemListUserGet(grno);
-		model.addAttribute("uList", uList);
-		return "/group/memberList";
+//		UserVO capUvo=usv.selectCapGet(grno);
+//		log.info(capUvo.toString());
+//		model.addAttribute("capUvo", capUvo);
+//		List<UserVO> uList=usv.selectMemListUserGet(grno);
+//		model.addAttribute("uList", uList);
+		
+		
+		//CapUserDTO capUdto=usv.selectCapGet(grno);
+		//log.info(capUdto.toString());
+		//log.info("uName:  "+capUdto.getUName());
+		//req.setAttribute("cdto", capUdto);
+		//model.addAttribute("cdto", capUdto);
+		
+		UserVO uvo=usv.selectCapGet(grno);
+		model.addAttribute("capUvo", uvo);
+		ProfileVO pvo=psv.selectProfile(uvo.getEmail());
+		model.addAttribute("capPvo", pvo);
+		
+		
 	}
 	
 	@GetMapping("/join")

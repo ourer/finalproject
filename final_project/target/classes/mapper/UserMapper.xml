@@ -9,9 +9,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectMemListUser" resultType="com.ezen.finalpj.domain.UserVO">
 		select * from user join waiting on user.email=waiting.email where grno=#{grno} and isOk=1;
 	</select>
-	<select id="selectCap" resultType="com.ezen.finalpj.domain.UserVO">
-		select user.name, user.email, user.age, user.phone, user.area, user.nickname, user.gender from smallgroup join user on smallgroup.grno=user.isCap where grno=#{grno};
-	</select>
+
 	
 	<select id="getUser" resultType="com.ezen.finalpj.domain.UserVO"> 
       select * ,(select code from category where category.ctno = user.ctno_1) as "ctcode_1" 
@@ -51,4 +49,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="updateMyinfo">
 		update user set area=#{area}, phone=#{phone}, ctno_1=#{ctno_1}, ctno_2=#{ctno_2}, ctno_3=#{ctno_3}, ctcode_1=#{ctcode_1}, ctcode_2=#{ctcode_2}, ctcode_3=#{ctcode_3} where email=#{email}
 	</update>
+	
+	<select id="selectCap" resultType="com.ezen.finalpj.domain.UserVO">
+		select * from user where isCap=${grno}
+	</select>
+<!-- 		select smallgroup.grno as grno, user.email as uEmail, user.name as uName, user.nickname as uNickname, user.age as uAge, user.phone as uPhone, user.area as uArea, user.gender as uGender, profile.dir as pDir, profile.uuid as pUuid, profile.name as pName from user
+		join smallgroup on smallgroup.grno=user.isCap
+		join profile on profile.email=user.email where smallgroup.grno=#{grno} -->
+<!-- 		select user.email as uEmail, user.name as uName, user.nickname as uNickname, user.age as uAge, user.phone as uPhone, user.area as uArea, user.gender as uGender, profile.dir as pDir, profile.uuid as pUuid, profile.name as pName from user
+		join profile on profile.email=user.email
+		join waiting on user.email=waiting.email
+		where waiting.grno=#{grno} and waiting.isOk=1; -->
 </mapper>

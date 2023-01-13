@@ -27,4 +27,14 @@ public class JoinPersonServiceImpl implements JoinPersonService {
 	public List<JoinPersonDTO> selectListJp() {
 		return jpdao.selectList();
 	}
+
+	@Override
+	public int deleteJp(int jno) {
+		return jpdao.deleteJp(jno);
+	}
+
+	@Override
+	public int selectSnoJp(int jno) {
+		return jpdao.selectSno(jno);
+	}
 }

@@ -1,5 +1,7 @@
 package com.ezen.finalpj.service;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
@@ -34,5 +36,10 @@ public class FavoriteServiceImpl implements FavoriteService {
 		log.info("찜 추가");
 		int isOk=fdao.insertFavorite(fvo);
 		return isOk;
+	}
+
+	@Override
+	public List<FavoriteVO> selectListFavorite(int grno) {
+		return fdao.selectListFavorite(grno);
 	}
 }

@@ -10,8 +10,8 @@ document.getElementById('heartBtn').addEventListener('click', ()=>{
     console.log(nowUrl);
     let grno=nowUrl.substring(nowUrl.lastIndexOf('=')+1);
     console.log(grno);
-    if(emailVal==null||grno==""||grno==null){
-        alert("찜하기 오류");
+    if(emailVal==""||grno==""||grno==null){
+        alert("로그인해주세요.");
         console.log("찜 기능 실패");
         return false;
     }else{
@@ -65,10 +65,38 @@ function showJoinPeople(sno){
     console.log(joinPeople.style.display);
 }
 
-const schJoinBtn=document.getElementById('schJoinBtn');
-if(schJoinBtn!=null){
-schJoinBtn.addEventListener('click', ()=>{
-    console.log(nowUrl);
+// const schJoinBtn=document.getElementById('schJoinBtn');
+// if(schJoinBtn!=null){
+// schJoinBtn.addEventListener('click', ()=>{
+//     console.log(nowUrl);
+//     let grno=nowUrl.substring(nowUrl.lastIndexOf('=')+1);
+//     console.log(grno);
+//     let sno=document.getElementById("sno").value;
+//     console.log(sno);
+//     if(grno!=null||sno!=null){
+//         joinData={
+//             sno: sno,
+//             grno: grno
+//         }
+//     }
+//     console.log(joinData);
+//     addJoinPerson(joinData).then(result=>{
+//         console.log(result);
+//         if(result=="1"){
+//             alert("스케줄 참가 성공!");
+//             location.reload();
+//         }else if(result=="2"){
+//             alert("스케줄 참가 실패");
+//             location.href="/group/main?grno="+grno;
+//         }
+//        //getJoinPersonList();
+//     })
+// })
+// }
+
+document.addEventListener('click', (e)=>{
+    if(e.target.classList.contains('schJoinBtn')&&e.target!=null){
+        console.log(nowUrl);
     let grno=nowUrl.substring(nowUrl.lastIndexOf('=')+1);
     console.log(grno);
     let sno=document.getElementById("sno").value;
@@ -91,8 +119,8 @@ schJoinBtn.addEventListener('click', ()=>{
         }
        //getJoinPersonList();
     })
+    }
 })
-}
 
 async function addJoinPerson(joinData){
     try {
@@ -140,16 +168,57 @@ function getJoinPersonList(){
                 
                 let div='';
                 if(divJP.dataset.sno==r.sno){
-                    div=`<div class="joinPerson">`;
+                    div=`<div class="joinPerson" data-jno="${r.jno}">`;
                     div+=`<img src="/upload/${pDir}/${r.puuid}_${r.pname}" class="rounded-circle mx-auto d-block" alt="..." style="width: 140px;">`;
-                    div+=`<span>${r.uname}</span></div>`;
+                    div+=`<span>${r.uname}</span>`;
                 }
-                
+                console.log(emailVal);
+                if(emailVal == r.uemail){
+                    console.log(r.uemail);
+                    div+=`<button class="schCancelBtn">참가 취소</button>`;
+                    const joinBtn=document.getElementById(`schJoinBtn${r.sno}`);
+                    console.log(joinBtn);
+                    joinBtn.disabled=true;
+                }
+                div+=`</div>`;
                 divJP.innerHTML+=div;
 
             }
         }
     })
+}
+
+//스케줄 참가 취소
+document.addEventListener('click', (e)=>{
+    if(e.target.classList.contains('schCancelBtn')){
+        const div=e.target.closest('div');
+        console.log(div);
+        const jno=div.dataset.jno;
+        console.log(jno);
+        //취소
+        cancelJoinPeople(jno).then(result=>{
+            if(result>0){
+                alert("스케줄 참가를 취소했어요!");
+                location.reload();
+            }
+        })
+    }
+})
+
+
+async function cancelJoinPeople(jno){
+    try {
+        const url="/schedule/cancel/"+jno;
+        const config={
+            method: 'delete'
+        }
+        const resp=await fetch(url, config);
+        const result=resp.text();
+        return result;
+    } catch (error) {
+        console.log(error);
+    }
+
 }
 
 document.getElementById('trigger').addEventListener('click',()=>{
