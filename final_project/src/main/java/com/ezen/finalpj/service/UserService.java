@@ -13,7 +13,7 @@ public interface UserService {
 
 	int updateCapUser(ManagerDTO managerDTO);
 
-	List<UserVO> selectMemListUserGet(int grno);
+	//List<UserVO> selectMemListUserGet(int grno);
 
 	UserVO selectCapGet(int grno);
 
@@ -31,7 +31,18 @@ public interface UserService {
 	
 	int modifyMyinfo(UserVO uvo);
 
+	List<UserVO> selectMemListUser(int grno);
+
+	//CapUserDTO selectCapGet(int grno);
+	
+	int emailCheck(String email);
+
+	int nicknameCheck(String nickname);
+	
+	List<UserVO> selectAllUser();
+	
 	int deleteUser(String email);
 
-	
+	List<FavoriteVO> countFavoriteList(String email);
+
 }

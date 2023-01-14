@@ -10,7 +10,7 @@ public interface UserDAO {
 
 	int updateCap(ManagerDTO managerDTO);
 
-	List<UserVO> selectMemListUser(int grno);
+	//List<UserVO> selectMemListUser(int grno);
 
 	UserVO selectCap(int grno);
 	
@@ -24,6 +24,16 @@ public interface UserDAO {
 	
 	int updateMyinfo(UserVO uvo);
 
+	List<UserVO> selectMemList(int grno);
+
+	int emailCheck(String email);
+
+	int nicknameCheck(String nickname);
+	
+	List<UserVO> selectAllList();
+	
 	int deleteUser(String email);
+
+	List<FavoriteVO> likeListCount(String email);
 
 }

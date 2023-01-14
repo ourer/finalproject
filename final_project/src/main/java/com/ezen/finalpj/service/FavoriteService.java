@@ -2,9 +2,6 @@ package com.ezen.finalpj.service;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
-import com.ezen.finalpj.domain.CategoryVO;
 import com.ezen.finalpj.domain.FavoriteDTO;
 import com.ezen.finalpj.domain.FavoriteVO;
 import com.ezen.finalpj.domain.GroupVO;
@@ -17,8 +14,12 @@ public interface FavoriteService {
 
 	int insertFavorite(FavoriteVO fvo);
 
+	List<FavoriteVO> selectListFavorite(int grno);
+	
 	List<GroupVO> groupList(String email);
 
 	List<FavoriteDTO> favoriteList(String email);
+
+	List<FavoriteVO> countFavoriteList(String email);
 
 }

@@ -23,6 +23,11 @@ public class SgmainServiceImpl implements SgmainService {
 		return sdao.getSgmain(grno);
 	}
 	
+	@Override
+	public List<SgMainVO> getSgMainImg() {
+		log.info(">>> sgmain 이미지 가져오기");
+		return sdao.getSgMainImg();
+	}
 
 
 }

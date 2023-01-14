@@ -12,6 +12,7 @@ import lombok.ToString;
 @Setter
 @Getter
 public class FavoriteDTO {
+	private int grno;
 	private String ctname;
 	private String gname;
 	private String gdetail;

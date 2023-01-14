@@ -17,4 +17,9 @@ public class SgMainVO {
 	private String name;
 	private String dir;
 	private String uuid;
+	
+	private String city;
+	private String sg_name;
+	private String detail;
+	private String county;
 }

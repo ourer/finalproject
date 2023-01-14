@@ -3,6 +3,7 @@ package com.ezen.finalpj.service;
 import java.util.List;
 
 import com.ezen.finalpj.domain.GroupVO;
+import com.ezen.finalpj.domain.PagingVO;
 import com.ezen.finalpj.domain.SgMainVO;
 
 public interface GroupService {
@@ -19,7 +20,13 @@ public interface GroupService {
 
 	int deleteSgMain(int grno);
 
-	List<GroupVO> getAllList();
+	List<GroupVO> getAllList(PagingVO pgvo);
 
 	List<GroupVO> CategoryOne(String code);
+
+	int getPageCount(PagingVO pgvo);
+
+	List<GroupVO> selectGrpList();
+
+	int removeGrp(String grno);
 }

@@ -15,12 +15,12 @@ import lombok.extern.slf4j.Slf4j;
 public class WaitingServiceImpl implements WaitingService {
 	@Inject
 	private WaitingDAO wdao;
-
+	
 	@Override
 	public int insertMemWaitPost(WaitingVO wvo) {
 		return wdao.insertMemWaitPost(wvo);
 	}
-	
+
 	@Override
 	public int remove(String email) {
 		log.info("waiting user remove");
@@ -28,9 +28,9 @@ public class WaitingServiceImpl implements WaitingService {
 	}
 
 	@Override
-	public int accept(UserVO uvo) {
+	public int accept(String email) {
 		log.info("waiting user accept");
-		return wdao.acceptUser(uvo);
+		return wdao.acceptUser(email);
 	}
 
 	@Override
@@ -38,4 +38,18 @@ public class WaitingServiceImpl implements WaitingService {
 		log.info("waiting user refuse");
 		return wdao.refuseUser(email);
 	}
+	
+	@Override
+	public int appointment(String email) {
+		log.info("operator appointment email");
+		return wdao.appointment(email);
+	}
+
+	@Override
+	public int cancellation(String email) {
+		log.info("operator cancellation email");
+		return wdao.cancellation(email);
+	}
+
+
 }

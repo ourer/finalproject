@@ -6,5 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getSgmain" resultType="com.ezen.finalpj.domain.SgMainVO">
 		select * from sgmain where grno=#{grno}
 	</select>
-
+	<select id="getSgMainImg" resultType="com.ezen.finalpj.domain.SgMainVO">
+		select S.uuid, S.dir, S.name, SG.grno, SG.name AS sg_name, SG.detail, SG.city, SG.county from smallgroup SG left join sgmain S on S.grno = SG.grno
+	</select>
 </mapper>

@@ -18,12 +18,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ezen.finalpj.domain.FavoriteVO;
-import com.ezen.finalpj.domain.GroupVO;
 import com.ezen.finalpj.domain.ProfileVO;
 import com.ezen.finalpj.domain.UserDTO;
 import com.ezen.finalpj.domain.UserVO;
@@ -122,7 +122,7 @@ public class UserController {
 			 //model로 넘겨주게 되면 해당 페이지에서만 프로필이 드러나게 된다
 			 //그러므로 model에 넘겨주지 말고 ses로 넘겨줘서 해당 이메일에 따라 그 프로필을 볼 수 있게 하자!
 			 ProfileVO pvo=psv.selectPersonalProfile(email);
-			 ses.setAttribute("pvo", pvo);
+			 ses.setAttribute("sespvo", pvo);
 			 
 			 mv.setViewName("/home");
 			 mv.addObject("msglogin", "1");
@@ -143,15 +143,17 @@ public class UserController {
 		 return mv;
 	 }
 	 
-	 @GetMapping("/mypage")
-		public String userMypageGet() {
+	 @GetMapping("/mypage/{email}")
+		public String userMypageGet(@PathVariable("email")String email, Model model) {
+		List<FavoriteVO> fList = usv.countFavoriteList(email);
+     model.addAttribute("fList", fList);
 			return "/user/mypage";
 		}
 		
-		@GetMapping("/myinfo")
-		public String userMyinfoGet() {
-			return "/user/myinfo";
-		}
+	@GetMapping("/myinfo")
+	public String userMyinfoGet() {
+		return "/user/myinfo";
+	}
 		
 	 @GetMapping(value="/management/{email}")
       public String getUserList(Model model,HttpServletRequest req,@PathVariable("email")String email) {
@@ -187,6 +189,9 @@ public class UserController {
          
          model.addAttribute("list1", list1);
          model.addAttribute("list2", list2);
+         
+         List<FavoriteVO> fList = usv.countFavoriteList(email);
+         model.addAttribute("fList", fList);
          return "/user/management";
       }
 	 
@@ -202,17 +207,44 @@ public class UserController {
 			return "/user/modify";
 		}
 		
-	 @PostMapping("/modify")
-	 public String modifyMyinfoPost(UserVO uvo, RedirectAttributes reAttr, HttpServletRequest req) {
+	@PostMapping("/modify")
+	public String modifyMyinfoPost(UserVO uvo, RedirectAttributes reAttr, HttpServletRequest req) {
 		log.info(uvo.toString());
 		int isOk = usv.modifyMyinfo(uvo);
 		reAttr.addFlashAttribute("msg", isOk>0?"1":"0");
-		log.info("개인정보수정 >>> "+(isOk>0?"성공":"실패"));
+		log.info("개인정보수정 >>> "+(isOk>0?"수정성공":"수정실패"));
 		if(isOk>0) {
 			req.getSession().setAttribute("ses", uvo);
 		}
 		return "redirect:/user/mypage";
 	}
+	
+	//아이디 중복확인
+	@PostMapping("/emailCheck")
+	@ResponseBody
+	public int emailCheck(@RequestParam("email") String email) {
+		int cnt = usv.emailCheck(email);
+		System.out.println(cnt);
+		return cnt;
+	}
+	
+	//닉네임 중복확인
+	@PostMapping("/nicknameCheck")
+	@ResponseBody
+	public int idCheck(@RequestParam("nickname") String nickname) {		
+		int cnt = usv.nicknameCheck(nickname);
+		return cnt;
+
+	}
+	
+	@GetMapping("/userlist")
+	public String userAllGet(Model model) {
+		log.info("모든 유저 뽑아내기");
+		List<UserVO> uList=usv.selectAllUser();
+		model.addAttribute("uList", uList);
+		return "/supervisor/userlist";
+	}
+	
 	 @GetMapping("/delete")
 	 public String deleteUserGet(RedirectAttributes reAttr, HttpServletRequest req, @RequestParam("email")String email) {
 		 int isOk = usv.deleteUser(email);
@@ -222,5 +254,5 @@ public class UserController {
 		 req.getSession().invalidate();
 		 return "redirect:/";
 	 }
-		
+	
 }

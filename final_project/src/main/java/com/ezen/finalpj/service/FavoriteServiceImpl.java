@@ -3,11 +3,9 @@ package com.ezen.finalpj.service;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
 
-import com.ezen.finalpj.domain.CategoryVO;
 import com.ezen.finalpj.domain.FavoriteDTO;
 import com.ezen.finalpj.domain.FavoriteVO;
 import com.ezen.finalpj.domain.GroupVO;
@@ -43,6 +41,11 @@ public class FavoriteServiceImpl implements FavoriteService {
 	}
 
 	@Override
+	public List<FavoriteVO> selectListFavorite(int grno) {
+		return fdao.selectListFavorite(grno);
+	}
+	
+	@Override
 	public List<GroupVO> groupList(String email) {
 		log.info("찜 목록");
 		return fdao.selectGroupList(email);
@@ -55,5 +58,9 @@ public class FavoriteServiceImpl implements FavoriteService {
 		return fdao.selectFavoriteList(email);
 	}
 
-
+	@Override
+	public List<FavoriteVO> countFavoriteList(String email) {
+		log.info("찜 개수 확인");
+		return fdao.countFavoriteList(email);
+	}
 }

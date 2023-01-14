@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.ezen.finalpj.domain.GroupVO;
+import com.ezen.finalpj.domain.PagingVO;
 import com.ezen.finalpj.domain.SgMainVO;
 import com.ezen.finalpj.repository.GroupDAO;
 
@@ -59,15 +60,33 @@ public class GroupServiceImpl implements GroupService {
 	}
 
 	@Override
-	public List<GroupVO> getAllList() {
+	public List<GroupVO> getAllList(PagingVO pgvo) {
 		log.info("group List check 2");
-		return gdao.getAllList();
+		return gdao.getAllList(pgvo);
 	}
 
 	@Override
 	public List<GroupVO> CategoryOne(String code) {
 		log.info("group SelectOne List check 2");
 		return gdao.CategoryOne(code);
+	}
+
+	@Override
+	public int getPageCount(PagingVO pgvo) {
+		log.info("group total paging test");
+		return gdao.selectCount(pgvo);
+	}
+
+	@Override
+	public List<GroupVO> selectGrpList() {
+		log.info("get group list ");
+		return gdao.selectGrpList();
+	}
+
+	@Override
+	public int removeGrp(String grno) {
+		log.info("remove group list");
+		return gdao.deleteGrpList(grno);
 	}
 
 }

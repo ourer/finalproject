@@ -94,7 +94,6 @@
   			<button class="btn btn-outline-warning" type="button" onclick="location.href='/category/categoryName?name=${cvo.name }'">${cvo.name }</button>
 		</c:forEach>
 	</div>
-	
 	<br>
 	
 	<div class="row row-cols-1 row-cols-md-4 g-4" style="margin-bottom: 100px">
