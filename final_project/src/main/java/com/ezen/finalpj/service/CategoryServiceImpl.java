@@ -34,6 +34,18 @@ public class CategoryServiceImpl implements CategoryService {
 		log.info("category name별 code 불러오기");
 		return cdao.getCategoryCode(name);
 	}
+
+	@Override
+	public List<CategoryVO> getCategoryDetailList(String code) {
+		log.info("category name별 List 불러오기");
+		return cdao.getCategoryDetailList(code);
+	}
+
+	@Override
+	public List<CategoryVO> getCategoryOne(String name) {
+		log.info("category 소분류 List 불러오기");
+		return cdao.getCategoryOne(name);
+	}
 	
 
 

@@ -90,25 +90,24 @@
 		  
 	<h3 style="margin: 30px auto">모든 소모임</h3>
 	<div class="row row-cols-1 row-cols-md-4 g-4" style="margin-bottom: 100px">
-	<c:forEach items="${gList }" var="gvo" begin="0" varStatus="status">
-		<div class="col">
-			<div class="card h-100">
-				<c:set var="svo" value="${sList[status.index]}" />
-					<c:if test="${sList[status.index] == null}">
+		<c:forEach items="${sList}" var="svo" begin="0" varStatus="status">
+			<div class="col">
+				<div class="card h-100">
+					<c:if test="${svo.uuid == null}">
 						<img alt="sgMain" src="/resources/img/sgmain_null.jpg">
 					</c:if>
-					<c:if test="${sList[status.index] != null}">
+					<c:if test="${svo.uuid != null}">
 						<img alt="sgMain" src="/upload/sgMainUpload/${fn:replace(svo.dir,'\\','/')}/${svo.uuid}_${svo.name}" class="card-img-top">
 					</c:if>
-				<div class="card-body">
-					<h5 class="card-title">${gvo.name }</h5>
-					<p class="card-text">${gvo.detail }</p>
-					<p class="card-text">${gvo.city}  ${gvo.county }</p>
-					<a href="/group/main?grno=${gvo.grno }" class="btn btn-warning">구경하기</a>
+					<div class="card-body">
+						<h5 class="card-title">${svo.sg_name }</h5>
+						<p class="card-text">${svo.detail }</p>
+						<p class="card-text">${svo.city}  ${svo.county }</p>
+						<a href="/group/main?grno=${svo.grno}" class="btn btn-warning">구경하기</a>
+					</div>
 				</div>
 			</div>
-		</div>
-	</c:forEach>
+		</c:forEach>
 	</div>
 </section>
 <jsp:include page="../layout/footer.jsp"></jsp:include>

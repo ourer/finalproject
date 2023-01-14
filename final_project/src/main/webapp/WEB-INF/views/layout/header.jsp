@@ -42,10 +42,10 @@
              <li class="nav-item">
                 <div>
 					<c:if test="${pvo.uuid ==null }">
-						<img src="/resources/img/blank-profile.png" class="rounded-circle mx-auto d-block" style="width: 75px; height: 75px;">
+						<img src="/upload/blank-profile.png" class="rounded-circle mx-auto d-block" alt="..." style="width: 140px; height: 140px">
 					</c:if>
 					<c:if test="${pvo.uuid !=null }">
-						<img src="/upload/${fn:replace(pvo.dir,'\\','/')}/${pvo.uuid}_${pvo.name}" class="rounded-circle mx-auto d-block" alt="..." style="width: 150px;">
+						<img src="/upload/${fn:replace(pvo.dir,'\\','/')}/${pvo.uuid}_${pvo.name}" class="rounded-circle mx-auto d-block" alt="..." style="width: 140px; height: 140px">
 					</c:if>
                   <div class="imgname">
                   <span id="imgname">${ses.name }</span>

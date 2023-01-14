@@ -25,10 +25,6 @@ public interface GroupDAO {
 
 	List<GroupVO> getAllList();
 
-	List<GroupVO> CategoryOne(String code);
-
-	List<GroupVO> getCategoryOne(String name);
-
 
 
 }

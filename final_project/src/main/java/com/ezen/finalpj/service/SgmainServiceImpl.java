@@ -22,8 +22,6 @@ public class SgmainServiceImpl implements SgmainService {
 		log.info(">>> sgmain 이미지 가져오기");
 		return sdao.getSgMainImg();
 	}
-
-
 	
 
 

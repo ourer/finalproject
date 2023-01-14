@@ -49,33 +49,32 @@ function joinCheck(obj){
 // 이메일 중복체크
 function emailCheck(){
     var email = $('#email').val();  // 받아온 email값 저장
-    if(email!=""){
-    console.log(email);
-    $.ajax({
-        url:'/user/emailCheck',  // Controller에서 요청받을 주소
-        type : 'post',
-        data : {email : email},
-        success:function(cnt){
-            if(cnt == 0){
-                $('.email_OK').css("display", "inline-block");
-                $('.email_NO').css("display","none");
-            }else{  // cnt 가 1 일 경우 => 이미 있는 이메일
-                $('.email_NO').css("display", "inline-block");
-                $('.email_OK').css("display", "none");
-                alert("아이디를 다시 입력해주세요!")
-                $('#email').val('');
-            }
-        },
-        error:function(){
-            alert("에러났다..");
-        }
-    });
-    
+    if(email!="") {
+	    $.ajax({
+	        url:'/user/emailCheck',  // Controller에서 요청받을 주소
+	        type : 'post',
+	        data : {email : email},
+	        dataType: 'json',
+	        success:function(cnt) {
+	            if(cnt == 0){
+	                $('.email_OK').css("display", "inline-block");
+	                $('.email_NO').css("display","none");
+	            }else{  // cnt 가 1 일 경우 => 이미 있는 이메일
+	                $('.email_NO').css("display", "inline-block");
+	                $('.email_OK').css("display", "none");
+	                alert("아이디를 다시 입력해주세요!");
+	                $('#email').val('');
+	            }
+	        },
+	        error:function() {
+	            alert("에러났다..");
+	        }
+	    });
     }
 };
 
 // 비밀번호 일치 체크
-	$('.pw').focusout(function(){
+	$('.pw').keyup(function(){
     	let pass1 = $("#pw").val();
         let pass2 = $("#pw2").val();
         console.log(pass1);
@@ -95,28 +94,29 @@ function emailCheck(){
 
 
 // 닉네임 중복확인
-    function checkNickName(){
-        var nickname = $('#nickname').val(); //id값이 "id"인 입력란의 값을 저장
-        $.ajax({
-            url:'/user/nicknameCheck', //Controller에서 요청 받을 주소
-            type:'post', //POST 방식으로 전달
-            data:{nickname:nickname},
-            success:function(cnt){ //컨트롤러에서 넘어온 cnt값을 받는다 
-                if(cnt == 0){ //cnt가 1이 아니면(=0일 경우) -> 사용 가능한 아이디 
-                    $('.nickName_OK').css("display","inline-block"); 
-                    $('.nickName_NO').css("display", "none");
-                } else { // cnt가 1일 경우 -> 이미 존재하는 아이디
-                    $('.nickName_NO').css("display","inline-block");
-                    $('.nickName_OK').css("display", "none");
-                    alert("아이디를 다시 입력해주세요");
-                    $('#nickname').val('');
-                }
-            },
-            error:function(){
-                alert("에러입니다");
+function checkNickName(){
+    var nickname = $('#nickname').val(); //id값이 "id"인 입력란의 값을 저장
+    $.ajax({
+        url:'/user/nicknameCheck', //Controller에서 요청 받을 주소
+        type:'post', //POST 방식으로 전달
+        data:{nickname:nickname},
+        dataType: 'json',
+        success:function(cnt){ //컨트롤러에서 넘어온 cnt값을 받는다 
+            if(cnt == 0){ //cnt가 1이 아니면(=0일 경우) -> 사용 가능한 아이디 
+                $('.nickName_OK').css("display","inline-block"); 
+                $('.nickName_NO').css("display", "none");
+            } else { // cnt가 1일 경우 -> 이미 존재하는 아이디
+                $('.nickName_NO').css("display","inline-block");
+                $('.nickName_OK').css("display", "none");
+                alert("닉네임을 다시 입력해주세요");
+                $('#nickname').val('');
             }
-        });
-        };
+        },
+        error:function(){
+            alert("에러입니다");
+        }
+    });
+};
 
 
 

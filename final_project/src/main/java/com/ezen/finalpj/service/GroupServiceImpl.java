@@ -64,17 +64,9 @@ public class GroupServiceImpl implements GroupService {
 		return gdao.getAllList();
 	}
 
-	@Override
-	public List<GroupVO> CategoryOne(String code) {
-		log.info("group SelectOne List check 2");
-		return gdao.CategoryOne(code);
-	}
 
-	@Override
-	public List<GroupVO> getCategoryOne(String name) {
-		log.info("상세 카테고리별 리스트 가져오기");
-		return gdao.getCategoryOne(name);
-	}
+
+
 
 
 }

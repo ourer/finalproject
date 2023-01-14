@@ -12,5 +12,9 @@ public interface CategoryService {
 
 	String getCategoryCode(String name);
 
+	List<CategoryVO> getCategoryDetailList(String code);
+
+	List<CategoryVO> getCategoryOne(String name);
+
 
 }

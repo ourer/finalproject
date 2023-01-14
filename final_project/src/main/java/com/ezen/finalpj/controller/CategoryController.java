@@ -1,9 +1,13 @@
 package com.ezen.finalpj.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javax.inject.Inject;
+import javax.ws.rs.PUT;
 
+import org.apache.commons.collections4.map.HashedMap;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +20,7 @@ import com.ezen.finalpj.domain.SgMainVO;
 import com.ezen.finalpj.service.CategoryService;
 import com.ezen.finalpj.service.GroupService;
 import com.ezen.finalpj.service.SgmainService;
+import com.mysql.cj.x.protobuf.MysqlxCrud.Collection;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -33,11 +38,8 @@ public class CategoryController {
 	// 소모임 전체리스트 불러오기
 	@GetMapping("/categorymain")
 	public String categorymain(Model model) {
-		List<GroupVO> gList = gsv.getAllList();
 		List<SgMainVO> sList = ssv.getSgMainImg();
-		log.info(gList.toString());
-		log.info(sList.toString());
-		model.addAttribute("gList", gList);
+		log.info("test : " + sList.toString());
 		model.addAttribute("sList", sList);
 		return "/category/categorymain";
 	}
@@ -45,12 +47,10 @@ public class CategoryController {
 	//소모임 카테고리별 불러오기
 	@GetMapping("/categoryDetail")
 	public String categoryDetail(Model model, @RequestParam("code")String code) {
-		List<GroupVO> gList = gsv.CategoryOne(code);
-		List<SgMainVO> sList = ssv.getSgMainImg();
-		List<CategoryVO> cList = csv.getCategoryList(code);
-		log.info(cList.toString());
-		model.addAttribute("gList", gList);
-		model.addAttribute("sList", sList);
+		List<CategoryVO> cateList = csv.getCategoryList(code);
+		List<CategoryVO> cList = csv.getCategoryDetailList(code);
+		log.info("카테고리별 불러오기 : "+cateList.toString());
+		model.addAttribute("cateList", cateList);
 		model.addAttribute("cList", cList);
 		return "/category/categoryDetail";
 	}
@@ -59,18 +59,28 @@ public class CategoryController {
 	@GetMapping("/categoryName")
 	public String categoryName(Model model, @RequestParam("name")String name) {
 		String code=csv.getCategoryCode(name);
-		List<CategoryVO> cList = csv.getCategoryList(code);
-		List<GroupVO> gList = gsv.getCategoryOne(name);
-		List<SgMainVO> sList = ssv.getSgMainImg();
+		List<CategoryVO> cList = csv.getCategoryDetailList(code);
+		List<CategoryVO> cateList = csv.getCategoryOne(name);
 		log.info("세부 카테고리별 C리스트 출력"+cList.toString());
-		log.info("세부 카테고리별 G리스트 출력"+gList.toString());
+		log.info("세부 카테고리별 G리스트 출력"+cateList.toString());
 		
 		model.addAttribute("cList", cList);
-		model.addAttribute("sList", sList);
-		model.addAttribute("gList", gList);
+		model.addAttribute("cateList", cateList);
 		return "/category/categoryNameList";
 	}
 	
-
+	
+	//home.jsp 오늘의 추천 소모임 리스트 랜덤 추천
+	@GetMapping("/categoryRandom")
+	public String categoryRandom(Model model) {
+		List<SgMainVO> sList = ssv.getSgMainImg();
+		log.info("test : " + sList.toString());
+		// 랜덤출력
+		
+		
+		
+		model.addAttribute("sList", sList);
+		return "/";
+	}
 
 }

@@ -7,9 +7,6 @@ import com.ezen.finalpj.domain.SgMainVO;
 public interface SgmainDAO {
 
 	List<SgMainVO> getSgMainImg();
-
-
-
 	
 
 }

@@ -29,9 +29,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from smallgroup where code=#{code};
 	</select>
 	
-	<select id="getCategoryOne" resultType="com.ezen.finalpj.domain.GroupVO">
-		select * from smallgroup where ctno = (select ctno from category where name = #{name})
-	</select>
+
 	
 
 </mapper>

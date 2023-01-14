@@ -21,8 +21,6 @@ public interface GroupService {
 
 	List<GroupVO> getAllList();
 
-	List<GroupVO> CategoryOne(String code);
 
-	List<GroupVO> getCategoryOne(String name);
 
 }
