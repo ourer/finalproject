@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 <jsp:include page="../layout/header.jsp"></jsp:include>
 <style>
@@ -86,26 +87,38 @@
 		  		<span class="icontext">반려동물</span>
 		  	</button>
 		  </div>
-
-	<h3 style="margin: 30px auto">소모임 전체 리스트</h3>
+		  
+	<h3 style="margin: 30px auto">모든 소모임</h3>
 	<div class="row row-cols-1 row-cols-md-4 g-4" style="margin-bottom: 100px">
-		<c:forEach items="${gList }" var="list" begin="0" step="1">
-		<div class="col">
-			<div class="card h-100">
-				<img src="/resources/img/java.jpg" class="card-img-top">
-<%-- 				<c:forEach items="${sList }" var="svo" begin="0" step="1">
-					<img src="${svo.grno }" class="card-img-top">
-				</c:forEach> --%>
-				<div class="card-body">
-					<h5 class="card-title">${list.name }</h5>
-					<p class="card-text">${list.detail }</p>
-					<p class="card-text">${list.city}  ${list.county }</p>
-					<a href="#" class="btn btn-warning">구경하기</a>
+		<c:forEach items="${sList}" var="svo" begin="0" varStatus="status">
+			<div class="col">
+				<div class="card h-100">
+					<c:if test="${svo.uuid == null}">
+						<img alt="sgMain" src="/resources/img/sgmain_null.jpg">
+					</c:if>
+					<c:if test="${svo.uuid != null}">
+						<img alt="sgMain" src="/upload/sgMainUpload/${fn:replace(svo.dir,'\\','/')}/${svo.uuid}_${svo.name}" class="card-img-top">
+					</c:if>
+					<div class="card-body">
+						<h5 class="card-title">${svo.sg_name }</h5>
+						<p class="card-text">${svo.detail }</p>
+						<p class="card-text">${svo.city}  ${svo.county }</p>
+						<a href="/group/main?grno=${svo.grno}" class="btn btn-warning">구경하기</a>
+					</div>
 				</div>
 			</div>
-		</div>
 		</c:forEach>
 	</div>
-	
+	<div>
+		<c:if test="${pgh.prev }">
+			<a href="/category/categorymain?pageNo=${pgh.startPage-1 }&qty=${pgh.pgvo.qty }&type=${pgh.pgvo.qty }&keyword=${pgh.pgvo.keyword } ">◀</a>
+		</c:if>
+		<c:forEach begin="${pgh.startPage }" end="${pgh.endPage }" var="i">
+			<a href="/category/categorymain?pageNo=${i }&qty=${pgh.pgvo.qty}&type=${pgh.pgvo.qty }&keyword=${pgh.pgvo.keyword }">${i } ｜</a>
+		</c:forEach>
+		<c:if test="${pgh.next }">
+			<a href="/category/categorymain?pageNo=${pgh.endPage+1 }&qty=${pgh.pgvo.qty }&type=${pgh.pgvo.qty }&keyword=${pgh.pgvo.keyword } ">▶</a>
+		</c:if>
+	</div>
 </section>
 <jsp:include page="../layout/footer.jsp"></jsp:include>

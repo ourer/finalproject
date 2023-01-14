@@ -20,6 +20,8 @@ public interface ScheduleService {
 
 	int updateJoinMemDelete(int sno);
 
+	int updateIsDoneSche(int sno);
+
 
 
 }

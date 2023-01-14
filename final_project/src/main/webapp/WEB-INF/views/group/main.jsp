@@ -8,39 +8,40 @@
 
 <section>
     <div class="firstBox">
-        <div class="infoBox">
-            <div class="grpNameBox">
-                <span class="grpName">${gvo.name }</span>
-                <button id="shareBtn" onclick="copyUrl()"><i class="fa-solid fa-share-nodes"></i></button>
-                <button id="heartBtn">
-               	<c:choose>
-               	<c:when test="${fvo ne null }">
-                	<i class="fa-solid fa-heart"></i>
-               	</c:when>
-	            <c:otherwise>
-                	<i class="fa-regular fa-heart"></i>                		
-	            </c:otherwise>
-               	</c:choose>
-                </button>
-            </div>
-            <ul class="grpNavUl">
-                <li class="grpNavLi"><a href="#">정보</a></li>
-                <li class="grpNavLi"><a href="/gboard/list?grno=${gvo.grno }">게시판</a></li>
+    	<ul class="grpNavUl nav nav-tabs">
+            	<li class="nav-item dropdown"><h3 class="grpName">${gvo.name }</h3></li>
+                <li class="grpNavLi nav-item"><a class="nav-link" href="group/main?grno=${gvo.grno }">정보</a></li>
+                <li class="grpNavLi nav-item"><a class="nav-link" href="/gboard/list?grno=${gvo.grno }">게시판</a></li>
+                <li class="grpNavLi nav-item"><a class="nav-link" href="/group/memberList?grno=${gvo.grno }">멤버</a></li>
                 <c:if test="${ses.email eq gvo.email }">
-                <li class="grpNavLi"><a href="/schedule/register?grno=${gvo.grno }">스케줄 생성</a></li>
+                <li class="grpNavLi nav-item"><a class="nav-link" href="/schedule/register?grno=${gvo.grno }">스케줄 생성</a></li>
                 </c:if>
-                <li class="grpNavLi"><a href="/group/memberList?grno=${gvo.grno }">멤버</a></li>
+                <li class="grpNavLi nav-item"><button id="shareBtn" onclick="copyUrl()"><i class="fa-solid fa-share-nodes"></i></button></li>
+                <li class="grpNavLi nav-item">
+	                <button id="heartBtn">
+	               	<c:choose>
+	               	<c:when test="${fvo ne null }">
+	                	<i class="fa-solid fa-heart"></i>
+	               	</c:when>
+		            <c:otherwise>
+	                	<i class="fa-regular fa-heart"></i>                		
+		            </c:otherwise>
+	               	</c:choose>
+	                </button>
+                </li>
             </ul>
         </div>
-        <div class="imgBox">
+	    <div class="imgBox">
         <c:choose>
         	<c:when test="${smvo ne null }">
-	            <img src="/upload/sgMainUpload/${fn:replace(smvo.dir, '\\', '/')}/${smvo.uuid}_${smvo.name}" alt="">
+	            <img src="/upload/sgMainUpload/${fn:replace(smvo.dir, '\\', '/')}/${smvo.uuid}_${smvo.name}" alt="" style="width: 1050px; height: 500px">
 	            <form action="/group/image" method="post" enctype="multipart/form-data">
 		            <input type="hidden" name="grno" value="${gvo.grno }">
 		            <input class="form-control" type="file" style="display: none;" id="files" name="files">
+		            <c:if test="${ses.email == gvo.email }">
 		            <button id="trigger" class="btn btn-outline-primary btn-block d-block" type="button">이미지 수정</button>
 		            <a href="/group/image/delete?grno=${gvo.grno }"><button class="btn btn-outline-primary btn-block d-block" type="button">이미지 삭제</button></a>
+		            </c:if>
 	        	<div class="col-12" id="fileZone">
 					<!--파일이 첨부되면 해당 파일에 대한 정보가 표시됨-->
 				</div>
@@ -51,7 +52,9 @@
 	            <form action="/group/image" method="post" enctype="multipart/form-data">
 		            <input type="hidden" name="grno" value="${gvo.grno }">
 		            <input class="form-control" type="file" style="display: none;" id="files" name="files">
+		            <c:if test="${ses.email == gvo.email }">
 		            <button id="trigger" class="btn btn-outline-primary btn-block d-block" type="button">이미지 등록</button>
+		            </c:if>
 	        	<div class="col-12" id="fileZone">
 					<!--파일이 첨부되면 해당 파일에 대한 정보가 표시됨-->
 				</div>
@@ -65,7 +68,6 @@
     			${gvo.detail }
             </div>
         </div>
-    </div>
     <div class="secondBox">
         <div class="secondTitle">
             모임 정보
@@ -81,7 +83,7 @@
 	            <div class="scheInner">
 	                <img src="" alt="">
 	                <ul class="scheInfo">
-	                    <li class="scheInfoLi">시간: ${svo.meetdate }</li>
+	                    <li class="scheInfoLi scheDate" data-sno="${svo.sno}">시간: ${svo.meetdate }</li>
 	                    <li class="scheInfoLi">장소: ${svo.spot } </li>
 	                    <li class="scheInfoLi">비용: ${svo.cost }</li>
 	                    <li class="scheInfoLi">

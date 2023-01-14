@@ -48,11 +48,11 @@
 		    </div>
 			<div class="form">
 			    <label for="gender" class="col-sm-1 col-form-label">성별</label>
-			    <input type="text" class="form-control" id="gender" name="gender" value="${ses.gender }" readonly="readonly">
+			    <input type="text" class="form-control" id="gender" name="gender" value="${ses.gender == 0? "남자":"여자"  }" readonly="readonly">
 		    </div>
 			<div class="form">
 			    <label for="phone" class="col-sm-1 col-form-label">연락처</label>
-			    <input type="text" class="form-control" id="phone" name="phone" value="${ses.phone }">
+			    <input type="text" class="form-control" id="Phone" name="phone" oninput="hypenTel(this)" maxlength="13" value="${ses.phone }">
 		    </div>
 		    <div class="row g-3">
 				<div class="innerSecond col-auto">관심사1:
@@ -71,7 +71,7 @@
                        <option value="K">요리/제조</option>
                        <option value="L">반려동물</option>
                    </select>
-                   <select class="form-select" name="ctno_1" id="ctno" class="ctno_1">
+                   <select class="form-select" name="ctno_1" id="ctno1" class="ctno_1">
                        <option value="0">중분류</option>
                    </select>
                    </div>
@@ -91,7 +91,7 @@
                       <option value="K">요리/제조</option>
                       <option value="L">반려동물</option>
                    </select>
-                   <select class="form-select" name="ctno_2" id="ctno" class="ctno_2">
+                   <select class="form-select" name="ctno_2" id="ctno2" class="ctno_2">
                        <option value="0">중분류</option>
                    </select>
                </div>
@@ -111,7 +111,7 @@
                       <option value="K">요리/제조</option>
                       <option value="L">반려동물</option>
                   </select>
-                  <select class="form-select" name="ctno_3" id="ctno" class="ctno_3">
+                  <select class="form-select" name="ctno_3" id="ctno3" class="ctno_3">
                       <option value="0">중분류</option>
                   </select>
               </div>
@@ -124,6 +124,11 @@
 <jsp:include page="../layout/footer.jsp"></jsp:include>
 <script type="text/javascript" src="/resources/js/UserRegister.js"></script>
 <script type="text/javascript">
+const hypenTel = (target) => {
+    target.value = target.value
+      .replace(/[^0-9]/g, '')
+      .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
+}
 
 //카테고리 선택옵션 고정
 let ctnoAllList = [
@@ -170,15 +175,10 @@ console.log(ctno_1); //현재 고정되어있는 옵션 >> 대분류
 console.log(option1.length); //13
 
 for(var i=0; i<option1.length; i++){
-    //console.log(ctcode1);
-    //console.log(option1[i]);
     if(option1[i].value == ctcode1){
         option1[i].selected = true;
-        //console.log(ctnoList[i]); // 선택된 중분류 목록
-        //console.log(ctnoAllList[ctno1]); // 선택된 중분류
-        // ctno.options[i] : 중분류의 i번째 옵션
-        ctno = option1.nextElementSibling; // 해당되는 중분류 select 요소
-        for(j=ctno.length-1; j>=0; j--) ctno.options[j] = null; // 기존에 있던 중분류 옵션 초기화
+        ctno = option1.nextElementSibling;
+        for(j=ctno.length-1; j>=0; j--) ctno.options[j] = null;
         for(j=0; j<ctnoList[i].length; j++) ctno.options[j]=new Option(ctnoList[i][j], ctnoList[i][j]);
         for(var j=0; j<options1.length; j++){
         if(options1[j].value == ctnoAllList[ctno1]){

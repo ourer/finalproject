@@ -268,3 +268,45 @@ document.addEventListener('change',(e)=>{
         }
     }
 })
+
+window.addEventListener('load', ()=>{
+    let scheDateLi=document.querySelectorAll('.scheDate');
+    for(let d of scheDateLi){
+        let date=d.innerText;
+        date=date.substring(4, 16);
+        console.log(date);
+        date=new Date(date);
+        console.log("스케줄 날짜: "+date.toLocaleDateString());
+        const today=new Date();
+        console.log("오늘 날짜: "+today.toLocaleDateString());
+        if(today>date){
+            let sno=d.dataset.sno;
+            //let grno=d.dataset.grno;
+            console.log("지난스케줄: "+date.toLocaleDateString());
+            console.log("sno "+sno);
+            updateIsDone(sno).then(result=>{
+                if(result>0){
+                    console.log("스케줄 수정 완료");
+                    location.reload();
+                    //location.href = location.href;
+                    //location.href="/group/main?grno="+grno;
+                }
+            })
+        }
+    }
+})
+
+async function updateIsDone(sno){
+    try {
+        const url="/schedule/update/"+sno;
+        const config={
+            method: 'put',
+            body: sno
+        }
+        const resp=await fetch(url, config);
+        const result=resp.text();
+        return result;
+    } catch (error) {
+        console.log(error);
+    }
+}

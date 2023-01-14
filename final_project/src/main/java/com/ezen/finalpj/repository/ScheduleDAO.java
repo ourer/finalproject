@@ -24,4 +24,6 @@ public interface ScheduleDAO {
 
 	int updateJoinMemDelete(int sno);
 
+	int updateIsDonePut(int sno);
+
 }

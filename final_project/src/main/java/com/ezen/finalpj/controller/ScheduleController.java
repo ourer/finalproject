@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -110,5 +111,13 @@ public class ScheduleController {
 		isOk*=ssv.updateJoinMemDelete(sno);
 		log.info(isOk>0?"스케줄 참가 취소 성공":"스케줄 참가취소 실패");
 		return isOk>0? new ResponseEntity<String>("1", HttpStatus.OK): new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	
+	@PutMapping(value = "/update/{sno}", produces = {MediaType.TEXT_PLAIN_VALUE})
+	public ResponseEntity<String> updateSchePut(@PathVariable("sno")int sno){
+		int isOk=ssv.updateIsDoneSche(sno);
+		log.info(isOk>0?"isDone 성공":"isDone 실패");
+		return isOk>0? new ResponseEntity<String>("1", HttpStatus.OK): new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+		
 	}
 }

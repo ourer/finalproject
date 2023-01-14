@@ -8,6 +8,6 @@ public interface SgmainDAO {
 
 	List<SgMainVO> getSgmain(int grno);
 
-	
+	List<SgMainVO> getSgMainImg();
 
 }

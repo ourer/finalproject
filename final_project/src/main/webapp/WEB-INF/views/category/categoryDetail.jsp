@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 <jsp:include page="../layout/header.jsp"></jsp:include>
 <style>
@@ -87,17 +88,30 @@
 		  	</button>
 		  </div>
 		  
-	<h3 style="margin: 30px auto">카테고리명</h3>
+	<!-- 카테고리 name -->
+	<div class="d-grid gap-2 d-md-block">
+		<c:forEach items="${cList }" var="cvo" begin="0">
+  			<button class="btn btn-outline-warning" type="button" onclick="location.href='/category/categoryName?name=${cvo.name }'">${cvo.name }</button>
+		</c:forEach>
+	</div>
+	
+	<br>
+	
 	<div class="row row-cols-1 row-cols-md-4 g-4" style="margin-bottom: 100px">
-	<c:forEach items="${gList }" var="gvo" begin="0" step="1">
+	<c:forEach items="${cateList }" var="cavo" begin="0" varStatus="status">
 		<div class="col">
 			<div class="card h-100">
-				<img src="/resources/img/java.jpg" class="card-img-top">
+				<c:if test="${cavo.uuid == null}">
+					<img alt="sgMain" src="/resources/img/sgmain_null.jpg">
+				</c:if>
+				<c:if test="${cavo.uuid != null}">
+					<img alt="sgMain" src="/upload/sgMainUpload/${fn:replace(cavo.dir,'\\','/')}/${cavo.uuid}_${cavo.sm_name}" class="card-img-top">
+				</c:if>
 				<div class="card-body">
-					<h5 class="card-title">${gvo.name }</h5>
-					<p class="card-text">${gvo.detail }</p>
-					<p class="card-text">${gvo.city}  ${gvo.county }</p>
-					<a href="/group/main?grno=${gvo.grno }" class="btn btn-warning">구경하기</a>
+					<h5 class="card-title">${cavo.sg_name }</h5>
+					<p class="card-text">${cavo.detail }</p>
+					<p class="card-text">${cavo.city}  ${cavo.county }</p>
+					<a href="/group/main?grno=${cavo.grno}" class="btn btn-warning">구경하기</a>
 				</div>
 			</div>
 		</div>

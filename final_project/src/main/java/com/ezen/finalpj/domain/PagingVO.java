@@ -13,7 +13,7 @@ public class PagingVO {
 	private String keyword;
 	
 	public PagingVO() {
-		this(1,10);
+		this(1,8);
 	}
 	
 	public PagingVO(int pageNo, int qty) {
