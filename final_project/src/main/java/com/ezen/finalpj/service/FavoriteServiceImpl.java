@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
 
+import com.ezen.finalpj.domain.CategoryVO;
 import com.ezen.finalpj.domain.FavoriteDTO;
 import com.ezen.finalpj.domain.FavoriteVO;
 import com.ezen.finalpj.domain.GroupVO;
@@ -45,6 +46,13 @@ public class FavoriteServiceImpl implements FavoriteService {
 	public List<GroupVO> groupList(String email) {
 		log.info("찜 목록");
 		return fdao.selectGroupList(email);
+	}
+
+
+	@Override
+	public List<FavoriteDTO> favoriteList(String email) {
+		log.info("찜 목록 카테고리");
+		return fdao.selectFavoriteList(email);
 	}
 
 

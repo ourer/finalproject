@@ -8,19 +8,15 @@
 
 <section>
     <div class="firstBox">
-        <div class="infoBox">
-            <div class="grpNameBox">
-                <span class="grpName">${gvo.name }</span>
-                <button id="shareBtn" onclick="copyUrl()"><i class="fa-solid fa-share-nodes"></i></button>
-                <button id="heartBtn"><i class="fa-regular fa-heart"></i>${favMsg }</button>
-            </div>
-            <ul class="grpNavUl">
-                <li class="grpNavLi"><a href="#">정보</a></li>
-                <li class="grpNavLi"><a href="/gboard/list?grno=${gvo.grno }">게시판</a></li>
+            <ul class="grpNavUl nav nav-tabs">
+            	<li class="nav-item dropdown"><h3 class="grpName">${gvo.name }</h3></li>
+                <li class="grpNavLi nav-item"><a class="nav-link" href="#">정보</a></li>
+                <li class="grpNavLi nav-item"><a class="nav-link" href="/gboard/list?grno=${gvo.grno }">게시판</a></li>
                 <c:if test="${ses.email eq gvo.email }">
-                <li class="grpNavLi"><a href="/schedule/register?grno=${gvo.grno }">스케줄 생성</a></li>
+                <li class="grpNavLi nav-item"><a class="nav-link" href="/schedule/register?grno=${gvo.grno }">스케줄 생성</a></li>
                 </c:if>
-                <li class="grpNavLi"><a href="/group/memberList?grno=${gvo.grno }">멤버</a></li>
+                <li class="grpNavLi nav-item"><button id="shareBtn" onclick="copyUrl()"><i class="fa-solid fa-share-nodes"></i></button></li>
+                <li class="grpNavLi nav-item"><button id="heartBtn"><i class="fa-regular fa-heart"></i>${favMsg }</button></li>
             </ul>
         </div>
         <div class="imgBox">

@@ -159,10 +159,3 @@ for(var i=0; i<option3.length; i++){
 		option3[i].selected = true;
 	}
 }
-
-for(var i=0; i<options1.length; i++){
-	console.log(options1[i].value);
-	if(options1[i].value == ctno1){
-		options1[i].selected = true;
-	}
-}

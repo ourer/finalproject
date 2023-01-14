@@ -1,7 +1,5 @@
 package com.ezen.finalpj.domain;
 
-import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +12,8 @@ import lombok.ToString;
 @Setter
 @Getter
 public class FavoriteDTO {
-	private FavoriteVO fvo;
-	private GroupVO gvo;
+	private String ctname;
+	private String gname;
+	private String gdetail;
 
 }

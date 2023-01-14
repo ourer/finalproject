@@ -25,10 +25,10 @@
 		    <div class="card">
 		      <div class="card-body">
 				<c:if test="${pvo.uuid == null}">
-					<img src="/resources/img/blank-profile.png" class="rounded-circle mx-auto d-block" alt="..." style="width: 140px;">
+					<img src="/resources/img/blank-profile.png" class="rounded-circle mx-auto d-block" alt="..." style="width: 140px; height: 140px">
 				</c:if>
 				<c:if test="${pvo.uuid != null}">
-					<img src="/upload/${fn:replace(pvo.dir,'\\','/')}/${pvo.uuid}_th_${pvo.name}" class="rounded-circle mx-auto d-block" alt="..." style="width: 140px;"> 
+					<img src="/upload/${fn:replace(pvo.dir,'\\','/')}/${pvo.uuid}_${pvo.name}" class="rounded-circle mx-auto d-block" alt="..." style="width: 140px; height: 140px"> 
 				</c:if>		
 		        <div class="text-center">
 		        	<span>${ses.name }</span>

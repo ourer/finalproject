@@ -16,4 +16,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectGroupList" resultType="com.ezen.finalpj.domain.GroupVO">
 		select * from smallgroup join favorite on smallgroup.grno = favorite.grno where favorite.email = #{email}
 	</select>
+	<select id="selectFavoriteList" resultType="com.ezen.finalpj.domain.FavoriteDTO">
+		select category.name as ctname, smallgroup.name as gname, smallgroup.detail as gdetail from smallgroup
+		join category on category.ctno=smallgroup.ctno join favorite on favorite.grno=smallgroup.grno where favorite.email=#{email}
+	</select>
 </mapper>
