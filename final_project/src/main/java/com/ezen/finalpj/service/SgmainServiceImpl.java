@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.ezen.finalpj.domain.PagingVO;
+import com.ezen.finalpj.domain.SearchVO;
 import com.ezen.finalpj.domain.SgMainVO;
 import com.ezen.finalpj.repository.SgmainDAO;
 
@@ -31,16 +32,11 @@ public class SgmainServiceImpl implements SgmainService {
 	}
 
 	@Override
-	public List<SgMainVO> getSgMainImgPaging(PagingVO pgvo) {
-		log.info(">>> sgmainPaging 이미지 가져오기");
-		return sdao.getSgMainImgPaging(pgvo);
+	public List<SgMainVO> getSgMainImgSearching(SearchVO scvo) {
+		log.info(">>> sgmainNoPaging 이미지 가져오기");
+		return sdao.getSgMainImgSearching(scvo);
 	}
 
-	@Override
-	public int getPageCount(PagingVO pgvo) {
-		log.info(">>> sgmainPaging 이미지의 전체 수 가져오기");
-		return sdao.selectCount(pgvo);
-	}
 
 
 }

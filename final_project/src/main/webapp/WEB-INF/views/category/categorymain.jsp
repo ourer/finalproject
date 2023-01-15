@@ -90,7 +90,7 @@
 
 	<h3 style="margin: 30px auto">모든 소모임</h3>
    <div class="row row-cols-1 row-cols-md-4 g-4" style="margin-bottom: 100px">
-      <c:forEach items="${sList}" var="svo" begin="0" varStatus="status">
+      <c:forEach items="${sgList}" var="svo" begin="0">
          <div class="col">
             <div class="card h-100">
                <c:if test="${svo.uuid == null}">
@@ -109,18 +109,6 @@
          </div>
       </c:forEach>
    </div>
-	
-	<div>
-		<c:if test="${pgh.prev }">
-			<a href="/category/categorymain?pageNo=${pgh.startPage-1 }&qty=${pgh.pgvo.qty }&type=${pgh.pgvo.qty }&keyword=${pgh.pgvo.keyword } ">◀</a>
-		</c:if>
-		<c:forEach begin="${pgh.startPage }" end="${pgh.endPage }" var="i">
-			<a href="/category/categorymain?pageNo=${i }&qty=${pgh.pgvo.qty}&type=${pgh.pgvo.qty }&keyword=${pgh.pgvo.keyword }">${i } ｜</a>
-		</c:forEach>
-		<c:if test="${pgh.next }">
-			<a href="/category/categorymain?pageNo=${pgh.endPage+1 }&qty=${pgh.pgvo.qty }&type=${pgh.pgvo.qty }&keyword=${pgh.pgvo.keyword } ">▶</a>
-		</c:if>
-	</div>
 	
 </section>
 <jsp:include page="../layout/footer.jsp"></jsp:include>

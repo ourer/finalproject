@@ -32,11 +32,11 @@ public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model,PagingVO pgvo) {
 		logger.info("Welcome home! The client locale is {}.", locale);
-		log.info("pgvo : "+pgvo.toString());
-		
-		int totalCount=ssv.getPageCount(pgvo);
-		PagingHandler pgh=new PagingHandler(pgvo, totalCount);
-		model.addAttribute("pgh", pgh);
+//		log.info("pgvo : "+pgvo.toString());
+//		
+//		int totalCount=ssv.getPageCount(pgvo);
+//		PagingHandler pgh=new PagingHandler(pgvo, totalCount);
+//		model.addAttribute("pgh", pgh);
 		
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);

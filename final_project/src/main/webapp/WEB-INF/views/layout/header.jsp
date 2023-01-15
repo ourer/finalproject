@@ -117,15 +117,13 @@
       <!-- search 라인 -->
 	<div class="input-group mb-3">
 		<form class="d-flex" role="search" action="/category/categorymain" method="get">
-			<c:set value="${pgh.pgvo.type }" var="typed"/>
+			<c:set value="${scvo.type }" var="typed"/>
 				<select name="type" class="btn btn-outline-secondary" aria-expanded="false">
 					<option value="a" ${typed eq 'a' ? 'selected':'' }>제목+내용</option>
 					<option value="n" ${typed eq 'n' ? 'selected':'' }>제목</option>
 					<option value="d" ${typed eq 'd' ? 'selected':'' }>내용</option>
 				</select>
-					<input class="form-control me-2" type="search" placeholder="관심사를 검색해보세요"  aria-label="Search" name="keyword" value="${pgh.pgvo.keyword }">
-					<input type="hidden" name="pageNo" value="1">
-					<input type="hidden" name="qty" value="${pgh.pgvo.qty }">
+					<input class="form-control me-2" type="search" placeholder="관심사를 검색해보세요"  aria-label="Search" name="keyword" value="${scvo.keyword }">
 						<button class="btn btn-outline-warning" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
 		</form>
 	</div>
