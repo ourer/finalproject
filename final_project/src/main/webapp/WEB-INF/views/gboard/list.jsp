@@ -36,16 +36,16 @@
 			<div class="text-end">
 				<a href="/gboard/register?grno=${grno }"><button class="btn btn-outline-warning" type="button">작성</button></a>
 			</div>
-			<nav aria-label="Page navigation example">
+		<nav aria-label="Page navigation example">
 		  <ul class="pagination justify-content-center">
-		  	<c:if test="${pgh.prev }">
-		    <li class="page-item"><a class="page-link" href="/board/list?pageNo=${pgh.startPage-1 }&qty=${pgh.pgvo.qty }">Previous</a></li>
+		  	<c:if test="${gph.prev }">
+		    <li class="page-item"><a class="page-link" href="/board/list?pageNo=${gph.startPage-1 }&qty=${gph.gpvo.qty }">Previous</a></li>
 		    </c:if>
-		    <c:forEach begin="${pgh.startPage }" end="${pgh.endPage }" var="i">
-		    <li class="page-item"><a class="page-link" href="/board/list?pageNo=${i }&qty=${pgh.pgvo.qty }">${i }</a></li>
+		    <c:forEach begin="${gph.startPage }" end="${gph.endPage }" var="i">
+		    <li class="page-item"><a class="page-link" href="/board/list?pageNo=${i }&qty=${gph.gpvo.qty }">${i }</a></li>
 		    </c:forEach>
-		    <c:if test="${pgh.next }">
-		    <li class="page-item"><a class="page-link" href="/board/list?pageNo=${pgh.endPage+1 }&qty=${pgh.pgvo.qty }">Next</a></li>
+		    <c:if test="${gph.next }">
+		    <li class="page-item"><a class="page-link" href="/board/list?pageNo=${gph.endPage+1 }&qty=${gph.gpvo.qty }">Next</a></li>
 		    </c:if>
 		  </ul>
 		</nav>

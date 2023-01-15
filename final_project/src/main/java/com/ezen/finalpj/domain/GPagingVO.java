@@ -8,6 +8,7 @@ import lombok.Setter;
 public class GPagingVO {
 	private int qty;
 	private int pageNo;
+	private int grno;
 	
 	public GPagingVO(int pageNo, int qty) {
 		this.pageNo=pageNo;

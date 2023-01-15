@@ -100,8 +100,11 @@ public class GroupController {
 				}
 			}
 		}
+		List<UserVO> uList=usv.selectMemListUser(grno);
+		log.info("회원 리스트"+uList.toString());
 		model.addAttribute("gvo", gvo);
 		model.addAttribute("sList", sList);
+		model.addAttribute("uList", uList);
 		model.addAttribute("smvo", smvo);
 		//model.addAttribute("fList", fList);
 		return "/group/main";

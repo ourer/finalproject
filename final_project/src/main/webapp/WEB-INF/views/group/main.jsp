@@ -10,7 +10,7 @@
     <div class="firstBox">
     	<ul class="grpNavUl nav nav-tabs">
             	<li class="nav-item dropdown"><h3 class="grpName">${gvo.name }</h3></li>
-                <li class="grpNavLi nav-item"><a class="nav-link" href="group/main?grno=${gvo.grno }">정보</a></li>
+                <li class="grpNavLi nav-item"><a class="nav-link" href="/group/main?grno=${gvo.grno }">정보</a></li>
                 <li class="grpNavLi nav-item"><a class="nav-link" href="/gboard/list?grno=${gvo.grno }">게시판</a></li>
                 <li class="grpNavLi nav-item"><a class="nav-link" href="/group/memberList?grno=${gvo.grno }">멤버</a></li>
                 <c:if test="${ses.email eq gvo.email }">
@@ -103,7 +103,11 @@
 			               <button class="schJoinBtn" id="schJoinBtn${svo.sno }" disabled>마감</button>
 	                	</c:when>
 	                	<c:otherwise>
+	                	<c:forEach items="${uList }" var="uvo">
+	                	<c:if test="${uvo.email eq ses.email }">
 			               <button class="schJoinBtn" id="schJoinBtn${svo.sno }">참가</button>
+	                	</c:if>
+	                	</c:forEach>
 	                	</c:otherwise>
 	                </c:choose>
 	            </div>
@@ -117,7 +121,29 @@
         	</c:otherwise>
         </c:choose>
     </div>
-    <a href="/group/join?grno=${gvo.grno }"><button>가입</button></a>
+    <c:choose>
+    <c:when test="${ses.email ne null}">
+	     <%-- doneLoop가 반대가 되면 break --%>
+		<c:set var="doneLoop" value="false"/>
+	   	<c:forEach var="mem" items="${uList}">
+	    <c:choose>
+	    <c:when test="${empty uList}">
+	   		<a href="/group/join?grno=${gvo.grno }"><button>가입</button></a>            
+	    </c:when>
+	    <c:when test="${not doneLoop}">
+           <c:if test="${mem.email ne ses.email }">
+             <%-- 원하는 결과가 나오면 true로 선언 : for문의 break 효과 --%>
+             <c:set var="doneLoop" value="true" />
+           </c:if>
+        </c:when>
+        <c:when test="${doneLoop }">
+		     <a href="/group/join?grno=${gvo.grno }"><button>가입</button></a>        
+        </c:when>
+	    </c:choose>
+	   </c:forEach>
+    </c:when>
+    </c:choose>
+
 </section>
 <script type="text/javascript">
 	const emailVal='<c:out value="${ses.email }"/>';
