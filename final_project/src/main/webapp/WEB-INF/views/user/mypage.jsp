@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
 <jsp:include page="../layout/header.jsp"></jsp:include>
 <section>
 		<ul class="nav nav-tabs">
@@ -9,8 +10,8 @@
 		  <li class="nav-item dropdown">
 		    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">나의 소모임</a>
 		    <ul class="dropdown-menu">
-		      <li><a class="dropdown-item" href="/user/mypage">목록</a></li>
-		      <li><a class="dropdown-item" href="/user/management">관리</a></li>
+				<li><a class="dropdown-item" href="/user/mypage/${ses.email }">목록</a></li>
+		      <li><a class="dropdown-item" href="/user/management/${ses.email }" >관리</a></li>
 		    </ul>
 		  </li>
 		  <li class="nav-item">
@@ -24,9 +25,15 @@
 		  <div class="col-sm-6">
 		    <div class="card">
 		      <div class="card-body">
-				<img src="https://m.colettemung.com/web/product/big/202009/5b2194624e6fbe01f2bf3541b4935dd4.jpg" class="rounded-circle mx-auto d-block" alt="..." style="width: 140px;">		        
+		        <c:if test="${sespvo.uuid ==null }">
+					<img src="/upload/blank-profile.png" class="rounded-circle mx-auto d-block" alt="..." style="width: 140px; height: 140px">                
+				</c:if>
+                
+                <c:if test="${sespvo.uuid !=null }">
+                    <img src="/upload/${fn:replace(sespvo.dir,'\\','/')}/${sespvo.uuid}_${sespvo.name}" class="rounded-circle mx-auto d-block" alt="..." style="width: 150px;">
+                </c:if>
 		        <div class="text-center">
-		        	<span>윤승희</span>
+		        	<span>${ses.name }</span>
 		        	<span>님</span>
 		        </div>
 		      </div>
@@ -36,13 +43,15 @@
 		    <div class="card">
 		      <div class="card-body text-center">
 		        <h3>내 소모임 관리</h3>
-		        <a href="/user/management"> 개</a>
+		        <a href="/user/management/${ses.email }"> 개</a>
 		      </div>
 		    </div>
 		    <div class="card">
 		      <div class="card-body text-center">
 		      	<h3>내가 찜한 소모임</h3>
-		        <a href="/user/like"> 개</a>
+		        <c:forEach items="${fList }" var="fvo">
+		        <a href="/favorite/mylike/${ses.email }">${fvo.cntFav } 개</a>
+		      	</c:forEach>
 		      </div>
 		    </div>
 		  </div>

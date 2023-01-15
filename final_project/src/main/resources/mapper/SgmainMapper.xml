@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ezen.finalpj.repository.SgmainDAO">
+	<select id="getSgmain" resultType="com.ezen.finalpj.domain.SgMainVO">
+		select * from sgmain where grno=#{grno}
+	</select>
+	<select id="getSgMainImg" resultType="com.ezen.finalpj.domain.SgMainVO">
+		select S.uuid, S.dir, S.name, SG.grno, SG.name AS sg_name, SG.detail, SG.city, SG.county 
+		from smallgroup SG left join sgmain S on S.grno = SG.grno 
+	</select>
+	
+	<select id="getSgMainImgPaging" resultType="com.ezen.finalpj.domain.SgMainVO">
+		select S.uuid, S.dir, S.name, SG.grno, SG.name AS sg_name, SG.detail, SG.city, SG.county 
+		from smallgroup SG left join sgmain S on S.grno = SG.grno 
+		<include refid="search1"></include> 
+		limit #{pageStart},#{qty}
+	</select>
+	
+	<select id="selectCount" resultType="int">
+		select count(grno) from smallgroup where grno is not null
+		<include refid="search2"></include> 
+	</select>
+	
+	<sql id="search1">
+		<if test="type !=null">
+			<trim prefix="and (" suffix=")" prefixOverrides="OR">
+				<foreach collection="typeToArray" item="type">
+					<trim prefix="OR">
+						<choose>
+							<when test="type =='n'.toString()">
+								sg.name like concat('%',#{keyword},'%')  
+							</when>
+							<when test="type =='d'.toString()">
+								detail like concat('%',#{keyword},'%')  
+							</when>
+							<when test="type =='a'.toString()">
+								sg.name like concat('%',#{keyword},'%')  
+								or detail like concat('%',#{keyword},'%') 
+							</when>
+						</choose>
+					</trim>
+				</foreach>
+			</trim>
+		</if>
+	</sql>
+	<sql id="search2">
+		<if test="type !=null">
+			<trim prefix="and (" suffix=")" prefixOverrides="OR">
+				<foreach collection="typeToArray" item="type">
+					<trim prefix="OR">
+						<choose>
+							<when test="type =='n'.toString()">
+								name like concat('%',#{keyword},'%')  
+							</when>
+							<when test="type =='d'.toString()">
+								detail like concat('%',#{keyword},'%')  
+							</when>
+							<when test="type =='a'.toString()">
+								name like concat('%',#{keyword},'%')  
+								or detail like concat('%',#{keyword},'%') 
+							</when>
+						</choose>
+					</trim>
+				</foreach>
+			</trim>
+		</if>
+	</sql>
+	
+</mapper>

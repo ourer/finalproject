@@ -1,0 +1,18 @@
+package com.ezen.finalpj.service;
+
+import java.util.List;
+
+import com.ezen.finalpj.domain.PagingVO;
+import com.ezen.finalpj.domain.SgMainVO;
+
+public interface SgmainService {
+
+	List<SgMainVO> getSgmain(int grno);
+
+	List<SgMainVO> getSgMainImg();
+
+	List<SgMainVO> getSgMainImgPaging(PagingVO pgvo);
+
+	int getPageCount(PagingVO pgvo);
+
+}

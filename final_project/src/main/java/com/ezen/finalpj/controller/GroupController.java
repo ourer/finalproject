@@ -1,5 +1,6 @@
 package com.ezen.finalpj.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -11,20 +12,29 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.ezen.finalpj.domain.GroupDTO;
+import com.ezen.finalpj.domain.FavoriteVO;
 import com.ezen.finalpj.domain.GroupVO;
-import com.ezen.finalpj.domain.JoinPersonVO;
 import com.ezen.finalpj.domain.ManagerDTO;
+import com.ezen.finalpj.domain.ProfileVO;
 import com.ezen.finalpj.domain.ScheduleVO;
+import com.ezen.finalpj.domain.SgMainVO;
 import com.ezen.finalpj.domain.UserVO;
+import com.ezen.finalpj.domain.WaitingVO;
+import com.ezen.finalpj.handler.SgMainHandler;
+import com.ezen.finalpj.service.FavoriteService;
 import com.ezen.finalpj.service.GroupService;
 import com.ezen.finalpj.service.JoinPersonService;
+import com.ezen.finalpj.service.ProfileService;
 import com.ezen.finalpj.service.ScheduleService;
 import com.ezen.finalpj.service.UserService;
 import com.ezen.finalpj.service.WaitingService;
@@ -45,6 +55,12 @@ public class GroupController {
 	private WaitingService wsv;
 	@Inject
 	private UserService usv;
+	@Inject
+	private SgMainHandler smh;
+	@Inject
+	private FavoriteService fsv;
+	@Inject
+	private ProfileService psv;
 	
 	@GetMapping("/register")
 	public String insertGrpGet() {
@@ -64,25 +80,114 @@ public class GroupController {
 		log.info("소모임 생성"+(isOk>0?"성공":"실패"));
 		return isOk>0? new ResponseEntity<String>("1", HttpStatus.OK):new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
+
 	
 	@GetMapping("/main")
-	public String selectGrpGet(@RequestParam("grno")int grno, Model model) {
+	public String selectGrpGet(@RequestParam("grno")int grno, Model model, HttpServletRequest req) {
 		GroupVO gvo=gsv.selectGrp(grno);
 		List<ScheduleVO> sList=ssv.selectListSch(grno);
-		GroupDTO gdto=new GroupDTO(gvo, sList);
-		model.addAttribute("gvo", gdto.getGvo());
-		model.addAttribute("sList", gdto.getSList());
+		//int joinCnt=jsv.selectCntJp(sno);
+		SgMainVO smvo=gsv.selectSgMain(grno);
+		//GroupDTO gdto=new GroupDTO(gvo, sList, smvo);
+		List<FavoriteVO> fList=fsv.selectListFavorite(grno);
+		HttpSession ses=req.getSession();
+		UserVO uvo=(UserVO)ses.getAttribute("ses");
+		if(uvo!=null) {
+			String email=uvo.getEmail();
+			for(FavoriteVO f:fList) {
+				if(f.getEmail().equals(email)) {
+					model.addAttribute("fvo", f);
+				}
+			}
+		}
+		model.addAttribute("gvo", gvo);
+		model.addAttribute("sList", sList);
+		model.addAttribute("smvo", smvo);
+		//model.addAttribute("fList", fList);
 		return "/group/main";
 	}
 	
+	@PostMapping("image")
+	public String insertMainSmPost(@RequestParam(name = "grno")int grno, @RequestParam(name="files", required = false)MultipartFile file, RedirectAttributes reAttr) {
+		log.info(file.toString());
+		SgMainVO smvo=null;
+		if(file.getSize()>0) {
+			smvo=smh.uploadMainFile(file);
+			smvo.setGrno(grno);
+			int isOk=gsv.insertSgMain(smvo);
+			log.info(isOk>0?"메인 등록 성공":"메인 등록 실패");
+		}else {
+			reAttr.addFlashAttribute("imgMsg", "err");
+		}
+		reAttr.addAttribute("grno", grno);
+		return "redirect:/group/main";
+	}
+	
+	@GetMapping("/image/delete")
+	public String deleteSgMainGet(@RequestParam("grno")int grno, RedirectAttributes reAttr) {
+		int isOk=gsv.deleteSgMain(grno);
+		log.info("메인 삭제 성공"+(isOk>0?"성공":"실패"));
+		reAttr.addAttribute("grno", grno);
+		return "redirect:/group/main";
+	}
+	
 	@GetMapping("/memberList")
-	public String selectMemListGrpGet(@RequestParam("grno")int grno, Model model) {
+	public void selectMemListGrpGet(RedirectAttributes reAttr, @RequestParam(name="grno", required=false)int grno, Model model, HttpServletRequest req) {
 		//방장 가져오기
-		UserVO capUvo=usv.selectCapGet(grno);
-		log.info(capUvo.toString());
-		model.addAttribute("capUvo", capUvo);
-		List<UserVO> uList=usv.selectMemListUserGet(grno);
+//		UserVO capUvo=usv.selectCapGet(grno);
+//		log.info(capUvo.toString());
+//		model.addAttribute("capUvo", capUvo);
+//		List<UserVO> uList=usv.selectMemListUserGet(grno);
+//		model.addAttribute("uList", uList);
+		
+		
+		//CapUserDTO capUdto=usv.selectCapGet(grno);
+		//log.info(capUdto.toString());
+		//log.info("uName:  "+capUdto.getUName());
+		//req.setAttribute("cdto", capUdto);
+		//model.addAttribute("cdto", capUdto);
+		
+		UserVO uvo=usv.selectCapGet(grno);
+		model.addAttribute("capUvo", uvo);
+		ProfileVO pvo=psv.selectProfile(uvo.getEmail());
+		model.addAttribute("capPvo", pvo);
+		List<UserVO> uList=usv.selectMemListUser(grno);
 		model.addAttribute("uList", uList);
-		return "/group/memberList";
+		List<ProfileVO> pList=new ArrayList<ProfileVO>();
+		for(UserVO memUvo:uList) {
+			ProfileVO memPvo=psv.selectPersonalProfile(memUvo.getEmail());
+			pList.add(memPvo);
+		}
+		model.addAttribute("pList", pList);
+		
+	}
+	
+	@GetMapping("/join")
+	public String joinGrpGet(@RequestParam("grno")int grno, Model model, HttpServletRequest req) {
+		model.addAttribute("grno", grno);
+		return "/group/join";
+	}
+	
+	@PostMapping("/join")
+	public String joinGrpPost(WaitingVO wvo, RedirectAttributes reAttr) {
+		log.info(wvo.toString());
+		int isOk=wsv.insertMemWaitPost(wvo);
+		log.info("소모임 가입 신청"+(isOk>0?"성공":"실패"));
+		reAttr.addAttribute("grno", wvo.getGrno());
+		return "redirect:/group/main";
+	}
+	
+	@GetMapping("/grouplist")
+	public String listGrpGet(Model model) {
+		List<GroupVO> gList=gsv.selectGrpList();
+		model.addAttribute("gList", gList);
+		return "/supervisor/grouplist";
+	}
+	
+	@DeleteMapping(value = "/remove/{grno}",produces = {MediaType.TEXT_PLAIN_VALUE})
+	public ResponseEntity<String> removeGrp(@PathVariable("grno")String grno){
+		log.info("supervisor's remove group");
+		int isOk=gsv.removeGrp(grno);
+		return isOk>0? new ResponseEntity<String>("1",HttpStatus.OK): new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 }

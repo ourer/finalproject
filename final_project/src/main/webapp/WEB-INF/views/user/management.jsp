@@ -10,7 +10,7 @@
 		    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">나의 소모임</a>
 		    <ul class="dropdown-menu">
 		      <li><a class="dropdown-item" href="/user/mypage">목록</a></li>
-		      <li><a class="dropdown-item" href="/user/management">관리</a></li>
+		      <li><a class="dropdown-item" href="/user/management/${ses.email }">관리</a></li>
 		    </ul>
 		  </li>
 		  <li class="nav-item">
@@ -24,7 +24,13 @@
 		  <div class="col-sm-6">
 		    <div class="card">
 		      <div class="card-body">
-					<img src="/upload/${fn:replace(pvo.dir,'\\','/')}/${pvo.uuid}_th_${pvo.name}" class="rounded-circle mx-auto d-block" alt="..." style="width: 140px;">		        
+		        <c:if test="${sespvo.uuid ==null }">
+					<img src="/upload/blank-profile.png" class="rounded-circle mx-auto d-block" alt="..." style="width: 140px; height: 140px">                
+				</c:if>
+                
+                <c:if test="${sespvo.uuid !=null }">
+                    <img src="/upload/${fn:replace(sespvo.dir,'\\','/')}/${sespvo.uuid}_${sespvo.name}" class="rounded-circle mx-auto d-block" alt="..." style="width: 150px;">
+                </c:if>
 		        <div class="text-center">
 		        	<span>${ses.name }</span>
 		        	<span>님</span>
@@ -51,9 +57,9 @@
 		<table class="table caption-top text-center" style="margin: 30px auto">
 		<caption>가입 대기명단</caption>
 		<colgroup>
-			<col width="30%" />
-			<col width="10%" />
-			<col width="10%" />
+			<col width="20%" />
+         	<col width="15%" />
+         	<col width="15%" />
 			<col width="10%" />
 			<col width="10%" />
 			<col width="20%" />
@@ -73,16 +79,16 @@
 			<tbody class="table-group-divider">
 			
 			<c:forEach items="${list1}" var="user" varStatus="status">
-				<tr>
+				<tr data-email="${user.email }" id="waitingDecide">
 						<td>	
 							<c:set var="pvo" value="${profileList1[status.index]}"/>
 							
 							<c:if test="${profileList1[status.index] == null}">
-								<img src="/resources/img/blank-profile.png" style="width: 75px; height: 75px;">
+								<img src="/upload/blank-profile.png" class="rounded-circle mx-auto d-block" alt="..." style="width: 75px; height: 75px">							
 							</c:if>
 							
 							<c:if test="${profileList1[status.index] != null}">
-							<img src="/upload/${fn:replace(pvo.dir,'\\','/')}/${pvo.uuid}_th_${pvo.name}"> 
+								<img src="/upload/${fn:replace(pvo.dir,'\\','/')}/${pvo.uuid}_${pvo.name}" class="rounded-circle mx-auto d-block" style="width: 75px; height: 75px;"> 
 							</c:if>
 						</td>
 					<td>${user.name }</td>
@@ -94,7 +100,10 @@
 					<c:if test="${user.gender =='1'}">
 					<td>여자</td>
 					</c:if>
-					<td><button class="btn btn-sm btn-outline-success admit" type="button">승인</button><button class="btn btn-sm btn-outline-danger deny" type="button">거절</button></td>					
+					<td>
+						<button class="btn btn-sm btn-outline-success accept" type="button">승인</button>
+						<button class="btn btn-sm btn-outline-danger refuse" type="button">거절</button>
+					</td>					
 					<td></td>
 				</tr>
 			</c:forEach>
@@ -105,9 +114,9 @@
 		<table class="table caption-top text-center" style="margin: 30px auto">
 		<caption>소모임 멤버</caption>
 		<colgroup>
-			<col width="30%" />
-			<col width="10%" />
-			<col width="10%" />
+			<col width="20%" />
+	        <col width="15%" />
+	        <col width="15%" />
 			<col width="10%" />
 			<col width="10%" />
 			<col width="20%" />
@@ -126,16 +135,16 @@
 			</thead>
 			<tbody class="table-group-divider">
 			<c:forEach items="${list2}" var="user" varStatus="status">
-				<tr>
+				<tr data-email="${user.email }">
 						<td>	
 							<c:set var="pvo" value="${profileList2[status.index]}"/>
 							
 							<c:if test="${profileList2[status.index] == null}">
-								<img src="/resources/img/blank-profile.png" style="width: 75px; height: 75px;">
+								<img src="/resources/img/blank-profile.png" class="rounded-circle mx-auto d-block" style="width: 75px; height: 75px;">
 							</c:if>
 							
 							<c:if test="${profileList2[status.index] != null}">
-							<img src="/upload/${fn:replace(pvo.dir,'\\','/')}/${pvo.uuid}_th_${pvo.name}"> 
+							<img src="/upload/${fn:replace(pvo.dir,'\\','/')}/${pvo.uuid}_${pvo.name}" class="rounded-circle mx-auto d-block" style="width: 75px; height: 75px;"> 
 							</c:if>
 						</td>
 					<td>${user.name }</td>
@@ -147,11 +156,30 @@
 					<c:if test="${user.gender =='1'}">
 					<td>여자</td>
 					</c:if>
-					<td><button class="btn btn-sm btn-outline-success special" type="button">임명</button><button class="btn btn-sm btn-outline-danger normal" type="button">해제</button></td>					
-					<td><button class="btn btn-sm btn-outline-success special" type="button">강퇴</button></td>					
+					<td>
+						<button class="btn btn-sm btn-outline-success special appointment" type="button">임명</button>
+						<button class="btn btn-sm btn-outline-danger normal cancellation" type="button">해제</button>
+					</td>					
+					<td><button class="btn btn-sm btn-outline-success special del" type="button">강퇴</button></td>					
 				</tr>
 			</c:forEach>
 			</tbody>
 		</table>
 </section>
 <jsp:include page="../layout/footer.jsp"></jsp:include>
+<script type="text/javascript" src="/resources/js/WaitingDecide.js">
+</script>
+
+<script type="text/javascript" src="/resources/js/Operator.js">
+</script>
+
+<script type="text/javascript" src="/resources/js/UserDelete.js">
+</script>
+
+<script type="text/javascript">
+const emailVal='<c:out value="${user.email}"/>';
+const sesemailVal='<c:out value="${ses.email}"/>';
+console.log(emailVal);
+console.log(sesemailVal);
+</script>
+

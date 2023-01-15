@@ -16,4 +16,5 @@ import lombok.ToString;
 public class GroupDTO {
 	private GroupVO gvo;
 	private List<ScheduleVO> sList;
+	private SgMainVO smvo;
 }

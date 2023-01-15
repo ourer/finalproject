@@ -19,4 +19,5 @@ public class ScheduleVO {
 	private String spot;
 	private int max_member;
 	private String cost;
+	private int joinmember;
 }

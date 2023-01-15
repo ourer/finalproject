@@ -2,9 +2,11 @@ package com.ezen.finalpj.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Setter
 @Getter
+@ToString
 public class PagingVO {
 	private int pageNo;
 	private int qty;
@@ -13,7 +15,7 @@ public class PagingVO {
 	private String keyword;
 	
 	public PagingVO() {
-		this(1,10);
+		this(1,8);
 	}
 	
 	public PagingVO(int pageNo) {

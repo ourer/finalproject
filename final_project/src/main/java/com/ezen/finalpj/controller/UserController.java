@@ -8,12 +8,16 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,6 +32,7 @@ import com.ezen.finalpj.domain.UserVO;
 import com.ezen.finalpj.handler.ProfileHandler;
 import com.ezen.finalpj.service.ProfileService;
 import com.ezen.finalpj.service.UserService;
+import com.ezen.finalpj.service.WaitingService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -44,6 +49,9 @@ public class UserController {
 	
 	@Inject
 	private ProfileService psv;
+	
+	@Inject
+	private WaitingService wsv;
 	
 	
 	@GetMapping("/")
@@ -103,7 +111,7 @@ public class UserController {
 			 //model로 넘겨주게 되면 해당 페이지에서만 프로필이 드러나게 된다
 			 //그러므로 model에 넘겨주지 말고 ses로 넘겨줘서 해당 이메일에 따라 그 프로필을 볼 수 있게 하자!
 			 ProfileVO pvo=psv.selectPersonalProfile(email);
-			 ses.setAttribute("pvo", pvo);
+			 ses.setAttribute("sespvo", pvo);
 			 
 			 mv.setViewName("/home");
 			 mv.addObject("msglogin", "1");
@@ -140,16 +148,7 @@ public class UserController {
 		}
 		
 		@GetMapping(value="/management/{email}")
-		public String list(Model model,HttpServletRequest req,@PathVariable("email")String email) {
-//			우리가 성공한 것.
-//			유저 목록 가져오기.
-//			-> 유저 한명의 정보를 가지고
-//			해당 유저의 이메일과 같은 프로필의 정보를 DB에서 불러온다.
-//			이 과정을 반복하여 유저 목록과 같은 길이의 프로필 리스트를 구성한다.
-//			유저 리스트와 프로필 리스트를 model로 넘긴다.
-//			넘긴 거로 jsp에서 표현한다.
-			
-			//email 가져오기는 rest 방식으로
+		public String getUserList(Model model,HttpServletRequest req,@PathVariable("email")String email) {
 			
 			HttpSession ses=req.getSession();
 			ses.setAttribute("email", email);
@@ -157,27 +156,8 @@ public class UserController {
 			UserVO user=usv.getMyOnlyuser(req);
 			log.info("uvo test : "+user.getEmail());
 			
-//			ArrayList<ProfileVO> profilepersonal=new ArrayList<ProfileVO>();
-//			ProfileVO personalvo=psv.selectPersonalProfile(user.getEmail());
-//			profilepersonal.add(personalvo);
-//			System.out.println(profilepersonal);
-//			model.addAttribute("profilepersonal",profilepersonal);
-			//for문 돌려서 profile 리스트 생성
-			//session에서 email 정보추출
-			//email 정보를 들고, service 에게 요청 
-			// mapper에게 email과 일치하는 isOk = 0와 (해결)
-			//grno 요청
-			
-			
-			//profile service 생성
-			//profile serviceImpl 생성
-			//profile mapper -> select * from file where email=#{email}
-			//그렇게 가져온 프로필을 profileList1에 add 하기
-			//이메일과 같은 프로필 정보 불러오기
-			//불러온 정보를 프로필 리스트에 넣기
-			
-			//건드리지 말기
 			List<UserVO> list1=usv.getOnlyList1(user);
+			System.out.println(list1);
 			List<UserVO> list2=usv.getOnlyList2(user);
 			log.info("only user");
 			
@@ -203,4 +183,48 @@ public class UserController {
 			model.addAttribute("list2", list2);
 			return "/user/management";
 		}
+		
+		@DeleteMapping(value = "/remove/{email}", produces = {MediaType.TEXT_PLAIN_VALUE})
+		public ResponseEntity<String> removeUser(@PathVariable("email")String email) {
+			log.info("my user remove email : "+email);
+			int isOk=wsv.remove(email);
+			return isOk>0? new ResponseEntity<String>("1",HttpStatus.OK): new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		 @GetMapping("/modify")
+			public String userModifyMyinfoGet() {
+				return "/user/modify";
+			}
+			
+		@PostMapping("/modify")
+		public String modifyMyinfoPost(UserVO uvo, RedirectAttributes reAttr, HttpServletRequest req) {
+			log.info(uvo.toString());
+			int isOk = usv.modifyMyinfo(uvo);
+			reAttr.addFlashAttribute("msg", isOk>0?"1":"0");
+			log.info("개인정보수정 >>> "+(isOk>0?"수정성공":"수정실패"));
+			if(isOk>0) {
+				req.getSession().setAttribute("ses", uvo);
+			}
+			return "redirect:/user/mypage";
+		}
+		
+		@GetMapping("/userlist")
+		public String userAllGet(Model model) {
+			log.info("모든 유저 뽑아내기");
+			List<UserVO> uList=usv.selectAllUser();
+			model.addAttribute("uList", uList);
+			return "/supervisor/userlist";
+		}
+		
+		 @GetMapping("/delete")
+		 public String deleteUserGet(RedirectAttributes reAttr, HttpServletRequest req, @RequestParam("email")String email) {
+			 int isOk = usv.deleteUser(email);
+			 reAttr.addFlashAttribute("msg", isOk>0?"1":"0");
+			 log.info("계정삭제 >>> "+(isOk>0?"성공":"실패"));
+			 req.getSession().removeAttribute("ses");
+			 req.getSession().invalidate();
+			 return "redirect:/";
+		 }
+		
+		
 }

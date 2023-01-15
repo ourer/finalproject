@@ -14,4 +14,16 @@ public interface ScheduleDAO {
 
 	int deleteSch(int grno);
 
+	int insertJoinMem(int sno);
+
+	int updateJoinMem(int sno);
+
+	int selectMaxSno();
+
+	int selectSno(int jno);
+
+	int updateJoinMemDelete(int sno);
+
+	int updateIsDonePut(int sno);
+
 }

@@ -23,4 +23,5 @@ public class GroupVO {
 	private int isFree;
 	private int isFace;
 	private String email;
+	private String code;
 }

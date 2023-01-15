@@ -14,5 +14,14 @@ public interface ScheduleService {
 
 	int deleteSch(int sno);
 
+	int updateJoinMemPost(int sno);
+
+	int selectMaxSnoSch();
+
+	int updateJoinMemDelete(int sno);
+
+	int updateIsDoneSche(int sno);
+
+
 
 }
