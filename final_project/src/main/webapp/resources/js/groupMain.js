@@ -99,8 +99,9 @@ document.addEventListener('click', (e)=>{
         console.log(nowUrl);
     let grno=nowUrl.substring(nowUrl.lastIndexOf('=')+1);
     console.log(grno);
-    let sno=document.getElementById("sno").value;
-    console.log(sno);
+    let sno=e.target.id;
+    sno=sno.substring(sno.lastIndexOf('n')+1);
+    console.log("참가버튼 눌렀을 때"+sno);
     if(grno!=null||sno!=null){
         joinData={
             sno: sno,
@@ -156,15 +157,15 @@ function getJoinPersonList(){
     spreadJoinPerson().then(result=>{
         console.log(result);
         for(let r of result){
-            console.log(r);
-            console.log(r.sno);
+            //console.log(r);
+            //console.log(r.sno);
             let divJP=document.getElementById(`joinPeople${r.sno}`);
             if(divJP != null){
-                console.log(divJP);
+                //console.log(divJP);
                 //console.log(r.pdir);
                 let pDir=r.pdir.replace(/\\/g, '/');
-                console.log(pDir);
-                console.log(divJP.dataset.sno);
+                //console.log(pDir);
+                //console.log(divJP.dataset.sno);
                 
                 let div='';
                 if(divJP.dataset.sno==r.sno){
@@ -172,7 +173,7 @@ function getJoinPersonList(){
                     div+=`<img src="/upload/${pDir}/${r.puuid}_${r.pname}" class="rounded-circle mx-auto d-block" alt="..." style="width: 140px;">`;
                     div+=`<span>${r.uname}</span>`;
                 }
-                console.log(emailVal);
+                //console.log(emailVal);
                 if(emailVal == r.uemail){
                     console.log(r.uemail);
                     div+=`<button class="schCancelBtn">참가 취소</button>`;

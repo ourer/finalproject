@@ -84,10 +84,10 @@ public class ScheduleController {
 	
 	@PostMapping(value = "/join", consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> insertJpPost(@RequestBody JoinPersonVO jvo, HttpServletRequest req) {
-		log.info(jvo.toString());
 		HttpSession ses=req.getSession();
 		UserVO uvo=(UserVO)ses.getAttribute("ses");
 		jvo.setEmail(uvo.getEmail());
+		log.info("jvo"+jvo.toString());
 		int isOk=jsv.insertJpPost(jvo);
 		isOk*=ssv.updateJoinMemPost(jvo.getSno());
 		if(isOk>0) {

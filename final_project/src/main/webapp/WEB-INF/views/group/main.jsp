@@ -121,29 +121,18 @@
         	</c:otherwise>
         </c:choose>
     </div>
+    
     <c:choose>
-    <c:when test="${ses.email ne null}">
-	     <%-- doneLoop가 반대가 되면 break --%>
-		<c:set var="doneLoop" value="false"/>
-	   	<c:forEach var="mem" items="${uList}">
-	    <c:choose>
-	    <c:when test="${empty uList}">
-	   		<a href="/group/join?grno=${gvo.grno }"><button>가입</button></a>            
-	    </c:when>
-	    <c:when test="${not doneLoop}">
-           <c:if test="${mem.email ne ses.email }">
-             <%-- 원하는 결과가 나오면 true로 선언 : for문의 break 효과 --%>
-             <c:set var="doneLoop" value="true" />
-           </c:if>
-        </c:when>
-        <c:when test="${doneLoop }">
-		     <a href="/group/join?grno=${gvo.grno }"><button>가입</button></a>        
-        </c:when>
-	    </c:choose>
-	   </c:forEach>
+    <c:when test="${ses.email ne null and ses.email ne gvo.email}">
+    	<c:choose>
+    	<c:when test="${not fn:contains(uList, ses.email) }">
+    		<a href="/group/join?grno=${gvo.grno }"><button>가입</button></a>
+    	</c:when>
+    	</c:choose>
     </c:when>
     </c:choose>
 
+    
 </section>
 <script type="text/javascript">
 	const emailVal='<c:out value="${ses.email }"/>';
