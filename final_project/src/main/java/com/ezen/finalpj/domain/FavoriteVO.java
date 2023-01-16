@@ -15,4 +15,5 @@ public class FavoriteVO {
 	private int fno;
 	private int grno;
 	private String email;
+	private int cntFav;
 }

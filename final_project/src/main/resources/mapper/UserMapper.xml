@@ -6,12 +6,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="updateCap">
 		update user set isCap=#{grno} where email=#{email}
 	</update>
-	<select id="selectMemListUser" resultType="com.ezen.finalpj.domain.UserVO">
+	<!-- <select id="selectMemListUser" resultType="com.ezen.finalpj.domain.UserVO">
 		select * from user join waiting on user.email=waiting.email where grno=#{grno} and isOk=1;
-	</select>
-	<select id="selectCap" resultType="com.ezen.finalpj.domain.UserVO">
-		select user.name, user.email, user.age, user.phone, user.area, user.nickname, user.gender from smallgroup join user on smallgroup.grno=user.isCap where grno=#{grno};
-	</select>
+	</select> -->
+
 	
 	<select id="getUser" resultType="com.ezen.finalpj.domain.UserVO"> 
       select * ,(select code from category where category.ctno = user.ctno_1) as "ctcode_1" 
@@ -48,17 +46,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectSecoundUser" resultType="com.ezen.finalpj.domain.UserVO" resultMap="test">
 		select * from user join waiting on user.email=waiting.email where isOk=1 and grno=#{isCap}
 	</select>
-	
 	<update id="updateMyinfo">
 		update user set area=#{area}, phone=#{phone}, ctno_1=#{ctno_1}, ctno_2=#{ctno_2}, ctno_3=#{ctno_3}, ctcode_1=#{ctcode_1}, ctcode_2=#{ctcode_2}, ctcode_3=#{ctcode_3} where email=#{email}
 	</update>
-
+	
+	<select id="selectCap" resultType="com.ezen.finalpj.domain.UserVO">
+		select * from user where isCap=${grno}
+	</select>
+	
+	<select id="selectMemList" resultType="com.ezen.finalpj.domain.UserVO">
+		select user.* from user join waiting on waiting.email=user.email where waiting.grno=#{grno} and waiting.isOk=1;
+	</select>
+	
 	<select id="emailCheck" parameterType="String" resultType="int">
 		select count(email) from user where email = #{email}
 	</select>
-	
 	<select id="nicknameCheck" parameterType="String" resultType="int">
 		select count(*) from user where nickname = #{nickname}
 	</select>
 	
+	<select id="selectAllList" resultType="com.ezen.finalpj.domain.UserVO">
+		select * from user
+	</select>
+	
+	<delete id="deleteUser">
+		delete from user where email=#{email}
+	</delete>
+	
+	<select id="likeListCount" resultType="com.ezen.finalpj.domain.FavoriteVO">
+		select count(fno) as cntFav from favorite where email=#{email} group by email
+	</select>
 </mapper>

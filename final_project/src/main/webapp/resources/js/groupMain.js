@@ -10,8 +10,8 @@ document.getElementById('heartBtn').addEventListener('click', ()=>{
     console.log(nowUrl);
     let grno=nowUrl.substring(nowUrl.lastIndexOf('=')+1);
     console.log(grno);
-    if(emailVal==null||grno==""||grno==null){
-        alert("찜하기 오류");
+    if(emailVal==""||grno==""||grno==null){
+        alert("로그인해주세요.");
         console.log("찜 기능 실패");
         return false;
     }else{
@@ -54,8 +54,8 @@ async function likeFavorite(favData){
 }
 
 
-function showJoinPeople(){
-	const joinPeople=document.getElementById('joinPeople');
+function showJoinPeople(sno){
+	const joinPeople=document.getElementById(`joinPeople${sno}`);
     console.log(joinPeople.style.display);
     if(joinPeople.style.display=='block'){
         joinPeople.style.display='none';
@@ -65,10 +65,38 @@ function showJoinPeople(){
     console.log(joinPeople.style.display);
 }
 
-const schJoinBtn=document.getElementById('schJoinBtn');
-if(schJoinBtn!=null){
-schJoinBtn.addEventListener('click', ()=>{
-    console.log(nowUrl);
+// const schJoinBtn=document.getElementById('schJoinBtn');
+// if(schJoinBtn!=null){
+// schJoinBtn.addEventListener('click', ()=>{
+//     console.log(nowUrl);
+//     let grno=nowUrl.substring(nowUrl.lastIndexOf('=')+1);
+//     console.log(grno);
+//     let sno=document.getElementById("sno").value;
+//     console.log(sno);
+//     if(grno!=null||sno!=null){
+//         joinData={
+//             sno: sno,
+//             grno: grno
+//         }
+//     }
+//     console.log(joinData);
+//     addJoinPerson(joinData).then(result=>{
+//         console.log(result);
+//         if(result=="1"){
+//             alert("스케줄 참가 성공!");
+//             location.reload();
+//         }else if(result=="2"){
+//             alert("스케줄 참가 실패");
+//             location.href="/group/main?grno="+grno;
+//         }
+//        //getJoinPersonList();
+//     })
+// })
+// }
+
+document.addEventListener('click', (e)=>{
+    if(e.target.classList.contains('schJoinBtn')&&e.target!=null){
+        console.log(nowUrl);
     let grno=nowUrl.substring(nowUrl.lastIndexOf('=')+1);
     console.log(grno);
     let sno=document.getElementById("sno").value;
@@ -84,15 +112,15 @@ schJoinBtn.addEventListener('click', ()=>{
         console.log(result);
         if(result=="1"){
             alert("스케줄 참가 성공!");
-            //프로필 뿌리기
-            location.href="/group/main?grno="+grno;
+            location.reload();
         }else if(result=="2"){
             alert("스케줄 참가 실패");
             location.href="/group/main?grno="+grno;
         }
+       //getJoinPersonList();
     })
+    }
 })
-}
 
 async function addJoinPerson(joinData){
     try {
@@ -112,6 +140,86 @@ async function addJoinPerson(joinData){
     }
 }
 
+//화면에 뿌리기
+async function spreadJoinPerson(){
+    try {
+        const resp=await fetch('/schedule/list');
+        const result=await resp.json();
+        return result;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+//리스트 가져오기
+function getJoinPersonList(){
+    spreadJoinPerson().then(result=>{
+        console.log(result);
+        for(let r of result){
+            console.log(r);
+            console.log(r.sno);
+            let divJP=document.getElementById(`joinPeople${r.sno}`);
+            if(divJP != null){
+                console.log(divJP);
+                //console.log(r.pdir);
+                let pDir=r.pdir.replace(/\\/g, '/');
+                console.log(pDir);
+                console.log(divJP.dataset.sno);
+                
+                let div='';
+                if(divJP.dataset.sno==r.sno){
+                    div=`<div class="joinPerson" data-jno="${r.jno}">`;
+                    div+=`<img src="/upload/${pDir}/${r.puuid}_${r.pname}" class="rounded-circle mx-auto d-block" alt="..." style="width: 140px;">`;
+                    div+=`<span>${r.uname}</span>`;
+                }
+                console.log(emailVal);
+                if(emailVal == r.uemail){
+                    console.log(r.uemail);
+                    div+=`<button class="schCancelBtn">참가 취소</button>`;
+                    const joinBtn=document.getElementById(`schJoinBtn${r.sno}`);
+                    console.log(joinBtn);
+                    joinBtn.disabled=true;
+                }
+                div+=`</div>`;
+                divJP.innerHTML+=div;
+
+            }
+        }
+    })
+}
+
+//스케줄 참가 취소
+document.addEventListener('click', (e)=>{
+    if(e.target.classList.contains('schCancelBtn')){
+        const div=e.target.closest('div');
+        console.log(div);
+        const jno=div.dataset.jno;
+        console.log(jno);
+        //취소
+        cancelJoinPeople(jno).then(result=>{
+            if(result>0){
+                alert("스케줄 참가를 취소했어요!");
+                location.reload();
+            }
+        })
+    }
+})
+
+
+async function cancelJoinPeople(jno){
+    try {
+        const url="/schedule/cancel/"+jno;
+        const config={
+            method: 'delete'
+        }
+        const resp=await fetch(url, config);
+        const result=resp.text();
+        return result;
+    } catch (error) {
+        console.log(error);
+    }
+
+}
 
 document.getElementById('trigger').addEventListener('click',()=>{
     document.getElementById('files').click();
@@ -160,3 +268,45 @@ document.addEventListener('change',(e)=>{
         }
     }
 })
+
+window.addEventListener('load', ()=>{
+    let scheDateLi=document.querySelectorAll('.scheDate');
+    for(let d of scheDateLi){
+        let date=d.innerText;
+        date=date.substring(4, 16);
+        console.log(date);
+        date=new Date(date);
+        console.log("스케줄 날짜: "+date.toLocaleDateString());
+        const today=new Date();
+        console.log("오늘 날짜: "+today.toLocaleDateString());
+        if(today>date){
+            let sno=d.dataset.sno;
+            //let grno=d.dataset.grno;
+            console.log("지난스케줄: "+date.toLocaleDateString());
+            console.log("sno "+sno);
+            updateIsDone(sno).then(result=>{
+                if(result>0){
+                    console.log("스케줄 수정 완료");
+                    location.reload();
+                    //location.href = location.href;
+                    //location.href="/group/main?grno="+grno;
+                }
+            })
+        }
+    }
+})
+
+async function updateIsDone(sno){
+    try {
+        const url="/schedule/update/"+sno;
+        const config={
+            method: 'put',
+            body: sno
+        }
+        const resp=await fetch(url, config);
+        const result=resp.text();
+        return result;
+    } catch (error) {
+        console.log(error);
+    }
+}

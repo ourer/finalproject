@@ -8,12 +8,12 @@
 		  <li class="nav-item dropdown">
 		    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">나의 소모임</a>
 		    <ul class="dropdown-menu">
-		      <li><a class="dropdown-item" href="/user/mypage">목록</a></li>
+		      <li><a class="dropdown-item" href="/user/mypage/${ses.email }">목록</a></li>
 		      <li><a class="dropdown-item" href="/user/management/${ses.email }">관리</a></li>
 		    </ul>
 		  </li>
 		  <li class="nav-item">
-		    <a class="nav-link" href="/user/like">찜</a>
+		    <a class="nav-link" href="/favorite/mylike/${ses.email }">찜</a>
 		  </li>
 		  <li class="nav-item">
 		    <a class="nav-link" href="/user/myinfo">개인정보수정</a>
@@ -47,7 +47,7 @@
 		    </div>
 			<div class="form">
 			    <label for="phone" class="col-sm-1 col-form-label">연락처</label>
-			    <input type="text" class="form-control" id="phone" name="phone" value="${ses.phone.substring(0,3)}-${ses.phone.substring(3,7)}-${ses.phone.substring(7)}" readonly="readonly">
+			    <input type="text" class="form-control" id="Phone" name="phone" value="${ses.phone }" readonly="readonly">
 		    </div>
 			<div class="row g-3">
 				<div class="innerSecond col-auto">관심사1:

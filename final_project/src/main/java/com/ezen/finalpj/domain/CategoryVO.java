@@ -16,7 +16,7 @@ public class CategoryVO {
 	private int ctno;
 	private String name;
 	private String code;
-	
+
 	private int grno;
 	private long size;
 	private String sm_name;
@@ -27,6 +27,4 @@ public class CategoryVO {
 	private String sg_name;
 	private String detail;
 	private String county;
-	
-
 }

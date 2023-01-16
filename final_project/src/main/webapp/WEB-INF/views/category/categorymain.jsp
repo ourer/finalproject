@@ -90,7 +90,7 @@
 		  
 	<h3 style="margin: 30px auto">모든 소모임</h3>
 	<div class="row row-cols-1 row-cols-md-4 g-4" style="margin-bottom: 100px">
-		<c:forEach items="${sList}" var="svo" begin="0" varStatus="status">
+		<c:forEach items="${sgList}" var="svo" begin="0" varStatus="status">
 			<div class="col">
 				<div class="card h-100">
 					<c:if test="${svo.uuid == null}">

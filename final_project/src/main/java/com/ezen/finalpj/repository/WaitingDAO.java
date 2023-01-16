@@ -4,13 +4,17 @@ import com.ezen.finalpj.domain.UserVO;
 import com.ezen.finalpj.domain.WaitingVO;
 
 public interface WaitingDAO {
-
-	int insertMemWaitPost(WaitingVO wvo);
 	
+	int insertMemWaitPost(WaitingVO wvo);
+
 	int deleteUser(String email);
 
-	int acceptUser(UserVO uvo);
+	int acceptUser(String email);
 
 	int refuseUser(String email);
 
+	int appointment(String email);
+
+	int cancellation(String email);
+	
 }

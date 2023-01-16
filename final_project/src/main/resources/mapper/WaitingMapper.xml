@@ -15,4 +15,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="refuseUser">
 		delete from waiting where email=#{email}
 	</delete>
+	<update id="appointment">
+		update waiting set grade='B' where email=#{email}
+	</update>
+	
+	<update id="cancellation">
+		update waiting set grade='C' where email=#{email}
+	</update>
 </mapper>

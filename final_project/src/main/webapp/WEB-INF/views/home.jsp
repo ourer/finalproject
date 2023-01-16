@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ page session="false" %>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 <jsp:include page="./layout/header.jsp"></jsp:include>
@@ -112,25 +111,47 @@
         </div>
 		 
 		 <h3 style="margin: 30px auto">오늘의 추천 소모임</h3>
-		 	<div class="row row-cols-1 row-cols-md-4 g-4" style="margin-bottom: 100px">
-				<c:forEach items="${sList}" var="svo" begin="0" varStatus="status">
-					<div class="col">
-						<div class="card h-100">
-							<c:if test="${svo.uuid == null}">
-								<img alt="sgMain" src="/resources/img/sgmain_null.jpg">
-							</c:if>
-							<c:if test="${svo.uuid != null}">
-								<img alt="sgMain" src="/upload/sgMainUpload/${fn:replace(svo.dir,'\\','/')}/${svo.uuid}_${svo.name}" class="card-img-top">
-							</c:if>
-							<div class="card-body">
-								<h5 class="card-title">${svo.sg_name }</h5>
-								<p class="card-text">${svo.detail }</p>
-								<p class="card-text">${svo.city}  ${svo.county }</p>
-								<a href="/group/main?grno=${svo.grno}" class="btn btn-warning">구경하기</a>
-							</div>
-						</div>
-					</div>
-				</c:forEach>
-			</div>
+		 <div class="row row-cols-1 row-cols-md-4 g-4" style="margin-bottom: 100px">
+		  <div class="col">
+		    <div class="card h-100">
+		  		<img src="/resources/img/java.jpg" class="card-img-top">
+		  <div class="card-body">
+		    <h5 class="card-title">개발자</h5>
+		    <p class="card-text">자바 웹 개발을 공부하는 사람들 모두 모여라!!<br>비전공자, 전공자 상관없어요~</p>
+		    <a href="/category/categoryRandom" class="btn btn-warning">구경하기</a>
+		   </div>
+		  </div>
+		 </div>
+		  <div class="col">
+		    <div class="card h-100">
+		  		<img src="/resources/img/museum.jpg" class="card-img-top">
+		  <div class="card-body">
+		    <h5 class="card-title">전시회</h5>
+		    <p class="card-text">우리나라 곳곳에 숨어있는 전시회를 찾아다니자~</p>
+		    <a href="#" class="btn btn-warning">구경하기</a>
+		   </div>
+		  </div>
+		 </div>
+		  <div class="col">
+		    <div class="card h-100">
+		  		<img src="/resources/img/drink.jpg" class="card-img-top">
+		  <div class="card-body">
+		    <h5 class="card-title">먹고마셔</h5>
+		    <p class="card-text">다양한 주종을 즐겨보는 모임..!<br>이 지역의 핫플은 우리가 선도한다!</p>
+		    <a href="#" class="btn btn-warning">구경하기</a>
+		   </div>
+		  </div>
+		 </div>
+		  <div class="col">
+		    <div class="card h-100">
+		  		<img src="/resources/img/ball.jpg" class="card-img-top">
+		  <div class="card-body">
+		    <h5 class="card-title">야유회</h5>
+		    <p class="card-text">주말에 모여서 운동할 사람 모여라!<br>간단한 조깅부터 축구, 발야구, 배드민턴 등</p>
+		    <a href="#" class="btn btn-warning">구경하기</a>
+		   </div>
+		  </div>
+		 </div>
+		</div>
 </section>
 <jsp:include page="./layout/footer.jsp"></jsp:include>

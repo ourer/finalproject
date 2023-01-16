@@ -5,10 +5,10 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.ezen.finalpj.domain.FavoriteVO;
 import com.ezen.finalpj.domain.ManagerDTO;
 import com.ezen.finalpj.domain.ProfileVO;
 import com.ezen.finalpj.domain.UserDTO;
@@ -25,6 +25,7 @@ public class UserServiceImpl implements UserService {
 	private UserDAO udao;
 	@Inject
 	private ProfileDAO pdao;
+	
 	@Inject
 	BCryptPasswordEncoder passwordEncoder;
 
@@ -34,11 +35,11 @@ public class UserServiceImpl implements UserService {
 		return udao.updateCap(managerDTO);
 	}
 
-	@Override
-	public List<UserVO> selectMemListUserGet(int grno) {
-		log.info("소모임 멤버 리스트");
-		return udao.selectMemListUser(grno);
-	}
+//	@Override
+//	public List<UserVO> selectMemListUserGet(int grno) {
+//		log.info("소모임 멤버 리스트");
+//		return udao.selectMemListUser(grno);
+//	}
 
 	@Override
 	public UserVO selectCapGet(int grno) {
@@ -135,6 +136,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public List<UserVO> selectMemListUser(int grno) {
+		return udao.selectMemList(grno);
+	}
+	
+	
+
+	@Override
 	public int emailCheck(String email) {
 		int cnt = udao.emailCheck(email);
 		log.info("email check");
@@ -147,8 +155,22 @@ public class UserServiceImpl implements UserService {
 		System.out.println("cnt: " + cnt);
 		return cnt;
 	}
+	
+	@Override
+	public List<UserVO> selectAllUser() {
+		log.info("user all list check");
+		return udao.selectAllList();
+	}
+	
+	@Override
+	public int deleteUser(String email) {
+		log.info("delete user check");
+		return udao.deleteUser(email);
+	}
 
-
-
-
+	@Override
+	public List<FavoriteVO> countFavoriteList(String email) {
+		log.info("찜 목록 개수");
+		return udao.likeListCount(email);
+	}
 }

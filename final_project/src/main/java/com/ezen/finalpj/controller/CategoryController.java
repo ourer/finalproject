@@ -1,13 +1,12 @@
 package com.ezen.finalpj.controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
 import javax.inject.Inject;
-import javax.ws.rs.PUT;
 
-import org.apache.commons.collections4.map.HashedMap;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +15,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ezen.finalpj.domain.CategoryVO;
 import com.ezen.finalpj.domain.GroupVO;
+import com.ezen.finalpj.domain.PagingVO;
+import com.ezen.finalpj.domain.SearchVO;
 import com.ezen.finalpj.domain.SgMainVO;
+import com.ezen.finalpj.handler.PagingHandler;
 import com.ezen.finalpj.service.CategoryService;
 import com.ezen.finalpj.service.GroupService;
 import com.ezen.finalpj.service.SgmainService;
@@ -36,13 +38,14 @@ public class CategoryController {
 	private CategoryService csv;
 	
 	// 소모임 전체리스트 불러오기
-	@GetMapping("/categorymain")
-	public String categorymain(Model model) {
-		List<SgMainVO> sList = ssv.getSgMainImg();
-		log.info("test : " + sList.toString());
-		model.addAttribute("sList", sList);
-		return "/category/categorymain";
-	}
+   @GetMapping("/categorymain")
+      public String categorymain(Model model,SearchVO scvo) {
+         List<SgMainVO> sgList = ssv.getSgMainImgSearching(scvo);
+         log.info("test : " + sgList.toString());
+         model.addAttribute("sgList", sgList);
+         
+         return "/category/categorymain";
+      }
 	
 	//소모임 카테고리별 불러오기
 	@GetMapping("/categoryDetail")
@@ -73,14 +76,14 @@ public class CategoryController {
 	//home.jsp 오늘의 추천 소모임 리스트 랜덤 추천
 	@GetMapping("/categoryRandom")
 	public String categoryRandom(Model model) {
-		List<SgMainVO> sList = ssv.getSgMainImg();
+		List<SgMainVO> sList = ssv.getSgMainImg();  // 소모임리스트 값
 		log.info("test : " + sList.toString());
 		// 랜덤출력
-		
-		
+		Collections.shuffle(sList);
+		log.info("random : "+sList.toString());
 		
 		model.addAttribute("sList", sList);
-		return "/";
+		return "/category/categoryRandom";
 	}
 
 }

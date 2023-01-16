@@ -3,6 +3,7 @@ package com.ezen.finalpj.repository;
 import java.util.List;
 
 import com.ezen.finalpj.domain.GroupVO;
+import com.ezen.finalpj.domain.PagingVO;
 import com.ezen.finalpj.domain.SgMainVO;
 
 public interface GroupDAO {
@@ -23,8 +24,15 @@ public interface GroupDAO {
 
 	List<GroupVO> selectGroup(int ctno);
 
-	List<GroupVO> getAllList();
+	List<GroupVO> getAllList(PagingVO pgvo);
 
+	List<GroupVO> CategoryOne(String code);
+
+	int selectCount(PagingVO pgvo);
+
+	List<GroupVO> selectGrpList();
+
+	int deleteGrpList(String grno);
 
 
 }
