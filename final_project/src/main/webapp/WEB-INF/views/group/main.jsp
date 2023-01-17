@@ -8,14 +8,18 @@
 
 <section>
     <div class="firstBox">
-    	<ul class="grpNavUl nav nav-tabs">
-            	<li class="nav-item dropdown"><h3 class="grpName">${gvo.name }</h3></li>
-                <li class="grpNavLi nav-item"><a class="nav-link" href="/group/main?grno=${gvo.grno }">정보</a></li>
-                <li class="grpNavLi nav-item"><a class="nav-link" href="/gboard/list?grno=${gvo.grno }">게시판</a></li>
-                <li class="grpNavLi nav-item"><a class="nav-link" href="/group/memberList?grno=${gvo.grno }">멤버</a></li>
+    	<ul class="nav nav-tab">
+            	<li class="grpNavLi nav-item"><h1 class="grpName">${gvo.name }</h1></li>
+                <li class="grpNavLi nav-item"><a class="nav-link groupNav" href="/group/main?grno=${gvo.grno }">소모임 홈</a></li>
+                <li class="grpNavLi nav-item"><a class="nav-link groupNav" href="/gboard/list?grno=${gvo.grno }">게시판</a></li>
+                <li class="grpNavLi nav-item"><a class="nav-link groupNav" href="/group/memberList?grno=${gvo.grno }">멤버</a></li>
                 <c:if test="${ses.email eq gvo.email }">
-                <li class="grpNavLi nav-item"><a class="nav-link" href="/schedule/register?grno=${gvo.grno }">스케줄 생성</a></li>
+                <li class="grpNavLi nav-item"><a class="nav-link groupNav" href="/schedule/register?grno=${gvo.grno }">스케줄 생성</a></li>
                 </c:if>
+            </ul>
+        </div>
+        <div class="firstsBox">
+        <ul class="nav justify-content-end">
                 <li class="grpNavLi nav-item"><button id="shareBtn" onclick="copyUrl()"><i class="fa-solid fa-share-nodes"></i></button></li>
                 <li class="grpNavLi nav-item">
 	                <button id="heartBtn">
@@ -29,8 +33,8 @@
 	               	</c:choose>
 	                </button>
                 </li>
-            </ul>
-        </div>
+         </ul>
+		</div>
 	    <div class="imgBox">
         <c:choose>
         	<c:when test="${smvo ne null }">
@@ -64,6 +68,7 @@
         </c:choose>
         </div>
         <div class="descBox">
+        	<span>${fn:length(uList)+1}/${gvo.max_member }</span>
             <div class="detail">
     			${gvo.detail }
             </div>
@@ -123,7 +128,7 @@
     </div>
     
     <c:choose>
-    <c:when test="${ses.email ne null and ses.email ne gvo.email}">
+    <c:when test="${ses.email ne null and ses.email ne gvo.email and gvo.max_member>fn:length(uList)+1}">
     	<c:choose>
     	<c:when test="${not fn:contains(uList, ses.email) }">
     		<a href="/group/join?grno=${gvo.grno }"><button>가입</button></a>

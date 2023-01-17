@@ -136,20 +136,7 @@ public class GroupController {
 	
 	@GetMapping("/memberList")
 	public void selectMemListGrpGet(RedirectAttributes reAttr, @RequestParam(name="grno", required=false)int grno, Model model, HttpServletRequest req) {
-		//방장 가져오기
-//		UserVO capUvo=usv.selectCapGet(grno);
-//		log.info(capUvo.toString());
-//		model.addAttribute("capUvo", capUvo);
-//		List<UserVO> uList=usv.selectMemListUserGet(grno);
-//		model.addAttribute("uList", uList);
-		
-		
-		//CapUserDTO capUdto=usv.selectCapGet(grno);
-		//log.info(capUdto.toString());
-		//log.info("uName:  "+capUdto.getUName());
-		//req.setAttribute("cdto", capUdto);
-		//model.addAttribute("cdto", capUdto);
-		
+		GroupVO gvo=gsv.selectGrp(grno);
 		UserVO uvo=usv.selectCapGet(grno);
 		model.addAttribute("capUvo", uvo);
 		ProfileVO pvo=psv.selectProfile(uvo.getEmail());
@@ -162,6 +149,7 @@ public class GroupController {
 			pList.add(memPvo);
 		}
 		model.addAttribute("pList", pList);
+		model.addAttribute("gvo", gvo);
 		
 	}
 	

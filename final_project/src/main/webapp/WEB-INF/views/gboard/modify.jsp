@@ -3,28 +3,24 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet"> 
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-<script src=" https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/lang/summernote-ko-KR.min.js"></script>
 <jsp:include page="../layout/header.jsp"></jsp:include>
 <section>
 	<form action="/gboard/modify" method="post" style="margin:30px auto" enctype="multipart/form-data">
-		<div class="form-check form-check-inline">
-		   <select name="cate" >
+		<div class="form">
+		<label for="cate" class="col-sm-1 col-form-label">말머리</label>
+		   <select name="cate" class="form-select" aria-label="Default select example">
 		   		<option value="${gbvo.cate }" selected hidden>${gbvo.cate }</option>
+		   		<c:if test="${ses.email eq gvo.email }">
 		   		<option value="공지">공지</option>
+		   		</c:if>
 		   		<option value="가입인사">가입인사</option>
 		   		<option value="후기">후기</option>
 		   		<option value="자유">자유</option>
 		   </select>
 		</div>
 		<div class="form">
-		    <label for="gbno class="col-sm-1 col-form-label">번호</label>
-		    <input type="" class="form-control" name="gbno" id="gbno" value="${gbvo.gbno }" readonly="readonly">
+		    <label for="gbno" class="col-sm-1 col-form-label">번호</label>
+		    <input type="text" class="form-control" name="gbno" id="gbno" value="${gbvo.gbno }" readonly="readonly">
 		 </div>
 		<div class="form">
 		    <label for="title" class="col-sm-1 col-form-label">제목</label>
@@ -36,7 +32,7 @@
 		  </div>
 		<div class="form">
 		    <label for="content" class="col-sm-1 col-form-label">내용</label>
-		    <textarea class="summernote" id="content" name="content">${gbvo.content }</textarea>
+		    <textarea class="form-control" id="content" name="content" style="height: 100px">${gbvo.content }</textarea>
 		</div>
 		<div class="form">
 		    <label for="regdate" class="col-sm-1 col-form-label">작성일</label>
@@ -70,14 +66,3 @@
 </section>
 <jsp:include page="../layout/footer.jsp"></jsp:include>
 <script type="text/javascript" src="/resources/js/gboardRegister.js"></script>
-<script type="text/javascript">
-$(document).ready(function(){
-	$('.summernote').summernote({
-		height: 300,
-		focus: true,
-		lang: "ko-KR",
-		placeholder: '최대 2048자까지 쓸 수 있습니다.'
-	});
-	
-});
-</script>

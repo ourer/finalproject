@@ -1,9 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<link rel="stylesheet" type="text/css" href="/resources/css/grpMain.css">
+
 <jsp:include page="../layout/header.jsp"></jsp:include>
 <section>
-	<h3 style="margin-top: 30px">소모임 게시판</h3>
+	 <div class="firstBox">
+    	<ul class="nav nav-tab">
+            	<li class="grpNavLi nav-item"><h1 class="grpName">${gvo.name }</h1></li>
+                <li class="grpNavLi nav-item"><a class="nav-link groupNav" href="/group/main?grno=${gvo.grno }">소모임 홈</a></li>
+                <li class="grpNavLi nav-item"><a class="nav-link groupNav" href="/gboard/list?grno=${gvo.grno }">게시판</a></li>
+                <li class="grpNavLi nav-item"><a class="nav-link groupNav" href="/group/memberList?grno=${gvo.grno }">멤버</a></li>
+                <c:if test="${ses.email eq gvo.email }">
+                <li class="grpNavLi nav-item"><a class="nav-link groupNav" href="/schedule/register?grno=${gvo.grno }">스케줄 생성</a></li>
+                </c:if>
+            </ul>
+        </div>
 		<table class="table table-hover text-center">
 			<colgroup>
 			<col width="10%" />
@@ -23,19 +36,45 @@
 			</thead>
 			<tbody class="table-group-divider">
 			<c:forEach items="${gbList }" var="gbvo">
-			<tr>
-				<td class="text-danger">${gbvo.cate }</td>
-				<td><a href="/gboard/detail?gbno=${gbvo.gbno }" style="text-decoration: none">${gbvo.title }</a></td>
-				<td>${gbvo.writer }</td>
-				<td>${gbvo.regdate.substring(0,10) }</td>
-				<td>${gbvo.view }</td>
-			</tr>
+			<c:choose>
+			<c:when test="${gbvo.cate eq '공지' }">
+				<tr>
+					<td class="text-danger">${gbvo.cate }</td>
+					<td><a href="/gboard/detail?gbno=${gbvo.gbno }" style="text-decoration: none">${gbvo.title }</a></td>
+					<td>${gbvo.writer }</td>
+					<td>${gbvo.regdate.substring(0,10) }</td>
+					<td>${gbvo.view }</td>
+				</tr>
+			</c:when>
+			<c:otherwise>
+				<tr>
+					<td class="text-danger">${gbvo.cate }</td>
+					<td><a href="/gboard/detail?gbno=${gbvo.gbno }" style="text-decoration: none">${gbvo.title }</a></td>
+					<td>${gbvo.writer }</td>
+					<td>${gbvo.regdate.substring(0,10) }</td>
+					<td>${gbvo.view }</td>
+				</tr>
+			</c:otherwise>
+			</c:choose>
 			</c:forEach>
 			</tbody>
 		</table>
+		<c:choose>
+		<c:when test="${ses.email ne null }">
+		<c:choose>
+		<c:when test="${ses.email eq gvo.email }">
 			<div class="text-end">
 				<a href="/gboard/register?grno=${grno }"><button class="btn btn-outline-warning" type="button">작성</button></a>
 			</div>
+		</c:when>
+		<c:when test="${fn:contains(uList, ses.email) }">
+			<div class="text-end">
+				<a href="/gboard/register?grno=${grno }"><button class="btn btn-outline-warning" type="button">작성</button></a>
+			</div>
+		</c:when>
+		</c:choose>
+		</c:when>
+		</c:choose>
 		<nav aria-label="Page navigation example">
 		  <ul class="pagination justify-content-center">
 		  	<c:if test="${gph.prev }">

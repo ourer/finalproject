@@ -23,9 +23,13 @@ import com.ezen.finalpj.domain.FileVO;
 import com.ezen.finalpj.domain.GPagingVO;
 import com.ezen.finalpj.domain.GboardDTO;
 import com.ezen.finalpj.domain.GboardVO;
+import com.ezen.finalpj.domain.GroupVO;
+import com.ezen.finalpj.domain.UserVO;
 import com.ezen.finalpj.handler.FileHandler;
 import com.ezen.finalpj.handler.GPagingHandler;
 import com.ezen.finalpj.service.GboardService;
+import com.ezen.finalpj.service.GroupService;
+import com.ezen.finalpj.service.UserService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -37,9 +41,15 @@ public class GboardController {
 	private GboardService gbsv;
 	@Inject
 	private FileHandler fh;
+	@Inject
+	private GroupService gsv;
+	@Inject
+	private UserService usv;
 	
 	@GetMapping("/register")
 	public String insertGbrdGet(@RequestParam("grno")int grno, Model model, HttpServletRequest req) {
+		GroupVO gvo=gsv.selectGrp(grno);
+		model.addAttribute("gvo", gvo);
 		model.addAttribute("grno", grno);
 		return "/gboard/register";
 	}
@@ -75,6 +85,10 @@ public class GboardController {
 		log.info(gbList.toString());
 		int totalPage=gbsv.getTotalPage(grno);
 		GPagingHandler gph=new GPagingHandler(gpvo, totalPage);
+		List<UserVO> uList=usv.selectMemListUser(grno);
+		GroupVO gvo=gsv.selectGrp(grno);
+		model.addAttribute("gvo", gvo);
+		model.addAttribute("uList", uList);
 		model.addAttribute("gbList", gbList);
 		model.addAttribute("grno", grno);
 		model.addAttribute("gph", gph);
@@ -86,6 +100,9 @@ public class GboardController {
 		int isOk=gbsv.updateViewGbrd(gbno);
 		log.info("조회수"+(isOk>0?"성공":"실패"));
 		GboardDTO gbdto=gbsv.selectDetailFileGbrd(gbno);
+		int grno=gbdto.getGbvo().getGrno();
+		GroupVO gvo=gsv.selectGrp(grno);
+		model.addAttribute("gvo", gvo);
 		//GboardVO gbvo=gbsv.selectDetailGbrd(gbno);
 		model.addAttribute("gbvo", gbdto.getGbvo());
 		model.addAttribute("gfvo", gbdto.getGfvo());
@@ -96,6 +113,9 @@ public class GboardController {
 	@GetMapping("/modify")
 	public String updateGbrdGet(@RequestParam("gbno")int gbno, Model model) {
 		GboardDTO gbdto=gbsv.selectDetailFileGbrd(gbno);
+		int grno=gbdto.getGbvo().getGrno();
+		GroupVO gvo=gsv.selectGrp(grno);
+		model.addAttribute("gvo", gvo);
 		//GboardVO gbvo=gbsv.selectDetailGbrd(gbno);
 		model.addAttribute("gbvo", gbdto.getGbvo());
 		model.addAttribute("gfvo", gbdto.getGfvo());

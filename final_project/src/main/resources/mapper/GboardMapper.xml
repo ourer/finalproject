@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ezen.finalpj.repository.GboardDAO">
 	<select id="selectListGbrd" resultType="com.ezen.finalpj.domain.GboardVO">
-		select * from gboard where grno=#{grno} limit #{startIndex}, #{qty}
+		select * from gboard where grno=#{grno} order by regdate desc limit #{startIndex}, #{qty}
 	</select>
 	<insert id="insertGbrd">
 		insert into gboard(title, content, writer, cate, grno) values(#{title}, #{content}, #{writer}, #{cate}, #{grno})
