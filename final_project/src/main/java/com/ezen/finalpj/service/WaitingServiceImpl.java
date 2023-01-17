@@ -51,5 +51,11 @@ public class WaitingServiceImpl implements WaitingService {
 		return wdao.cancellation(email);
 	}
 
+	@Override
+	public int quit(WaitingVO wt) {
+		log.info("quit a smallgroup email");
+		return wdao.quit(wt);
+	}
+
 
 }

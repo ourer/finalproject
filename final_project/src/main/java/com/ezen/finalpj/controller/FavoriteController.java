@@ -54,10 +54,13 @@ public class FavoriteController {
 //		model.addAttribute("gList", gList);
 
 		List<FavoriteDTO> gList = fsv.favoriteList(email);
-		List<FavoriteVO> fList = fsv.countFavoriteList(email);
+		List<FavoriteVO> fList=fsv.selectFList(email);
+		String name = fsv.selectmyGname(email);
 		log.info(gList.toString());
 		model.addAttribute("gList", gList);
 		model.addAttribute("fList", fList);
+		model.addAttribute("name", name);
+		
 		
 		return "/favorite/mylike";
 	}

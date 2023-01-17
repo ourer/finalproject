@@ -9,4 +9,33 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getSgMainImg" resultType="com.ezen.finalpj.domain.SgMainVO">
 		select S.uuid, S.dir, S.name, SG.grno, SG.name AS sg_name, SG.detail, SG.city, SG.county from smallgroup SG left join sgmain S on S.grno = SG.grno
 	</select>
+	   <select id="getSgMainImgSearching" resultType="com.ezen.finalpj.domain.SgMainVO">
+      select S.uuid, S.dir, S.name, SG.grno, SG.name AS sg_name, SG.detail, SG.city, SG.county 
+      from smallgroup SG left join sgmain S on S.grno = SG.grno where sg.grno is not null
+      <include refid="search"></include>
+   </select>
+   
+   
+   <sql id="search">
+      <if test="type !=null">
+         <trim prefix="and (" suffix=")" prefixOverrides="OR">
+            <foreach collection="typeToArray" item="type">
+               <trim prefix="OR">
+                  <choose>
+                     <when test="type =='n'.toString()">
+                        sg.name like concat('%',#{keyword},'%')  
+                     </when>
+                     <when test="type =='d'.toString()">
+                        detail like concat('%',#{keyword},'%')  
+                     </when>
+                     <when test="type =='a'.toString()">
+                        sg.name like concat('%',#{keyword},'%')  
+                        or detail like concat('%',#{keyword},'%') 
+                     </when>
+                  </choose>
+               </trim>
+            </foreach>
+         </trim>
+      </if>
+   </sql>
 </mapper>

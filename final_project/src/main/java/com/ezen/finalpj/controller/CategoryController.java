@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.ezen.finalpj.domain.CategoryVO;
 import com.ezen.finalpj.domain.GroupVO;
 import com.ezen.finalpj.domain.PagingVO;
+import com.ezen.finalpj.domain.SearchVO;
 import com.ezen.finalpj.domain.SgMainVO;
 import com.ezen.finalpj.handler.PagingHandler;
 import com.ezen.finalpj.service.CategoryService;
@@ -33,25 +34,14 @@ public class CategoryController {
 	private CategoryService csv;
 	
 	// 소모임 전체리스트 불러오기
-	@GetMapping("/categorymain")
-	public String categorymain(Model model, SgMainVO svo,PagingVO pgvo) {
-		//그룹에 대한 리스트 부터 만들고
-		log.info("pgvo : "+pgvo.getPageNo());
-		log.info("pgvo tostring : "+pgvo.toString());
-		List<GroupVO> gList = gsv.getAllList(pgvo);
-		model.addAttribute("gList", gList);
-		
-		//SgMainVO: 소모임 사진만 들어있다.
-		//그 그룹에 대한 사진 리스트를 만든다.
-		int grno = svo.getGrno();
-		List<SgMainVO> sList =  ssv.getSgmain(grno);
-		model.addAttribute("sList", sList);
-		
-		int totalCount=gsv.getPageCount(pgvo);
-		PagingHandler pgh=new PagingHandler(pgvo, totalCount);
-		model.addAttribute("pgh", pgh);
-		return "/category/categorymain";
-	}
+	   @GetMapping("/categorymain")
+	      public String categorymain(Model model,SearchVO scvo) {
+	         List<SgMainVO> sgList = ssv.getSgMainImgSearching(scvo);
+	         log.info("test : " + sgList.toString());
+	         model.addAttribute("sgList", sgList);
+	         
+	         return "/category/categorymain";
+	      }
 	
 	//소모임 카테고리별 불러오기
 	@GetMapping("/categoryDetail")

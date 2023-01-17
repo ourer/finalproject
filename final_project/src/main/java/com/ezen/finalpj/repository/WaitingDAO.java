@@ -16,5 +16,7 @@ public interface WaitingDAO {
 	int appointment(String email);
 
 	int cancellation(String email);
+
+	int quit(WaitingVO wt);
 	
 }

@@ -7,10 +7,10 @@
 <link rel="stylesheet" type="text/css" href="/resources/css/grpMain.css">
 
 <section>
-    <div class="firstBox">
+<div class="firstBox">
             <ul class="nav nav-tab">
                <li class="grpNavLi nav-item"><h1 class="grpName">${gvo.name }</h1></li>
-                <li class="grpNavLi nav-item"><a class="nav-link groupNav" href="/gboard/main?grno=${gvo.grno }">소모임 홈</a></li>
+                <li class="grpNavLi nav-item"><a class="nav-link groupNav" href="/group/main?grno=${gvo.grno }">소모임 홈</a></li>
                 <li class="grpNavLi nav-item"><a class="nav-link groupNav" href="/gboard/list?grno=${gvo.grno }">게시판</a></li>
                 <c:if test="${ses.email eq gvo.email }">
                 <li class="grpNavLi nav-item"><a class="nav-link groupNav" href="/schedule/register?grno=${gvo.grno }">스케줄 생성</a></li>
@@ -19,62 +19,70 @@
             </div>
      <div class="firstsBox">
             <ul class="nav justify-content-end">
-                <li class="grpNavLi"><button id="shareBtn" onclick="copyUrl()"><i class="fa-solid fa-share-nodes"></i></button></li>
-                <li class="grpNavLi"><button id="heartBtn"><i class="fa-regular fa-heart"></i>${favMsg }</button></li>
+                <li class="grpNavLi nav-item"><button id="shareBtn" onclick="copyUrl()"><i class="fa-solid fa-share-nodes"></i></button></li>
+                <li class="grpNavLi nav-item">
+	                <button id="heartBtn">
+	               	<c:choose>
+	               	<c:when test="${fvo ne null }">
+	                	<i class="fa-solid fa-heart"></i>
+	               	</c:when>
+		            <c:otherwise>
+	                	<i class="fa-regular fa-heart"></i>                		
+		            </c:otherwise>
+	               	</c:choose>
+	                </button>
+                </li>
             </ul>
      </div>
-        <div class="imgBox">
+	    <div class="imgBox">
         <c:choose>
-           <c:when test="${smvo ne null }">
-               <img src="/upload/sgMainUpload/${fn:replace(smvo.dir, '\\', '/')}/${smvo.uuid}_${smvo.name}" alt="" style="width: 1050px; height: 500px">
-               <form action="/group/image" method="post" enctype="multipart/form-data">
-                  <input type="hidden" name="grno" value="${gvo.grno }">
-                  <input class="form-control" type="file" style="display: none;" id="files" name="files">
-                  <c:if test="${ses.email == gvo.email }">
-                  <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                  <button id="trigger" class="btn btn-outline-primary me-md-2" type="button">이미지 수정</button>
-                  <a href="/group/image/delete?grno=${gvo.grno }"><button class="btn btn-outline-danger" type="button">이미지 삭제</button></a>
-                  </div>
-                  </c:if>
-              <div class="col-12" id="fileZone">
-               <!--파일이 첨부되면 해당 파일에 대한 정보가 표시됨-->
-            </div>
-            </form>
-           
-           </c:when>
-           <c:otherwise>
-               <form action="/group/image" method="post" enctype="multipart/form-data">
-                  <input type="hidden" name="grno" value="${gvo.grno }">
-                  <input class="form-control" type="file" style="display: none;" id="files" name="files">
-                  <c:if test="${ses.email == gvo.email }">
-                  <button id="trigger" class="btn btn-outline-primary btn-block d-block" type="button">이미지 등록</button>
-                  </c:if>
-              <div class="col-12" id="fileZone">
-               <!--파일이 첨부되면 해당 파일에 대한 정보가 표시됨-->
-            </div>
-            </form>
-           
-           </c:otherwise>
+        	<c:when test="${smvo ne null }">
+	            <img src="/upload/sgMainUpload/${fn:replace(smvo.dir, '\\', '/')}/${smvo.uuid}_${smvo.name}" alt="" style="width: 1050px; height: 500px">
+	            <form action="/group/image" method="post" enctype="multipart/form-data">
+		            <input type="hidden" name="grno" value="${gvo.grno }">
+		            <input class="form-control" type="file" style="display: none;" id="files" name="files">
+		            <c:if test="${ses.email == gvo.email }">
+		            <button id="trigger" class="btn btn-outline-primary btn-block d-block" type="button">이미지 수정</button>
+		            <a href="/group/image/delete?grno=${gvo.grno }"><button class="btn btn-outline-primary btn-block d-block" type="button">이미지 삭제</button></a>
+		            </c:if>
+	        	<div class="col-12" id="fileZone">
+					<!--파일이 첨부되면 해당 파일에 대한 정보가 표시됨-->
+				</div>
+				</form>
+        	
+        	</c:when>
+        	<c:otherwise>
+	            <form action="/group/image" method="post" enctype="multipart/form-data">
+		            <input type="hidden" name="grno" value="${gvo.grno }">
+		            <input class="form-control" type="file" style="display: none;" id="files" name="files">
+		            <c:if test="${ses.email == gvo.email }">
+		            <button id="trigger" class="btn btn-outline-primary btn-block d-block" type="button">이미지 등록</button>
+		            </c:if>
+	        	<div class="col-12" id="fileZone">
+					<!--파일이 첨부되면 해당 파일에 대한 정보가 표시됨-->
+				</div>
+				</form>
+        	
+        	</c:otherwise>
         </c:choose>
         </div>
         <div class="descBox">
             <div class="detail">
-            <h3>소모임 소개 >></h3>
-             ${gvo.detail }
+    			${gvo.detail }
             </div>
         </div>
     <div class="secondBox">
         <div class="secondTitle">
-            <h3>정모일정 >></h3>
+            모임 정보
         </div>
         <c:choose>
-           <c:when test="${sList ne null }">
-           <c:forEach items="${sList }" var="svo">
-           <div class="scheBox">
-               <div class="scheTitle">
-               <h5 class="hightlight">${svo.title }</h5>
-               <input type="hidden" id="sno" value="${svo.sno }">
-               </div>
+        	<c:when test="${sList ne null }">
+        	<c:forEach items="${sList }" var="svo">
+	        <div class="scheBox">
+	            <div class="scheTitle">
+					${svo.title }
+					<input type="hidden" id="sno" value="${svo.sno }">
+	            </div>
 	            <div class="scheInner">
 	                <img src="" alt="">
 	                <ul class="scheInfo">

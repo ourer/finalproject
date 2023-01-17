@@ -1,0 +1,31 @@
+@charset "UTF-8";
+.firstBox{
+	margin-top: 30px;
+	width: 90%;
+	float: left;
+}
+.grpName{
+	font-weight: bold;
+	text-shadow: #FFD34A 2px 2px 5px;
+	
+}
+.firstsBox{
+	margin-top: 30px;
+	width: 10%;
+	float: right;
+}
+.grpNavLi > button{
+	border: none;
+	width: 50px;
+	height: 50px;
+	background-color: #fff;
+}
+.grpNavLi > button > i{
+	font-size: 30px;
+}
+.grpNavLi > button > .fa-heart{
+	color: #FFD34A;
+}
+.nav-item > .groupNav{
+	margin-left: 50px;
+}

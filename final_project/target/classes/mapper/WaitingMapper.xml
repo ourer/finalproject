@@ -22,4 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="cancellation">
 		update waiting set grade='C' where email=#{email}
 	</update>
+	<delete id="quit">
+		delete from waiting where email=#{email} and grno=#{grno}
+	</delete>
 </mapper>

@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
+import com.ezen.finalpj.domain.SearchVO;
 import com.ezen.finalpj.domain.SgMainVO;
 import com.ezen.finalpj.repository.SgmainDAO;
 
@@ -28,6 +29,11 @@ public class SgmainServiceImpl implements SgmainService {
 		log.info(">>> sgmain 이미지 가져오기");
 		return sdao.getSgMainImg();
 	}
-
+	
+	 @Override
+	   public List<SgMainVO> getSgMainImgSearching(SearchVO scvo) {
+	      log.info(">>> sgmainNoPaging 가져오기");
+	      return sdao.getSgMainImgSearching(scvo);
+	   }
 
 }

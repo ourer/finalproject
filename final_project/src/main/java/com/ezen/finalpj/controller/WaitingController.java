@@ -56,5 +56,18 @@ public class WaitingController {
 		int isOk=wsv.cancellation(email);
 		return isOk>0? new ResponseEntity<String>("1",HttpStatus.OK): new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
+	
+	@DeleteMapping(value = "/quit/", produces = {MediaType.TEXT_PLAIN_VALUE})
+	public ResponseEntity<String> quitGroup(@RequestBody WaitingVO wt){
+		log.info("quit a smallgroup : "+wt.toString());
+		int isOk = wsv.quit(wt);
+		return isOk>0 ? new ResponseEntity<String>("1", HttpStatus.OK) : new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+//	@DeleteMapping(value = "/quit/{email}", produces = {MediaType.TEXT_PLAIN_VALUE})
+//	public ResponseEntity<String> quitGroup(@PathVariable("email")String email){
+//		log.info("quit a smallgroup : "+email);
+//		int isOk = wsv.quit(email);
+//		return isOk>0 ? new ResponseEntity<String>("1", HttpStatus.OK) : new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+//	}
 
 }

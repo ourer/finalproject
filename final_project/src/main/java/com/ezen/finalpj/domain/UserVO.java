@@ -32,5 +32,6 @@ public class UserVO {
 	private String ctcode_1;
 	private String ctcode_2;
 	private String ctcode_3;
+	private int cntFav;
 
 }

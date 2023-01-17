@@ -16,5 +16,6 @@ public class FavoriteDTO {
 	private String ctname;
 	private String gname;
 	private String gdetail;
+	private String wgrade;
 
 }

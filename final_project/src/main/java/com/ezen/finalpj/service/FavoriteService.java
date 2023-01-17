@@ -20,6 +20,8 @@ public interface FavoriteService {
 
 	List<FavoriteDTO> favoriteList(String email);
 
-	List<FavoriteVO> countFavoriteList(String email);
+	List<FavoriteVO> selectFList(String email);
+
+	String selectmyGname(String email);
 
 }
