@@ -24,23 +24,24 @@
 }
 
 </style>
+
 <section>
 	<form class="loginbox" action="/user/login" method="post">
 	  <div class="form-floating mb-3">
-	  <input type="email" class="form-control" id="floatingInput" name="email" placeholder="email@ourer.com">
-	  <label for="floatingInput">아이디</label>
-	</div>
-	<div class="form-floating">
-	  <input type="password" class="form-control" id="floatingPassword" name="pw" placeholder="password">
-	  <label for="floatingPassword">비밀번호</label>
-	</div>
-	<div class="loginBtn">
-	<button class="btn btn-outline-warning" type="submit">LOGIN</button>
-	</div>
+	 	 <input type="email" class="form-control" id="floatingInput" name="email" placeholder="email@ourer.com">
+	  	 <label for="floatingInput">아이디</label>
+	   </div>
+		<div class="form-floating">
+		  <input type="password" class="form-control" id="floatingPassword" name="pw" placeholder="password">
+		  <label for="floatingPassword">비밀번호</label>
+		</div>
+		<div class="loginBtn">
+			<button class="btn btn-outline-warning" type="submit">LOGIN</button>
+		</div>
 	</form>
-	<div class="forgetpw">
-		<a href="/user/register">비밀번호를 잊으셨나요?</a>
-	</div>
+		<div class="forgetpw">
+			<a href="/user/register">비밀번호를 잊으셨나요?</a>
+		</div>
 </section>
 
 <script type="text/javascript">
@@ -52,6 +53,6 @@
 		console.log(msglogin);
 		alert("로그인에 성공했습니다.");
 	}
-	</script>
+</script>
 
 <jsp:include page="../layout/footer.jsp"></jsp:include>

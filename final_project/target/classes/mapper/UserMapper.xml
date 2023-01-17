@@ -76,4 +76,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="likeListCount" resultType="com.ezen.finalpj.domain.FavoriteVO">
 		select count(fno) as cntFav from favorite where email=#{email} group by email
 	</select>
+	
+	<select id="getMyCtno" parameterType="String" resultType="int">
+		select ctno_1 from user where email = #{email}
+	</select>
+	
+
 </mapper>

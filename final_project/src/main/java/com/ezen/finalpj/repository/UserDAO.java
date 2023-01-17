@@ -36,4 +36,8 @@ public interface UserDAO {
 
 	List<FavoriteVO> likeListCount(String email);
 
+	int getMyCtno(String email);
+
+
+
 }

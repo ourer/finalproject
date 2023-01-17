@@ -45,4 +45,8 @@ public interface UserService {
 
 	List<FavoriteVO> countFavoriteList(String email);
 
+	int getMyCtno(String email);
+
+
+
 }

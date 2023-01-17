@@ -23,11 +23,13 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ezen.finalpj.domain.CategoryVO;
 import com.ezen.finalpj.domain.FavoriteVO;
 import com.ezen.finalpj.domain.ProfileVO;
 import com.ezen.finalpj.domain.UserDTO;
 import com.ezen.finalpj.domain.UserVO;
 import com.ezen.finalpj.handler.ProfileHandler;
+import com.ezen.finalpj.service.CategoryService;
 import com.ezen.finalpj.service.ProfileService;
 import com.ezen.finalpj.service.UserService;
 import com.ezen.finalpj.service.WaitingService;
@@ -41,15 +43,14 @@ public class UserController {
 	
 	@Inject
 	private UserService usv;
-	
 	@Inject
 	private ProfileHandler ph;
-	
 	@Inject
 	private ProfileService psv;
-	
 	@Inject
 	private WaitingService wsv;
+	@Inject
+	private CategoryService csv;
 	
 	
 	@GetMapping("/")
@@ -63,20 +64,6 @@ public class UserController {
 		return "/user/register";
 	}
 	
-//	@PostMapping("/register")
-//		public ModelAndView register(UserVO uvo, ModelAndView mv){
-//		log.info(">>> User Register check 1");
-//		boolean isUP = usv.register(uvo);
-//		if(isUP) {
-//			mv.addObject("msg", "1");
-//			mv.setViewName("/");
-//		}else {
-//			mv.addObject("msg", "0");
-//			mv.setViewName("/user/register");
-//		}
-//		return mv;
-//	}
-	
 	 @PostMapping("/register") 
 	 	public String register(UserVO uvo, RedirectAttributes reAttr, @RequestParam(name="files", required =false)MultipartFile[] files){
 		 
@@ -84,7 +71,6 @@ public class UserController {
 		 log.info(">>>User : "+uvo.toString());
 		 log.info(">>>files: "+files.toString()); 
 		 List<ProfileVO> pList = null;
-//		 int isOK = usv.register(uvo);
 		 int isOK = 0;
 		 if(files[0].getSize() > 0) { 
 		 pList = ph.uploadFiles(files);
@@ -105,13 +91,12 @@ public class UserController {
 	  }
 	 
 	 @GetMapping("/login")
-	 public ModelAndView loginGet(ModelAndView mv) {
-		 mv.setViewName("/user/login");
-		 return mv;
+	 public String loginGet(Model model) {
+		 return "/user/login";
 	 }
 	 
     @PostMapping("/login")
-    public ModelAndView loginPost(ModelAndView mv, String email, String pw, HttpServletRequest req) {
+    public String loginPost(Model model, String email, String pw, HttpServletRequest req, RedirectAttributes ra) {
        log.info(">>>email : "+email+" pw : "+ pw);
        UserVO isUser = usv.isUser(email, pw);
        
@@ -124,14 +109,20 @@ public class UserController {
           ProfileVO pvo=psv.selectPersonalProfile(email);
           ses.setAttribute("sespvo", pvo);
           
-          mv.setViewName("/home");
-          mv.addObject("msglogin", "1");
+          // ctno_1 가져오기
+          int MyCtno = usv.getMyCtno(email);
+          log.info("내 관심사 번호 : "+MyCtno);
+          
+          // 내 관심사 리스트 만들기
+          List<CategoryVO> MyCtnoList = csv.getMyList(MyCtno);
+          log.info("내 관심사 리스트 : "+MyCtnoList.toString());
+          
+          // 일회성
+          ra.addFlashAttribute("MyCtnoList", MyCtnoList);
        }else {
-          mv.setViewName("user/login");
-          mv.addObject("msglogin","0");
+    	  return "/user/login";
        }
-       
-       return mv;
+       return "redirect:/";
     }
 	 
 	 @GetMapping("/logout")

@@ -1,9 +1,6 @@
 package com.ezen.finalpj.controller;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 import javax.inject.Inject;
 
@@ -14,16 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ezen.finalpj.domain.CategoryVO;
-import com.ezen.finalpj.domain.GroupVO;
-import com.ezen.finalpj.domain.PagingVO;
 import com.ezen.finalpj.domain.SearchVO;
 import com.ezen.finalpj.domain.SgMainVO;
-import com.ezen.finalpj.handler.PagingHandler;
 import com.ezen.finalpj.service.CategoryService;
 import com.ezen.finalpj.service.GroupService;
 import com.ezen.finalpj.service.SgmainService;
-import com.mysql.cj.x.protobuf.MysqlxCrud.Collection;
-
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -43,7 +35,6 @@ public class CategoryController {
          List<SgMainVO> sgList = ssv.getSgMainImgSearching(scvo);
          log.info("test : " + sgList.toString());
          model.addAttribute("sgList", sgList);
-         
          return "/category/categorymain";
       }
 	
@@ -70,20 +61,6 @@ public class CategoryController {
 		model.addAttribute("cList", cList);
 		model.addAttribute("cateList", cateList);
 		return "/category/categoryNameList";
-	}
-	
-	
-	//home.jsp 오늘의 추천 소모임 리스트 랜덤 추천
-	@GetMapping("/categoryRandom")
-	public String categoryRandom(Model model) {
-		List<SgMainVO> sList = ssv.getSgMainImg();  // 소모임리스트 값
-		log.info("test : " + sList.toString());
-		// 랜덤출력
-		Collections.shuffle(sList);
-		log.info("random : "+sList.toString());
-		
-		model.addAttribute("sList", sList);
-		return "/category/categoryRandom";
 	}
 
 }

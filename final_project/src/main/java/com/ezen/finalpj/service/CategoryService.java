@@ -16,5 +16,9 @@ public interface CategoryService {
 
 	List<CategoryVO> getCategoryOne(String name);
 
+	List<CategoryVO> getCategoryOneRandom();
+
+	List<CategoryVO> getMyList(int myCtno);
+
 
 }

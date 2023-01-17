@@ -43,8 +43,20 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Override
 	public List<CategoryVO> getCategoryOne(String name) {
-		log.info("category 소분류 List 불러오기");
+		log.info("category 소분류 name으로 List 불러오기");
 		return cdao.getCategoryOne(name);
+	}
+
+	@Override
+	public List<CategoryVO> getCategoryOneRandom() {
+		log.info("category 소분류 List 불러오기");
+		return cdao.getCategoryOneRandom();
+	}
+
+	@Override
+	public List<CategoryVO> getMyList(int myCtno) {
+		log.info("내 관심사 List 불러오기");
+		return cdao.getMyList(myCtno);
 	}
 	
 

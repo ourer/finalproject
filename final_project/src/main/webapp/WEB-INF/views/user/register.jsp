@@ -24,19 +24,36 @@
 </style>
 <section>
 <h2>회원가입</h2>
-	<form action="/user/register" method="post" enctype="multipart/form-data" onsubmit="return joinCheck(this)">
-		아이디: <input type="text" class="form-control" id="email" placeholder="email@ourer.com" name="email">
-		<button type="button" onclick="emailCheck()">이메일 중복확인</button><br>
+	<form action="/user/register" method="post" enctype="multipart/form-data" onsubmit="return joinCheck(this)">		
+		<div class="input-group mb-3">
+			<span class="input-group-text" id="inputGroup-sizing-default">email</span>
+  			<input type="email" class="form-control" id="email" placeholder="email@ourer.com" name="email">
+  			<button type="button" class="btn btn-outline-warning" onclick="emailCheck()">이메일 중복확인</button><br>
+		</div>
  		<span class="email_OK">사용 가능한 아이디입니다.</span>
 		<span class="email_NO">이미 사용중인 아이디입니다.</span><br>
-		프로필사진:	
- 		<div class="col-12 d-grid">
-		<input class="form-control" type="file" style="display: none;" id="files" name="files">
-		<button type="button" id="trigger" class="btn btn-outline-primary btn-block d-block">Files Upload</button>
+		
+		<!-- 원래 파일 올리는부분 -->
+   		<div class="col-12 d-grid input-group mb-3">
+			<span class="input-group-text" id="inputGroup-sizing-default" style="width: 100px;">프로필사진</span>
+			<input class="form-control" type="file" style="display: none;" id="files" name="files">
+			<button type="button" id="trigger" class="btn btn-outline-primary btn-block d-block" style="width: 600px; ">Files Upload</button>
 		</div>
 		<div class="col-12" id="fileZone">
 			<!-- 파일이 첨부되면 해당 파일에 대한 정보가 표시됨  -->
 		</div>
+		
+		
+		<!-- 부트스트랩에서 훔쳤다.. -->
+		<div class="col-12 input-group">
+  			<input type="file" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload" id="files" name="files">
+ 			<button class="btn btn-outline-secondary btn-block d-block" type="button" id="trigger">Files Upload</button>
+		</div>
+		
+		
+		
+		
+		
 		이름:<input type="text" class="form-control" id="name" placeholder="이름" name="name">
 		비밀번호:<input type="password" class="form-control pw" id="pw" name="pw">
 		<!-- 비밀번호 체크 -->

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 <jsp:include page="./layout/header.jsp"></jsp:include>
 <style>
@@ -58,7 +58,7 @@
 		  </button>
 		 </div>
 		  
-		   <h3 style="margin: 30px auto">관심사</h3>
+	<h3 style="margin: 30px auto">관심사</h3>
         <div class="likecategory">
            <button type="button" class="icon" id="category_A" onclick="location.href='/category/categoryDetail?code=A'">
               <i class="fa-solid fa-person-running"></i>
@@ -108,50 +108,53 @@
               <i class="fa-solid fa-dog"></i>
               <span class="icontext">반려동물</span>
            </button>
-        </div>
-		 
-		 <h3 style="margin: 30px auto">오늘의 추천 소모임</h3>
-		 <div class="row row-cols-1 row-cols-md-4 g-4" style="margin-bottom: 100px">
-		  <div class="col">
-		    <div class="card h-100">
-		  		<img src="/resources/img/java.jpg" class="card-img-top">
-		  <div class="card-body">
-		    <h5 class="card-title">개발자</h5>
-		    <p class="card-text">자바 웹 개발을 공부하는 사람들 모두 모여라!!<br>비전공자, 전공자 상관없어요~</p>
-		    <a href="/category/categoryRandom" class="btn btn-warning">구경하기</a>
-		   </div>
-		  </div>
-		 </div>
-		  <div class="col">
-		    <div class="card h-100">
-		  		<img src="/resources/img/museum.jpg" class="card-img-top">
-		  <div class="card-body">
-		    <h5 class="card-title">전시회</h5>
-		    <p class="card-text">우리나라 곳곳에 숨어있는 전시회를 찾아다니자~</p>
-		    <a href="#" class="btn btn-warning">구경하기</a>
-		   </div>
-		  </div>
-		 </div>
-		  <div class="col">
-		    <div class="card h-100">
-		  		<img src="/resources/img/drink.jpg" class="card-img-top">
-		  <div class="card-body">
-		    <h5 class="card-title">먹고마셔</h5>
-		    <p class="card-text">다양한 주종을 즐겨보는 모임..!<br>이 지역의 핫플은 우리가 선도한다!</p>
-		    <a href="#" class="btn btn-warning">구경하기</a>
-		   </div>
-		  </div>
-		 </div>
-		  <div class="col">
-		    <div class="card h-100">
-		  		<img src="/resources/img/ball.jpg" class="card-img-top">
-		  <div class="card-body">
-		    <h5 class="card-title">야유회</h5>
-		    <p class="card-text">주말에 모여서 운동할 사람 모여라!<br>간단한 조깅부터 축구, 발야구, 배드민턴 등</p>
-		    <a href="#" class="btn btn-warning">구경하기</a>
-		   </div>
-		  </div>
-		 </div>
+       </div>
+       
+	<h3 style="margin: 30px auto">오늘의 추천 소모임</h3>
+		<div class="row row-cols-1 row-cols-md-4 g-4" style="margin-bottom: 100px">
+			<c:forEach items="${RandomList }" var="rList" begin="0" end="7" varStatus="status">
+				<div class="col">
+					<div class="card h-100">
+						<c:if test="${rList.uuid == null}">
+							<img alt="sgMain" src="/upload/sgmain_null.jpg">
+						</c:if>
+						<c:if test="${rList.uuid != null}">
+							<img alt="sgMain" src="/upload/sgMainUpload/${fn:replace(rList.dir,'\\','/')}/${rList.uuid}_${rList.sm_name}" class="card-img-top">
+						</c:if>
+						<div class="card-body">
+							<h5 class="card-title">${rList.sg_name }</h5>
+							<p class="card-text">${rList.detail }</p>
+							<p class="card-text">${rList.city}  ${rList.county }</p>
+							<a href="/group/main?grno=${rList.grno}" class="btn btn-warning">구경하기</a>
+						</div>
+					</div>
+				</div>
+			</c:forEach>
 		</div>
+		
+	<%-- <c:if test="${ses.email != null }">
+		<h3 style="margin: 30px auto">${ses.name }님을 위한 추천 소모임</h3>
+		<div class="row row-cols-1 row-cols-md-4 g-4" style="margin-bottom: 100px">
+			<c:forEach items="${MyCtnoList }" var="List" begin="0" end="3" varStatus="status">
+				<div class="col">
+					<div class="card h-100">
+						<c:if test="${List.uuid == null}">
+							<img alt="sgMain" src="/upload/sgmain_null.jpg">
+						</c:if>
+						<c:if test="${List.uuid != null}">
+							<img alt="sgMain" src="/upload/sgMainUpload/${fn:replace(List.dir,'\\','/')}/${List.uuid}_${List.sm_name}" class="card-img-top">
+						</c:if>
+						<div class="card-body">
+							<h5 class="card-title">${List.sg_name }</h5>
+							<p class="card-text">${List.detail }</p>
+							<p class="card-text">${List.city}  ${List.county }</p>
+							<a href="/group/main?grno=${List.grno}" class="btn btn-warning">구경하기</a>
+						</div>
+					</div>
+				</div>
+			</c:forEach>
+		</div>
+	</c:if> --%>
+
 </section>
 <jsp:include page="./layout/footer.jsp"></jsp:include>

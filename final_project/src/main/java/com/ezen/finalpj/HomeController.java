@@ -1,39 +1,63 @@
 package com.ezen.finalpj;
 
-import java.text.DateFormat;
-import java.util.Date;
-import java.util.Locale;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.Collections;
+import java.util.List;
+
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
-/**
- * Handles requests for the application home page.
- */
+import com.ezen.finalpj.domain.CategoryVO;
+import com.ezen.finalpj.domain.UserVO;
+import com.ezen.finalpj.service.CategoryService;
+import com.ezen.finalpj.service.UserService;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
+@RequestMapping("/")
 public class HomeController {
+	@Inject
+	private CategoryService csv;
+	@Inject
+	private UserService usv;
 	
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
-	/**
-	 * Simply selects the home view to render by returning its name.
-	 */
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
-		logger.info("Welcome home! The client locale is {}.", locale);
+	//home.jsp 오늘의 추천 소모임 리스트 랜덤 추천
+	@GetMapping("/")
+	public String categoryRandom(Model model) {
+		// 리스트 출력(전체)
+		List<CategoryVO> RandomList = csv.getCategoryOneRandom();
+		log.info(RandomList.toString());
 		
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+		// 랜덤으로 섞기
+		Collections.shuffle(RandomList);
+		log.info("random : "+RandomList.toString());
 		
-		String formattedDate = dateFormat.format(date);
+		model.addAttribute("RandomList", RandomList);
+//		
+//		log.info("ctno >>> "+ctno_1);		          
+//          // 내 관심사 리스트 만들기
+//		if(ctno_1 != null) {
+//			int myCtno = Integer.parseInt(ctno_1);
+//			List<CategoryVO> MyCtnoList = csv.getMyList(myCtno);
+//			log.info("내 관심사 리스트 : "+MyCtnoList.toString());
+//			model.addAttribute("MyCtnoList", MyCtnoList);
+//		}
+//		
 		
-		model.addAttribute("serverTime", formattedDate );
+		
 		
 		return "home";
 	}
+	
 	
 }

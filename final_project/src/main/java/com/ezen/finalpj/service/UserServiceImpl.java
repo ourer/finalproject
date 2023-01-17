@@ -25,7 +25,6 @@ public class UserServiceImpl implements UserService {
 	private UserDAO udao;
 	@Inject
 	private ProfileDAO pdao;
-	
 	@Inject
 	BCryptPasswordEncoder passwordEncoder;
 
@@ -75,7 +74,7 @@ public class UserServiceImpl implements UserService {
 		UserVO uvo = udao.getUser(email);
 		log.info(">>>ServiceImpl : "+uvo.toString());
 		if(uvo == null) return null;
-		
+
 		if(passwordEncoder.matches(pw, uvo.getPw())) {
 			return uvo;
 		}else {
@@ -173,4 +172,12 @@ public class UserServiceImpl implements UserService {
 		log.info("찜 목록 개수");
 		return udao.likeListCount(email);
 	}
+
+	@Override
+	public int getMyCtno(String email) {
+		log.info("내 ctno_1 가져오기");
+		return udao.getMyCtno(email);
+	}
+
+
 }
