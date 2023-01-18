@@ -25,10 +25,12 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ezen.finalpj.domain.GroupVO;
 import com.ezen.finalpj.domain.PagingVO;
 import com.ezen.finalpj.domain.ProfileVO;
 import com.ezen.finalpj.domain.UserDTO;
 import com.ezen.finalpj.domain.UserVO;
+import com.ezen.finalpj.domain.WaitingVO;
 import com.ezen.finalpj.handler.ProfileHandler;
 import com.ezen.finalpj.service.ProfileService;
 import com.ezen.finalpj.service.UserService;
@@ -107,11 +109,15 @@ public class UserController {
 		 if(isUser != null) {
 			 HttpSession ses = req.getSession();
 			 ses.setAttribute("ses", isUser);
-			 
+			 log.info("grno : "+isUser.getIsCap());
 			 //model로 넘겨주게 되면 해당 페이지에서만 프로필이 드러나게 된다
 			 //그러므로 model에 넘겨주지 말고 ses로 넘겨줘서 해당 이메일에 따라 그 프로필을 볼 수 있게 하자!
 			 ProfileVO pvo=psv.selectPersonalProfile(email);
 			 ses.setAttribute("sespvo", pvo);
+			 
+			 //waiting 정보 가져오기
+			 WaitingVO wvo=wsv.selectGetWaiting(email);
+			 ses.setAttribute("wvo", wvo);
 			 
 			 mv.setViewName("/home");
 			 mv.addObject("msglogin", "1");
@@ -149,16 +155,22 @@ public class UserController {
 		
 		@GetMapping(value="/management/{email}")
 		public String getUserList(Model model,HttpServletRequest req,@PathVariable("email")String email) {
-			
 			HttpSession ses=req.getSession();
 			ses.setAttribute("email", email);
 			
 			UserVO user=usv.getMyOnlyuser(req);
 			log.info("uvo test : "+user.getEmail());
 			
+			int grno=user.getIsCap();
+			log.info("어..이건 "+grno);
+			model.addAttribute("grno", grno);
+			
 			List<UserVO> list1=usv.getOnlyList1(user);
 			System.out.println(list1);
 			List<UserVO> list2=usv.getOnlyList2(user);
+			List<WaitingVO> wList=usv.getWaitingList(user);
+			model.addAttribute("wList", wList);
+			log.info("실험체체체 "+ wList.toString());
 			log.info("only user");
 			
 			//profileVO list 초기화
@@ -184,13 +196,6 @@ public class UserController {
 			return "/user/management";
 		}
 		
-		@DeleteMapping(value = "/remove/{email}", produces = {MediaType.TEXT_PLAIN_VALUE})
-		public ResponseEntity<String> removeUser(@PathVariable("email")String email) {
-			log.info("my user remove email : "+email);
-			int isOk=wsv.remove(email);
-			return isOk>0? new ResponseEntity<String>("1",HttpStatus.OK): new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-		
 		 @GetMapping("/modify")
 			public String userModifyMyinfoGet() {
 				return "/user/modify";
@@ -211,7 +216,16 @@ public class UserController {
 		@GetMapping("/userlist")
 		public String userAllGet(Model model) {
 			log.info("모든 유저 뽑아내기");
+			
 			List<UserVO> uList=usv.selectAllUser();
+			List<WaitingVO> wList=new ArrayList<WaitingVO>();
+			
+			for(UserVO uvo:uList) {
+				WaitingVO wvo=wsv.selectUserGrp(uvo.getEmail());
+				wList.add(wvo);
+			}
+			
+			model.addAttribute("wList", wList);
 			model.addAttribute("uList", uList);
 			return "/supervisor/userlist";
 		}
@@ -225,6 +239,13 @@ public class UserController {
 			 req.getSession().invalidate();
 			 return "redirect:/";
 		 }
+		 
+		@DeleteMapping(value = "/remove/{email}",produces= {MediaType.TEXT_PLAIN_VALUE})
+		public ResponseEntity<String> refuse(@PathVariable("email")String email) {
+			log.info("waiting user remove : "+email);
+			int isOk=usv.deleteUser(email);
+			return isOk>0? new ResponseEntity<String>("1",HttpStatus.OK): new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 		
 		
 }

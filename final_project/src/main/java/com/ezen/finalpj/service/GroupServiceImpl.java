@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.ezen.finalpj.domain.GroupVO;
 import com.ezen.finalpj.domain.PagingVO;
 import com.ezen.finalpj.domain.SgMainVO;
+import com.ezen.finalpj.domain.WaitingVO;
 import com.ezen.finalpj.repository.GroupDAO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -78,5 +79,6 @@ public class GroupServiceImpl implements GroupService {
 		log.info("remove group list");
 		return gdao.deleteGrpList(grno);
 	}
+
 
 }

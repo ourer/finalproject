@@ -34,9 +34,12 @@
 .icon:hover {
 	transform: scale(1.07);
 }
+.card-img-top{
+	height: 250px;
+}
 </style>
 <section>
- <h3 style="margin: 30px auto">관심사</h3>
+<!--  <h3 style="margin: 30px auto">관심사</h3>
 		  <div class="likecategory">
 		  	<button type="button" class="icon" id="category_A" onclick="location.href='/category/categoryDetail?code=A'">
 		  		<i class="fa-solid fa-person-running"></i>
@@ -86,7 +89,7 @@
 		  		<i class="fa-solid fa-dog"></i>
 		  		<span class="icontext">반려동물</span>
 		  	</button>
-		  </div>
+		  </div> -->
 
 	<h3 style="margin: 30px auto">모든 소모임</h3>
    <div class="row row-cols-1 row-cols-md-4 g-4" style="margin-bottom: 100px">

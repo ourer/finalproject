@@ -28,7 +28,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="selectGrpList" resultType="com.ezen.finalpj.domain.GroupVO">
-		select * from smallgroup
+		select * from smallgroup 
 	</select>
 	
 	<delete id="deleteGrpList">

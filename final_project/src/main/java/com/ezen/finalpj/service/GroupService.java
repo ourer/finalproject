@@ -5,6 +5,7 @@ import java.util.List;
 import com.ezen.finalpj.domain.GroupVO;
 import com.ezen.finalpj.domain.PagingVO;
 import com.ezen.finalpj.domain.SgMainVO;
+import com.ezen.finalpj.domain.WaitingVO;
 
 public interface GroupService {
 

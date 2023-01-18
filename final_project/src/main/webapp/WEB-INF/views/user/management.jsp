@@ -79,7 +79,7 @@
 			<tbody class="table-group-divider">
 			
 			<c:forEach items="${list1}" var="user" varStatus="status">
-				<tr data-email="${user.email }" id="waitingDecide">
+				<tr data-email="${user.email }">
 						<td>	
 							<c:set var="pvo" value="${profileList1[status.index]}"/>
 							
@@ -138,6 +138,7 @@
 				<tr data-email="${user.email }">
 						<td>	
 							<c:set var="pvo" value="${profileList2[status.index]}"/>
+							<c:set var="wvo" value="${wList[status.index]}" />
 							
 							<c:if test="${profileList2[status.index] == null}">
 								<img src="/resources/img/blank-profile.png" class="rounded-circle mx-auto d-block" style="width: 75px; height: 75px;">
@@ -157,10 +158,15 @@
 					<td>여자</td>
 					</c:if>
 					<td>
-						<button class="btn btn-sm btn-outline-success special appointment" type="button">임명</button>
-						<button class="btn btn-sm btn-outline-danger normal cancellation" type="button">해제</button>
+						<c:if test="${wvo.grade=='C' }">
+							<button class="btn btn-sm btn-outline-success special appointment" type="button" id="appointment">임명</button>
+						</c:if>
+						
+						<c:if test="${wvo.grade=='B' }">
+							<button class="btn btn-sm btn-outline-danger normal cancellation" type="button" id="cancellation">해제</button>
+						</c:if>
 					</td>					
-					<td><button class="btn btn-sm btn-outline-success special del" type="button">강퇴</button></td>					
+					<td><button class="btn btn-sm btn-outline-danger special del" type="button">강퇴</button></td>					
 				</tr>
 			</c:forEach>
 			</tbody>
@@ -177,9 +183,8 @@
 </script>
 
 <script type="text/javascript">
-const emailVal='<c:out value="${user.email}"/>';
+const grnoVal='<c:out value="${grno}"/>';
 const sesemailVal='<c:out value="${ses.email}"/>';
-console.log(emailVal);
+console.log(grnoVal);
 console.log(sesemailVal);
 </script>
-

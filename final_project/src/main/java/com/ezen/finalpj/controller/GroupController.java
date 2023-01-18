@@ -180,7 +180,17 @@ public class GroupController {
 	@GetMapping("/grouplist")
 	public String listGrpGet(Model model) {
 		List<GroupVO> gList=gsv.selectGrpList();
+		List<Integer> wList=new ArrayList<Integer>(); 
+		
+		for(GroupVO gvo:gList) {
+			int wvo=wsv.selectGrpCount(gvo.getGrno());
+			wList.add(wvo);
+		}
+		
+		log.info("grno 제발 나와라 "+wList.toString());
+		log.info("그룹리스트 뽑기 "+gList.toString());
 		model.addAttribute("gList", gList);
+		model.addAttribute("wList", wList);
 		return "/supervisor/grouplist";
 	}
 	

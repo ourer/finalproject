@@ -8,14 +8,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
-@Getter
 @Setter
+@Getter
 public class UserVO {
+	
 	private String email;
-	private int ctno;
 	private String name;
 	private String pw;
 	private String area;
@@ -29,4 +29,8 @@ public class UserVO {
 	private int ctno_3;
 	private int isCap;
 	private List<WaitingVO> waitList;
+	private String ctcode_1;
+	private String ctcode_2;
+	private String ctcode_3;
+
 }

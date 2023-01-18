@@ -8,6 +8,7 @@ import com.ezen.finalpj.domain.FavoriteVO;
 import com.ezen.finalpj.domain.ManagerDTO;
 import com.ezen.finalpj.domain.UserDTO;
 import com.ezen.finalpj.domain.UserVO;
+import com.ezen.finalpj.domain.WaitingVO;
 
 public interface UserService {
 
@@ -44,5 +45,7 @@ public interface UserService {
 	int deleteUser(String email);
 
 	List<FavoriteVO> countFavoriteList(String email);
+
+	List<WaitingVO> getWaitingList(UserVO user);
 
 }

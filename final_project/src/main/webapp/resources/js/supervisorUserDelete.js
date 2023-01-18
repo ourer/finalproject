@@ -1,6 +1,6 @@
 async function removeUserAtServer(email){
     try {
-        const url='/wait/remove/'+email;
+        const url='/user/remove/'+email;
         const config={
             method: 'delete',
         };

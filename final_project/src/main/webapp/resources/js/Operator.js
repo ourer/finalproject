@@ -44,7 +44,7 @@ document.addEventListener('click',(e)=>{
             if(result>0){
                 alert('운영진 임명 완료');
             }
-            location.href="/user/management/"+sesemailVal;
+            location.reload();
         });
     }
 });
@@ -58,7 +58,7 @@ document.addEventListener('click',(e)=>{
             if(result>0){
                 alert('운영진 해제 완료');
             }
-            location.href="/user/management/"+sesemailVal;
+            location.reload();
         });
     }
 });

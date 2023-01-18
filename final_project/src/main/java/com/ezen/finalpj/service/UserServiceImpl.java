@@ -13,6 +13,7 @@ import com.ezen.finalpj.domain.ManagerDTO;
 import com.ezen.finalpj.domain.ProfileVO;
 import com.ezen.finalpj.domain.UserDTO;
 import com.ezen.finalpj.domain.UserVO;
+import com.ezen.finalpj.domain.WaitingVO;
 import com.ezen.finalpj.repository.ProfileDAO;
 import com.ezen.finalpj.repository.UserDAO;
 
@@ -173,4 +174,10 @@ public class UserServiceImpl implements UserService {
 		log.info("찜 목록 개수");
 		return udao.likeListCount(email);
 	}
+
+	@Override
+	public List<WaitingVO> getWaitingList(UserVO user) {
+		return udao.getWaitingList(user);
+	}
+
 }

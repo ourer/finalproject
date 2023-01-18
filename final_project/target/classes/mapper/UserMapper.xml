@@ -6,16 +6,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="updateCap">
 		update user set isCap=#{grno} where email=#{email}
 	</update>
-	<!-- <select id="selectMemListUser" resultType="com.ezen.finalpj.domain.UserVO">
-		select * from user join waiting on user.email=waiting.email where grno=#{grno} and isOk=1;
-	</select> -->
-
 	
 	<select id="getUser" resultType="com.ezen.finalpj.domain.UserVO"> 
       select * ,(select code from category where category.ctno = user.ctno_1) as "ctcode_1" 
       ,(select code from category where category.ctno = user.ctno_2) as "ctcode_2" 
       ,(select code from category where category.ctno = user.ctno_3) as "ctcode_3" from user where email = #{email}
-   </select>
+    </select>
    
    <insert id="insertUser" parameterType="com.ezen.finalpj.domain.UserVO"> 
       insert into user (email, name, pw, area, nickname, age, gender, phone, ctno_1, ctno_2, ctno_3) 
@@ -75,5 +71,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="likeListCount" resultType="com.ezen.finalpj.domain.FavoriteVO">
 		select count(fno) as cntFav from favorite where email=#{email} group by email
+	</select>
+	
+	<select id="getWaitingList" resultType="com.ezen.finalpj.domain.WaitingVO">
+		select * from user join waiting on user.email=waiting.email where isOk=1 and grno=#{isCap}
 	</select>
 </mapper>

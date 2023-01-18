@@ -33,7 +33,7 @@ public class SgmainServiceImpl implements SgmainService {
 
 	@Override
 	public List<SgMainVO> getSgMainImgSearching(SearchVO scvo) {
-		log.info(">>> sgmainNoPaging 이미지 가져오기");
+		log.info(">>> sgmainNoPaging 가져오기");
 		return sdao.getSgMainImgSearching(scvo);
 	}
 

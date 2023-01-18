@@ -1,5 +1,7 @@
 package com.ezen.finalpj.service;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
@@ -28,18 +30,6 @@ public class WaitingServiceImpl implements WaitingService {
 	}
 
 	@Override
-	public int accept(String email) {
-		log.info("waiting user accept");
-		return wdao.acceptUser(email);
-	}
-
-	@Override
-	public int refuse(String email) {
-		log.info("waiting user refuse");
-		return wdao.refuseUser(email);
-	}
-	
-	@Override
 	public int appointment(String email) {
 		log.info("operator appointment email");
 		return wdao.appointment(email);
@@ -51,5 +41,34 @@ public class WaitingServiceImpl implements WaitingService {
 		return wdao.cancellation(email);
 	}
 
+	@Override
+	public WaitingVO selectGetWaiting(String email) {
+		log.info("waiting 정보 끌어오기");
+		return wdao.selectGetWaiting(email);
+	}
+
+	@Override
+	public int acceptWaiting(WaitingVO wvo) {
+		log.info("grno 가져가기");
+		return wdao.acceptWaiting(wvo);
+	}
+
+	@Override
+	public int refuseWaiting(WaitingVO wvo) {
+		log.info("grno 뜯어가기");
+		return wdao.refuseWaiting(wvo);
+	}
+
+	@Override
+	public int selectGrpCount(int grno) {
+		log.info("grno 가져와라");
+		return wdao.selectGrpCount(grno);
+	}
+
+	@Override
+	public WaitingVO selectUserGrp(String email) {
+		log.info("마지막 잎새");
+		return wdao.selectGetWaiting(email);
+	}
 
 }
