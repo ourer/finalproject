@@ -158,13 +158,18 @@
 					<td>여자</td>
 					</c:if>
 					<td>
-						<c:if test="${wvo.grade=='C' }">
+					<c:choose>
+						<c:when test="${wvo.grade=='C' }">
 							<button class="btn btn-sm btn-outline-success special appointment" type="button" id="appointment">임명</button>
-						</c:if>
+						</c:when>
 						
-						<c:if test="${wvo.grade=='B' }">
+						<c:when test="${wvo.grade=='B' }">
 							<button class="btn btn-sm btn-outline-danger normal cancellation" type="button" id="cancellation">해제</button>
-						</c:if>
+						</c:when>
+						<c:otherwise>
+							<div>누구냐 너;;;</div>
+						</c:otherwise>
+					</c:choose>
 					</td>					
 					<td><button class="btn btn-sm btn-outline-danger special del" type="button">강퇴</button></td>					
 				</tr>

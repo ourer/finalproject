@@ -19,5 +19,4 @@ public class WaitingVO {
 	private int grno;
 	private int isOk;
 	private String grade;
-//	private List<UserVO> userList;
 }

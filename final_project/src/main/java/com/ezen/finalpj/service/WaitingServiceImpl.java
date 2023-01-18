@@ -30,15 +30,15 @@ public class WaitingServiceImpl implements WaitingService {
 	}
 
 	@Override
-	public int appointment(String email) {
+	public int appointment(WaitingVO wvo) {
 		log.info("operator appointment email");
-		return wdao.appointment(email);
+		return wdao.appointment(wvo);
 	}
 
 	@Override
-	public int cancellation(String email) {
+	public int cancellation(WaitingVO wvo) {
 		log.info("operator cancellation email");
-		return wdao.cancellation(email);
+		return wdao.cancellation(wvo);
 	}
 
 	@Override

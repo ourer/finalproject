@@ -15,9 +15,9 @@ public interface WaitingService {
 
 	int refuseWaiting(WaitingVO wvo);
 
-	int appointment(String email);
+	int appointment(WaitingVO wvo);
 
-	int cancellation(String email);
+	int cancellation(WaitingVO wvo);
 
 	WaitingVO selectGetWaiting(String email);
 

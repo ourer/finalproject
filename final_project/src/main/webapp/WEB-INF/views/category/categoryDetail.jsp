@@ -102,7 +102,7 @@
 		<div class="col">
 			<div class="card h-100">
 				<c:if test="${cavo.uuid == null}">
-					<img alt="sgMain" src="/resources/img/sgmain_null.jpg">
+					<img alt="sgMain" src="/resources/img/monkey.jpg">
 				</c:if>
 				<c:if test="${cavo.uuid != null}">
 					<img alt="sgMain" src="/upload/sgMainUpload/${fn:replace(cavo.dir,'\\','/')}/${cavo.uuid}_${cavo.sm_name}" class="card-img-top">

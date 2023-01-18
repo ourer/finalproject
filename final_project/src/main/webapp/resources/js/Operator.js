@@ -1,12 +1,12 @@
-async function appointmentUserToServer(email){
+async function appointmentUserToServer(manageData){
     try {
-        const url='/wait/appointment/'+email;
+        const url='/wait/appointment/'+manageData.email;
         const config={
             method: 'put',
             headers:{
                 'content-type': 'application/json; charset=utf-8'
             },
-            body: JSON.stringify(email)
+            body: JSON.stringify(manageData)
         }
         const resp=await fetch(url,config);
         const result=await resp.text();
@@ -16,15 +16,15 @@ async function appointmentUserToServer(email){
          
     }
 };
-async function cancellationUserToServer(email){
+async function cancellationUserToServer(manageData){
     try {
-        const url='/wait/cancellation/'+email;
+        const url='/wait/cancellation/'+manageData.email;
         const config={
             method: 'put',
             headers:{
                 'content-type': 'application/json; charset=utf-8'
             },
-            body: JSON.stringify(email)
+            body: JSON.stringify(manageData)
         }
         const resp=await fetch(url,config);
         const result=await resp.text();
@@ -40,7 +40,12 @@ document.addEventListener('click',(e)=>{
         let tr=e.target.closest('tr');
         let emailVal=tr.dataset.email;
         console.log(emailVal);
-        appointmentUserToServer(emailVal).then(result=>{
+        console.log(grnoVal);
+        let manageData={
+        email: emailVal,
+        grno: grnoVal
+        };
+        appointmentUserToServer(manageData).then(result=>{
             if(result>0){
                 alert('운영진 임명 완료');
             }
@@ -54,7 +59,12 @@ document.addEventListener('click',(e)=>{
         let tr=e.target.closest('tr');
         let emailVal=tr.dataset.email;
         console.log(emailVal);
-        cancellationUserToServer(emailVal).then(result=>{
+        console.log(grnoVal);
+        let manageData={
+	        email: emailVal,
+	        grno: grnoVal
+        };
+        cancellationUserToServer(manageData).then(result=>{
             if(result>0){
                 alert('운영진 해제 완료');
             }

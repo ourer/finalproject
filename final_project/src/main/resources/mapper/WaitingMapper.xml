@@ -13,11 +13,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 	
 	<update id="appointment">
-		update waiting set grade='B' where email=#{email}
+		update waiting set grade='B' where email=#{email} and grno=#{grno}
 	</update>
 	
 	<update id="cancellation">
-		update waiting set grade='C' where email=#{email}
+		update waiting set grade='C' where email=#{email} and grno=#{grno}
 	</update>
 	
 	<select id="selectGetWaiting" resultType="com.ezen.finalpj.domain.WaitingVO">

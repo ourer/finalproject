@@ -33,11 +33,6 @@ public class WaitingController {
 	@Inject
 	private WaitingService wsv;
 	
-	@Inject
-	private UserService usv;
-	
-	
-	
 	@PutMapping(value = "/accept/{email}", consumes = "application/json", produces= {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> accept(@PathVariable("email")String email, @RequestBody WaitingVO wvo) {
 		int isOk=wsv.acceptWaiting(wvo);
@@ -51,17 +46,17 @@ public class WaitingController {
 		return isOk>0? new ResponseEntity<String>("1",HttpStatus.OK): new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
-	@PutMapping(value = "/appointment/{email}",produces = {MediaType.TEXT_PLAIN_VALUE})
-	public ResponseEntity<String> appointmentUser(@PathVariable("email")String email){
+	@PutMapping(value = "/appointment/{email}",consumes = "application/json",produces = {MediaType.TEXT_PLAIN_VALUE})
+	public ResponseEntity<String> appointmentUser(@PathVariable("email")String email, @RequestBody WaitingVO wvo){
 		log.info("user appointment : "+email);
-		int isOk=wsv.appointment(email);
+		int isOk=wsv.appointment(wvo);
 		return isOk>0? new ResponseEntity<String>("1",HttpStatus.OK): new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
-	@PutMapping(value = "/cancellation/{email}",produces = {MediaType.TEXT_PLAIN_VALUE})
-	public ResponseEntity<String> cancellationUser(@PathVariable("email")String email){
+	@PutMapping(value = "/cancellation/{email}",consumes = "application/json",produces = {MediaType.TEXT_PLAIN_VALUE})
+	public ResponseEntity<String> cancellationUser(@PathVariable("email")String email, @RequestBody WaitingVO wvo){
 		log.info("user appointment : "+email);
-		int isOk=wsv.cancellation(email);
+		int isOk=wsv.cancellation(wvo);
 		return isOk>0? new ResponseEntity<String>("1",HttpStatus.OK): new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
