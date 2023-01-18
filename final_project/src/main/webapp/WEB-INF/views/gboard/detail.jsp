@@ -21,45 +21,36 @@
 		    <input type="hidden" class="form-control form-control-plaintext" name="gbno" id="gbno" value="${gbvo.gbno }" readonly>
 		 </div>
 		<div class="mb-3">
-		    <div class="col-sm-10">
+		    <div class="titleBox">
 		    <input type="text" class="form-control form-control-plaintext fs-3" name="title" id="title" value="[${gbvo.cate }] ${gbvo.title }" readonly="readonly">
 		 	</div>
 		 </div>
-		 <div class="d-flex mb-3">
-  	<div class="p-2" style="width: 450px;">
-  			<span>작성자:</span>
-		    <input type="text" class="form-control form-control-plaintext" id="writer" name="writer" value="${gbvo.writer }" readonly="readonly"></div>
-  	<div class="p-2">Flex item</div>
-  	<div class="p-2">Flex item</div>
-</div>
-		<<%-- div class="d-flex flex-row mb-3">
-			
-		    <span>작성일: </span>
+	<div class="infoBox">
+  		<div class="writerBox infoInner">
+  			<span>작성자: </span>
+		    <input type="text" class="form-control form-control-plaintext" id="writer" name="writer" value="${gbvo.writer }" readonly="readonly">
+		</div>
+		<div class="regBox infoInner">
+			<span>작성일: </span>
 		    <input type="text" class="form-control form-control-plaintext" id="regdate" name="regdate" value="${gbvo.regdate }" readonly="readonly">
-		    <span>조회수: </span>
+		</div>
+		<div class="viewBox infoInner">
+			<span>조회수: </span>
 		    <input type="text" class="form-control form-control-plaintext" id="view" name="view" value="${gbvo.view }" readonly="readonly">
-		<!-- <div class="mb-3">
-		  </div>
-		  <div class="mb-3">
-		    <div class="col-sm-10 regdate">
-			</div>
-			</div>
-		  <div class="mb-3">
-		    <div class="col-sm-10">
-			</div>
-		</div> -->
-	</div> --%>
+		</div>
+	</div>
+		<c:if test="${gfvo ne null }">
+		<div class="imgBox">
+			<img class="object-fit-contain border rounded" alt="" src="/upload/GbrdFileUpload/${fn:replace(gfvo.dir, '\\', '/')}/${gfvo.uuid}_${gfvo.name}">
+		</div>
+		</c:if>
+		
 		<div class="mb-3 content">
 		    <div class="col-sm-10">
 		    <textarea class="form-control form-control-plaintext" id="content" name="content" readonly="readonly" style="width:700px; height: 400px">${gbvo.content }</textarea>
 			</div>
 		</div>
 		
-		<c:if test="${gfvo ne null }">
-		<div class="img">
-			<img alt="" src="/upload/GbrdFileUpload/${fn:replace(gfvo.dir, '\\', '/')}/${gfvo.uuid}_${gfvo.name}">
-		</div>
-		</c:if>
 	</div>
 		<div class="text-end">
 			<c:if test="${ses.nickname eq gbvo.writer }">
@@ -68,7 +59,7 @@
 			</c:if>
 			<a href="/gboard/list?grno=${gbvo.grno }" class="btn btn-outline-warning" >목록</a>
 		</div>
-		<div class="container">
+		<div class="cmtOuter">
 		<div class="input-group my-3 form-floating">
 			<span class="input-group-text" id="cmtWriter">${ses.nickname }</span>
 			<input type="text" class="form-control" id="cmtText" placeholder="comment">
@@ -84,6 +75,7 @@
 <script type="text/javascript">
 	const gbnoVal='<c:out value="${gbvo.gbno}"/>';
 	const emailVal='<c:out value="${ses.email }"/>';
+	const nickVal='<c:out value="${ses.nickname }"/>';
 </script>
 <script type="text/javascript" src="/resources/js/gboardComment.js"></script>
 <script type="text/javascript">

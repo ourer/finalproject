@@ -48,8 +48,10 @@ public class GboardController {
 	
 	@GetMapping("/register")
 	public String insertGbrdGet(@RequestParam("grno")int grno, Model model, HttpServletRequest req) {
+		List<UserVO> uList=usv.selectMemListUser(grno);
 		GroupVO gvo=gsv.selectGrp(grno);
 		model.addAttribute("gvo", gvo);
+		model.addAttribute("uList", uList);
 		model.addAttribute("grno", grno);
 		return "/gboard/register";
 	}
@@ -119,6 +121,8 @@ public class GboardController {
 		int grno=gbdto.getGbvo().getGrno();
 		GroupVO gvo=gsv.selectGrp(grno);
 		model.addAttribute("gvo", gvo);
+		List<UserVO> uList=usv.selectMemListUser(grno);
+		model.addAttribute("uList", uList);
 		//GboardVO gbvo=gbsv.selectDetailGbrd(gbno);
 		model.addAttribute("gbvo", gbdto.getGbvo());
 		model.addAttribute("gfvo", gbdto.getGfvo());

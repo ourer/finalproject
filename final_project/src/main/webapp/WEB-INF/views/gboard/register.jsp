@@ -2,7 +2,21 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<style>
+.firstBox{
+	margin-top: 30px;
+}
 
+.grpName{
+	font-weight: bold;
+	text-shadow: #FFD34A 2px 2px 5px;
+	
+}
+
+.nav-item > .groupNav{
+	margin-left: 50px;
+}
+</style>
 <jsp:include page="../layout/header.jsp"></jsp:include>
 <section>
 	<div class="firstBox">

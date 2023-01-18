@@ -143,7 +143,9 @@
     <c:when test="${ses.email ne null and ses.email ne gvo.email and gvo.max_member>fn:length(uList)+1}">
     	<c:choose>
     	<c:when test="${not fn:contains(uList, ses.email) }">
-    		<a href="/group/join?grno=${gvo.grno }"><button>가입</button></a>
+    	<div class="d-grid gap-2">
+    		<a href="/group/join?grno=${gvo.grno }"><button class="btn btn-outline-warning">가입</button></a>
+    	</div>
     	</c:when>
     	</c:choose>
     </c:when>

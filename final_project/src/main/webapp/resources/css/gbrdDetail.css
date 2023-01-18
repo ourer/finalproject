@@ -16,6 +16,7 @@ li>.ms-2>.upperBox{
     margin-top: 5px;
 	float: right;
 }
+
 .firstBox{
 	margin-top: 30px;
 }
@@ -29,27 +30,7 @@ li>.ms-2>.upperBox{
 .nav-item > .groupNav{
 	margin-left: 50px;
 }
-/* .flex-row>input[type=text]{
-	width: fit-content;
-} */
-/* #regdate{
-	width: 220px;
-}
 
-#view{
-	width: 50px;
-}
-
-.just{
-	width: 600px;
-}
- */
-.regdate{
-	width: 200px;
-}
-.d-flex>.just>label{
-	width: 178.99px;
-}
 
 div.col-sm-10{
 	width: 220px;
@@ -69,6 +50,53 @@ div.col-sm-10{
 .text-body-tertiary{
 	font-size: 0.8em;
 }
-.dropBtn{
+.btn.dropBtn{
 	height: 25px;
+	/*--bs-btn-color: #ffc107;*/
+	--bs-btn-border-color: none;
+}
+
+.infoBox{
+	display: flex;
+	justify-content: space-between;
+	padding-bottom: 10px;
+	border-bottom: 1px solid gainsboro;
+}
+
+.infoInner{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	
+}
+.infoInner>span{
+	width: 70px;
+	flex-grow: 0;
+	font-weight: bold;
+}
+#view{
+	width: 50px;
+}
+#writer{
+	width: 120px;
+}
+#regdate{
+	width: 210px;
+}
+.titleBox{
+	width: 100%;
+}
+#title{
+	width: 100%;
+}
+.text-end, .cmtOuter{
+	width: 700px;
+	margin: auto;
+}
+.imgBox{
+	margin-top: 20px;
+}
+.imgBox>img{
+	width: 700px;
+	height: 500px;
 }

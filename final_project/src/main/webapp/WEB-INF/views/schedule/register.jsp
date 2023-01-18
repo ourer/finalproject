@@ -28,7 +28,7 @@
 <section>
 <div class="firstBox">
     	<ul class="nav nav-tab">
-            	<li class="grpNavLi nav-item"><h1 class="grpName">${gvo.name }</h1></li>
+            	<li class="grpNavLi nav-item"><a href="/group/main?grno=${gvo.grno }"><h1 class="grpName">${gvo.name }</h1></a></li>
                 <li class="grpNavLi nav-item"><a class="nav-link groupNav" href="/group/main?grno=${gvo.grno }">소모임 홈</a></li>
                 <li class="grpNavLi nav-item"><a class="nav-link groupNav" href="/gboard/list?grno=${gvo.grno }">게시판</a></li>
                 <li class="grpNavLi nav-item"><a class="nav-link groupNav" href="/group/memberList?grno=${gvo.grno }">멤버(${fn:length(uList)+1} / ${gvo.max_member })</a></li>

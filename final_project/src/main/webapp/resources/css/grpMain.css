@@ -136,3 +136,6 @@ h3{
 .secondTitle>span{
 	font-weight: 700;
 }
+.d-grid.gap-2>a>button{
+	width: 100%;
+}

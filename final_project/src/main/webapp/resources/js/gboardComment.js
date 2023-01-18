@@ -68,10 +68,10 @@ function getCommentList(gbno){
                 li+=`<div class="ms-2 me-auto">`;
                 li+=`<div class="upperBox">`;
                 li+=`<div class="fw-bold writer">${cvo.writer}</div>`;
-                if(emailVal==cvo.writer){
+                if(nickVal==cvo.writer){
                     
                     li+=`<div class="dropdown">
-                    <button class="btn btn-outline-warning dropdown-toggle btn-sm dropBtn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button class="btn btn-outline-secondary dropdown-toggle btn-sm dropBtn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="fa-solid fa-ellipsis"></i>
                     </button>`;
                     li+=`<ul class="dropdown-menu">
@@ -106,7 +106,7 @@ document.addEventListener('click', (e)=>{
         let cnoVal=li.dataset.cno;
         let cmtTextDiv=document.getElementById(`cmtTextVal${cnoVal}`);
         let cmtTextVal=cmtTextDiv.innerText;
-        cmtTextDiv.innerHTML=`<input type="text" class="form-control" id="cmtTextMod" value="${cmtTextVal}"> <button class="modBtn">수정</button>`;
+        cmtTextDiv.innerHTML=`<input type="text" class="form-control cmtInput" id="cmtTextMod" value="${cmtTextVal}"> <button class="modBtn  btn btn-outline-warning btn-sm float-end">수정</button>`;
     }else if(e.target.classList.contains('modBtn')){
         let li=e.target.closest('li');
         let cnoVal=li.dataset.cno;
