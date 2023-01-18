@@ -25,6 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ezen.finalpj.domain.FavoriteDTO;
 import com.ezen.finalpj.domain.FavoriteVO;
+import com.ezen.finalpj.domain.GroupVO;
 import com.ezen.finalpj.domain.ProfileVO;
 import com.ezen.finalpj.domain.UserDTO;
 import com.ezen.finalpj.domain.UserVO;
@@ -151,6 +152,7 @@ public class UserController {
 		 List<FavoriteDTO> fDtoList = usv.selectUList(email);
 		 model.addAttribute("fDtoList", fDtoList);
 		 String name = usv.selectmyGname(email);
+		 log.info("소모임 명 >>> "+name);
 		 model.addAttribute("name", name);
 		 
 			return "/user/mypage";
@@ -218,12 +220,16 @@ public class UserController {
 	@PostMapping("/modify")
 	public String modifyMyinfoPost(UserVO uvo, RedirectAttributes reAttr, HttpServletRequest req) {
 		log.info(uvo.toString());
+		//log.info("modify >>>>> "+email);
 		log.info("ctno_1 >> "+req.getParameter("ctno_1"));
 		int isOk = usv.modifyMyinfo(uvo);
 		reAttr.addFlashAttribute("msg", isOk>0?"1":"0");
 		log.info("개인정보수정 >>> "+(isOk>0?"수정성공":"수정실패"));
 		if(isOk>0) {
+			// uvo => 변경사항이 없는 null인 객체
+			// 내 아이디에 일치하는 uvo가져오기
 			req.getSession().setAttribute("ses", uvo);
+			
 		}
 		return "redirect:/user/mypage/"+uvo.getEmail();
 	}

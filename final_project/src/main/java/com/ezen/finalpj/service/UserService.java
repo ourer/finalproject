@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.ezen.finalpj.domain.FavoriteDTO;
 import com.ezen.finalpj.domain.FavoriteVO;
+import com.ezen.finalpj.domain.GroupVO;
 import com.ezen.finalpj.domain.ManagerDTO;
 import com.ezen.finalpj.domain.UserDTO;
 import com.ezen.finalpj.domain.UserVO;
@@ -49,5 +50,6 @@ public interface UserService {
 	List<FavoriteDTO> selectUList(String email);
 
 	String selectmyGname(String email);
+
 
 }

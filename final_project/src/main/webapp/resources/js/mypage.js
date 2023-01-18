@@ -29,7 +29,8 @@ document.addEventListener('click',(e)=>{
             if(result>0){
                 alert('탈퇴 되었습니다.');
             }
-            location.href="/user/mypage/"+sesemailVal;
+            //location.href="/user/mypage/"+sesemailVal;
+            location.reload();
         });
     }
 });

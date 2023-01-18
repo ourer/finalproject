@@ -70,4 +70,5 @@ public class FavoriteServiceImpl implements FavoriteService {
 		log.info("내가 방장인 소모임 이름");
 		return fdao.selectmyGname(email);
 	}
+
 }

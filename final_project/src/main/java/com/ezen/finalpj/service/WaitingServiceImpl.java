@@ -52,9 +52,9 @@ public class WaitingServiceImpl implements WaitingService {
 	}
 
 	@Override
-	public int quit(WaitingVO wt) {
+	public int quit(WaitingVO wvo) {
 		log.info("quit a smallgroup email");
-		return wdao.quit(wt);
+		return wdao.quit(wvo);
 	}
 
 

@@ -17,7 +17,7 @@ public interface WaitingService {
 
 	int cancellation(String email);
 
-	int quit(WaitingVO wt);
+	int quit(WaitingVO wvo);
 
 
 }

@@ -40,12 +40,12 @@
 		  <div class="col-sm-6">
 		    <div class="card">
 		      <div class="card-body text-center">
-		        <h3>내가 생성한 소모임</h3>
+		        <h3>내 소모임 관리</h3>
 		        <c:if test="${name eq null }">
-		        <a style="text-decoration: none; font-weight: bold;" href="/group/register">소모임 생성하기</a>		        
+		        <a style="text-decoration: none; font-weight: bold;" href="/group/register">내 모임 생성하기</a>		        
 		        </c:if>
 		        <c:if test="${name ne null }">
-		        <a style="text-decoration: none; font-weight: bold;" href="/user/management/${ses.email }">${name }</a>
+		        <a style="text-decoration: none; font-weight: bold;" href="/group/main?grno=${ses.isCap }">${name }</a>
 		        </c:if>
 		      </div>
 		    </div>
@@ -78,7 +78,7 @@
 				<th scope="col" hidden="">번호</th>
 				<th scope="col">카테고리</th>
 				<th scope="col">소모임 이름</th>
-				<th scope="col">운영진 여부</th>
+				<th scope="col">회원 등급</th>
 				<th scope="col">탈퇴</th>
 			</tr>
 			</thead>
@@ -87,7 +87,7 @@
 				<tr>
 					<td hidden="">${fdvo.grno }</td>
 					<td>${fdvo.ctname }</td>
-					<td>${fdvo.gname }</td>
+					<td><a href="/group/main?grno=${fdvo.grno }" style="text-decoration: none; font-weight: bold">${fdvo.gname }</a></td>
 					<c:choose>
 					<c:when test="${fdvo.wgrade eq 'B' }">
 					<td>운영진</td>

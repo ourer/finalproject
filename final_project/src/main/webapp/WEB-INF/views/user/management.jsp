@@ -40,12 +40,12 @@
 		  <div class="col-sm-6">
 		    <div class="card">
 		      <div class="card-body text-center">
-		        <h3>내가 생성한 소모임</h3>
+		        <h3>내 소모임 관리</h3>
 		        <c:if test="${name eq null }">
-		        <a style="text-decoration: none; font-weight: bold;" href="/group/register">소모임 생성하기</a>		        
+		        <a style="text-decoration: none; font-weight: bold;" href="/group/register">내 모임 생성하기</a>		        
 		        </c:if>
 		        <c:if test="${name ne null }">
-		        <a style="text-decoration: none; font-weight: bold;" href="/user/management/${ses.email }">${name }</a>
+		        <a style="text-decoration: none; font-weight: bold;" href="/group/main?grno=${ses.isCap }">${name }</a>
 		        </c:if>
 		      </div>
 		    </div>

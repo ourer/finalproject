@@ -8,7 +8,7 @@
 		  <li class="nav-item dropdown">
 		    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">나의 소모임</a>
 		    <ul class="dropdown-menu">
-		      <li><a class="dropdown-item" href="/user/mypage">목록</a></li>
+		      <li><a class="dropdown-item" href="/user/mypage/${ses.email }">목록</a></li>
 		      <li><a class="dropdown-item" href="/user/management/${ses.email }">관리</a></li>
 		    </ul>
 		  </li>

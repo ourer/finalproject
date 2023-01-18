@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.ezen.finalpj.domain.FavoriteDTO;
 import com.ezen.finalpj.domain.FavoriteVO;
+import com.ezen.finalpj.domain.GroupVO;
 import com.ezen.finalpj.domain.ManagerDTO;
 import com.ezen.finalpj.domain.ProfileVO;
 import com.ezen.finalpj.domain.UserDTO;
@@ -186,5 +187,6 @@ public class UserServiceImpl implements UserService {
 		log.info("내가 방장인 소모임 이름");
 		return udao.selectmyGname(email);
 	}
+
 
 }
