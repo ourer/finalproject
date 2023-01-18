@@ -1,0 +1,36 @@
+@charset "UTF-8";
+.firstBox{
+	margin-top: 30px;
+}
+
+.grpName{
+	font-weight: bold;
+	text-shadow: #FFD34A 2px 2px 5px;
+	
+}
+
+.nav-item > .groupNav{
+	margin-left: 50px;
+}
+
+.outerBox{
+	width: 1050px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 50px;
+}
+.outerBox>form{
+	width: 500px;
+	/* display: flex;
+	flex-direction: column;
+	justify-content: center; */
+	
+}
+.outerBox>form>button{
+	width: 100%;
+}
+
+#datetimepicker1{
+	margin-bottom: 15px;
+}

@@ -2,22 +2,36 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<link rel="stylesheet" type="text/css" href="/resources/css/grpMain.css">
-
 <jsp:include page="../layout/header.jsp"></jsp:include>
+<style>
+.firstBox{
+	margin-top: 30px;
+}
+
+.grpName{
+	font-weight: bold;
+	text-shadow: #FFD34A 2px 2px 5px;
+	
+}
+
+.nav-item > .groupNav{
+	margin-left: 50px;
+}
+</style>
 <section>
-	 <div class="firstBox">
+	 <div class="firstBox clear">
     	<ul class="nav nav-tab">
             	<li class="grpNavLi nav-item"><h1 class="grpName">${gvo.name }</h1></li>
                 <li class="grpNavLi nav-item"><a class="nav-link groupNav" href="/group/main?grno=${gvo.grno }">소모임 홈</a></li>
                 <li class="grpNavLi nav-item"><a class="nav-link groupNav" href="/gboard/list?grno=${gvo.grno }">게시판</a></li>
-                <li class="grpNavLi nav-item"><a class="nav-link groupNav" href="/group/memberList?grno=${gvo.grno }">멤버</a></li>
+                <li class="grpNavLi nav-item"><a class="nav-link groupNav" href="/group/memberList?grno=${gvo.grno }">멤버(${fn:length(uList)+1} / ${gvo.max_member })</a></li>
                 <c:if test="${ses.email eq gvo.email }">
                 <li class="grpNavLi nav-item"><a class="nav-link groupNav" href="/schedule/register?grno=${gvo.grno }">스케줄 생성</a></li>
                 </c:if>
             </ul>
         </div>
-	<table class="table caption-top text-center" style="margin: 30px auto">
+    <div class="table"  style="margin-top: 50px;">
+	<table class="table caption-top text-center">
 		<colgroup>
 			<col width="20%" />
 			<col width="15%" />
@@ -92,5 +106,6 @@
 			
 			</tbody>
 		</table>
+		</div>
 </section>
 <jsp:include page="../layout/footer.jsp"></jsp:include>

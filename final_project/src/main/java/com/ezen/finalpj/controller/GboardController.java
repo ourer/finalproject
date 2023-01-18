@@ -102,6 +102,9 @@ public class GboardController {
 		GboardDTO gbdto=gbsv.selectDetailFileGbrd(gbno);
 		int grno=gbdto.getGbvo().getGrno();
 		GroupVO gvo=gsv.selectGrp(grno);
+		List<UserVO> uList=usv.selectMemListUser(grno);
+		log.info("회원 리스트"+uList.toString());
+		model.addAttribute("uList", uList);
 		model.addAttribute("gvo", gvo);
 		//GboardVO gbvo=gbsv.selectDetailGbrd(gbno);
 		model.addAttribute("gbvo", gbdto.getGbvo());

@@ -29,8 +29,10 @@ li>.ms-2>.upperBox{
 .nav-item > .groupNav{
 	margin-left: 50px;
 }
-
-#regdate{
+/* .flex-row>input[type=text]{
+	width: fit-content;
+} */
+/* #regdate{
 	width: 220px;
 }
 
@@ -41,7 +43,7 @@ li>.ms-2>.upperBox{
 .just{
 	width: 600px;
 }
-
+ */
 .regdate{
 	width: 200px;
 }
@@ -51,4 +53,22 @@ li>.ms-2>.upperBox{
 
 div.col-sm-10{
 	width: 220px;
+}
+
+.content{
+	margin-top: 20px;
+}
+
+.upperBox{
+	height: 30px;
+}
+
+.cmtTextVal{
+	font-size: 1.2em;
+}
+.text-body-tertiary{
+	font-size: 0.8em;
+}
+.dropBtn{
+	height: 25px;
 }

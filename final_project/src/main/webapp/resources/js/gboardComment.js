@@ -68,19 +68,22 @@ function getCommentList(gbno){
                 li+=`<div class="ms-2 me-auto">`;
                 li+=`<div class="upperBox">`;
                 li+=`<div class="fw-bold writer">${cvo.writer}</div>`;
-                li+=`<div class="rightCmtBox"> <span class="badge bg-dark rounded-pill regdate">${cvo.regdate}</span>`;
                 if(emailVal==cvo.writer){
-                li+=`<div class="dropdown">
-                <button class="btn btn-outline-warning dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  <i class="fa-solid fa-ellipsis"></i>
-                </button>`;
-                li+=`<ul class="dropdown-menu">
-                  <li class="dropdown-item mod" data-cno="${cvo.cno}">수정</li>
-                  <li class="dropdown-item del" data-cno="${cvo.cno}">삭제</li>
-                </ul></div>`;
-            }
-                li+=`</div></div>`;
+                    
+                    li+=`<div class="dropdown">
+                    <button class="btn btn-outline-warning dropdown-toggle btn-sm dropBtn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa-solid fa-ellipsis"></i>
+                    </button>`;
+                    li+=`<ul class="dropdown-menu">
+                    <li class="dropdown-item mod" data-cno="${cvo.cno}">수정</li>
+                    <li class="dropdown-item del" data-cno="${cvo.cno}">삭제</li>
+                    </ul></div>`;
+                    
+                }
+
+                li+=`</div>`;
                 li+=`<div class="cmtTextVal" id='cmtTextVal${cvo.cno}'>${cvo.content}</div>`;
+                li+=`<p class="text-body-tertiary">${cvo.regdate}</p>`;
                 //li+=`<input type="text" class="form-control" id="cmtTextMod" value="${cvo.content}"> </div>`;
                 ul.innerHTML+=li;
             }

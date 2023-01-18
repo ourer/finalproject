@@ -89,4 +89,9 @@ public class GroupServiceImpl implements GroupService {
 		return gdao.deleteGrpList(grno);
 	}
 
+	@Override
+	public int modifyDetailGrp(GroupVO gvo) {
+		return gdao.updateDetailGrp(gvo);
+	}
+
 }

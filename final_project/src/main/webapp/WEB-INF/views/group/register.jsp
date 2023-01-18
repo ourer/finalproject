@@ -108,7 +108,7 @@
 	                <h3>소모임 소개</h3>
 	            </div>
 	            <div class="innerSecond form-floating">
-	                <textarea class="form-control" name="detail" placeholder="어떤 소모임인가요?" id="detail" style="height: 100px"></textarea>
+	                <textarea class="form-control" name="detail" placeholder="어떤 소모임인가요?" id="detail" style="height: 200px"></textarea>
 	            	<label for="detail">어떤 소모임인가요?</label>
 	            </div>
 	        </div>

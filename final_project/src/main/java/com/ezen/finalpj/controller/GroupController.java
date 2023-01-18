@@ -102,9 +102,9 @@ public class GroupController {
 		}
 		List<UserVO> uList=usv.selectMemListUser(grno);
 		log.info("회원 리스트"+uList.toString());
+		model.addAttribute("uList", uList);
 		model.addAttribute("gvo", gvo);
 		model.addAttribute("sList", sList);
-		model.addAttribute("uList", uList);
 		model.addAttribute("smvo", smvo);
 		//model.addAttribute("fList", fList);
 		return "/group/main";
@@ -180,5 +180,14 @@ public class GroupController {
 		log.info("supervisor's remove group");
 		int isOk=gsv.removeGrp(grno);
 		return isOk>0? new ResponseEntity<String>("1",HttpStatus.OK): new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	
+	@PostMapping("/modify")
+	public String modifyDetailGrp(GroupVO gvo, RedirectAttributes reAttr) {
+		log.info(gvo.toString());
+		int isOk=gsv.modifyDetailGrp(gvo);
+		log.info("그룹 소개 수정"+(isOk>0?"성공":"실패"));
+		reAttr.addAttribute("grno", gvo.getGrno());
+		return "redirect:/group/main";
 	}
 }

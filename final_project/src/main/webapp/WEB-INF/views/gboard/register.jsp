@@ -1,8 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
 <jsp:include page="../layout/header.jsp"></jsp:include>
 <section>
+	<div class="firstBox">
+    	<ul class="nav nav-tab">
+            	<li class="grpNavLi nav-item"><h1 class="grpName">${gvo.name }</h1></li>
+                <li class="grpNavLi nav-item"><a class="nav-link groupNav" href="/group/main?grno=${gvo.grno }">소모임 홈</a></li>
+                <li class="grpNavLi nav-item"><a class="nav-link groupNav" href="/gboard/list?grno=${gvo.grno }">게시판</a></li>
+                <li class="grpNavLi nav-item"><a class="nav-link groupNav" href="/group/memberList?grno=${gvo.grno }">멤버(${fn:length(uList)+1} / ${gvo.max_member })</a></li>
+                <c:if test="${ses.email eq gvo.email }">
+                <li class="grpNavLi nav-item"><a class="nav-link groupNav" href="/schedule/register?grno=${gvo.grno }">스케줄 생성</a></li>
+                </c:if>
+            </ul>
+        </div>
 	<form action="/gboard/register" method="post" style="margin:30px auto" enctype="multipart/form-data">
 		<div class="form">
 		<label for="cate" class="col-sm-1 col-form-label">말머리</label>
@@ -21,7 +34,7 @@
 		 </div>
 		<div class="form">
 		    <label for="writer" class="col-sm-1 col-form-label">작성자</label>
-		    <input type="text" class="form-control" id="writer" name="writer" value="${ses.email }" readonly>
+		    <input type="text" class="form-control" id="writer" name="writer" value="${ses.nickname }" readonly>
 		  </div>
 		  <div class="form">
 		    <label for="content" class="col-sm-1 col-form-label">내용</label>
