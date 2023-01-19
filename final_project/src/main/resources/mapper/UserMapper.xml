@@ -47,7 +47,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from user join waiting on user.email=waiting.email where isOk=1 and grno=#{isCap}
 	</select>
 	<update id="updateMyinfo">
-		update user set area=#{area}, phone=#{phone}, ctno_1=#{ctno_1}, ctno_2=#{ctno_2}, ctno_3=#{ctno_3}, ctcode_1=#{ctcode_1}, ctcode_2=#{ctcode_2}, ctcode_3=#{ctcode_3} where email=#{email}
+		update user set area=#{area}, phone=#{phone}, ctno_1=#{ctno_1}, ctno_2=#{ctno_2}, ctno_3=#{ctno_3} where email=#{email}
 	</update>
 	
 	<select id="selectCap" resultType="com.ezen.finalpj.domain.UserVO">
@@ -81,7 +81,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select smallgroup.grno as grno, category.name as ctname, smallgroup.name as gname, waiting.grade as wgrade from category
 		join smallgroup on category.ctno = smallgroup.ctno
 		join waiting on smallgroup.grno = waiting.grno
-		where waiting.email=#{email}
+		where waiting.email=#{email} and isOk=1
 	</select>
 	<select id="selectmyGname" resultType="String">
 		select name from smallgroup where email=#{email}

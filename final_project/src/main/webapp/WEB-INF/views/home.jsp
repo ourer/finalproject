@@ -46,11 +46,11 @@
 	-webkit-line-clamp: 3;
 	-webkit-box-orient: vertical;
 }
-.icon{
-	transition: all 0.2s ease-in-out;
+.icon, .keyicon{
+   transition: all 0.2s ease-in-out;
 }
-.icon:hover {
-	transform: scale(1.07);
+.icon:hover, .keyicon:hover {
+   transform: scale(1.07);
 }
 .likecategory{
 	margin-bottom: 50px;

@@ -6,6 +6,9 @@
 .innerGroup{
 	margin-top: 20px;
 }
+.innerGroup> #grpRegBtn{
+	width: 100%;
+}
 
 #checkDiv{
 	width: 100%;
@@ -14,9 +17,6 @@
 .form-check-input:checked{
 	background-color: #FFD34A;
 	border-color: #FFD34A;
-}
-#grpRegBtn{
-	width: 100%;
 }
 </style>
 <section>

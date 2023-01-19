@@ -28,9 +28,16 @@
          </div>
          <div class="offcanvas-body">
            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+           <c:if test="${ses.isCap eq null }">
              <li class="nav-item">
                <a class="nav-link active d-grid gap-2 col-12 mx-auto" aria-current="page" href="/group/register"><button type="button" class="btn btn-outline-warning">소모임 생성</button></a>
              </li>
+           </c:if>
+           <c:if test="${ses.isCap ne null }">
+             <li class="nav-item">
+               <a class="nav-link active d-grid gap-2 col-12 mx-auto" aria-current="page" href="/group/main?grno=${ses.isCap }"><button type="button" class="btn btn-outline-warning">내 소모임</button></a>
+             </li>
+           </c:if>
              <c:if test="${ses.email == null }">
                 <li class="nav-item">
                   <a class="nav-link" aria-current="page" href="/user/login">로그인</a>
@@ -44,7 +51,7 @@
                 <div>
                 <c:choose>
                 <c:when test="${sespvo ne null }">
-                   <img src="/upload/${fn:replace(sespvo.dir,'\\','/')}/${sespvo.uuid}_${sespvo.name}" class="rounded-circle mx-auto d-block" alt="..." style="width: 150px;">                
+                   <img src="/upload/${fn:replace(sespvo.dir,'\\','/')}/${sespvo.uuid}_${sespvo.name}" class="rounded-circle mx-auto d-block" alt="..." style="width: 140px; height: 140px">                
                 </c:when>
                 <c:otherwise>
 					<img src="/upload/blank-profile.png" class="rounded-circle mx-auto d-block" alt="..." style="width: 140px; height: 140px;">
