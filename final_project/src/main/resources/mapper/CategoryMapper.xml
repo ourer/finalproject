@@ -27,7 +27,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="getCategoryOne" resultType="com.ezen.finalpj.domain.CategoryVO">
-		select 
+				select 
 			S.uuid, S.dir, S.name AS sm_name, SG.grno, SG.name AS sg_name, SG.detail, SG.city, SG.county, C.code 
 			from  smallgroup SG 
 			left join category C
@@ -36,7 +36,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			on S.grno = SG.grno 
 			where C.name = #{name}
 	</select>
-	
 	<select id="getCategoryOneRandom" resultType="com.ezen.finalpj.domain.CategoryVO">
 		select 
 			S.uuid, S.dir, S.name AS sm_name, SG.grno, SG.name AS sg_name, SG.detail, SG.city, SG.county, C.code
@@ -45,18 +44,5 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			on C.ctno = SG.ctno 
 			left join sgmain S 
 			on S.grno = SG.grno 
-	</select>
-	
-	<select id="getMyList" resultType="com.ezen.finalpj.domain.CategoryVO" parameterType="int">
-		select 
-			S.uuid, S.dir, S.name AS sm_name, SG.grno, SG.name AS sg_name, SG.detail, SG.city, SG.county, C.code, C.ctno, U.ctno_1 
-			from smallgroup SG
-			left join User U
-			on U.ctno_1 = SG.ctno
-			left join category C
-			on U.ctno_1 = C.ctno
-			left join sgmain S 
-			on S.grno = SG.grno
-			where ctno_1 = #{myCtno}
 	</select>
 </mapper>

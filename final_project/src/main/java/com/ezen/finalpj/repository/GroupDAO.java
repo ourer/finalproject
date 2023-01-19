@@ -34,5 +34,7 @@ public interface GroupDAO {
 
 	int deleteGrpList(String grno);
 
+	int updateDetailGrp(GroupVO gvo);
+
 
 }

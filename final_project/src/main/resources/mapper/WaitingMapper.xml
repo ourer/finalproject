@@ -9,17 +9,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="deleteUser">
 		delete from waiting where email=#{email}
 	</delete>
-	<update id="acceptUser">
-		update waiting set isOk=1 where email=#{email}
-	</update>
-	<delete id="refuseUser">
-		delete from waiting where email=#{email}
-	</delete>
 	<update id="appointment">
-		update waiting set grade='B' where email=#{email}
+		update waiting set grade='B' where email=#{email} and grno=#{grno}
 	</update>
 	
 	<update id="cancellation">
-		update waiting set grade='C' where email=#{email}
+		update waiting set grade='C' where email=#{email} and grno=#{grno}
 	</update>
+	<update id="acceptWaiting">
+		update waiting set isOk=1 where email=#{email} and grno=#{grno}
+	</update>
+	
+	<delete id="refuseWaiting">
+		delete from waiting where email=#{email} and grno=#{grno}
+	</delete>
+	
+	<select id="selectGetWaiting" resultType="com.ezen.finalpj.domain.WaitingVO">
+		select * from waiting where email=#{email} group by email
+	</select>
+	
+	<select id="selectGrpCount" resultType="int">
+		select count(*)+1 from waiting where grno=#{grno} and isOk=1
+	</select>
+	
+	<delete id="quit">
+		delete from waiting where email=#{email} and grno=#{grno}
+	</delete>
 </mapper>

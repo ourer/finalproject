@@ -16,6 +16,7 @@ import com.ezen.finalpj.domain.SgMainVO;
 import com.ezen.finalpj.service.CategoryService;
 import com.ezen.finalpj.service.GroupService;
 import com.ezen.finalpj.service.SgmainService;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -30,13 +31,14 @@ public class CategoryController {
 	private CategoryService csv;
 	
 	// 소모임 전체리스트 불러오기
-   @GetMapping("/categorymain")
-      public String categorymain(Model model,SearchVO scvo) {
-         List<SgMainVO> sgList = ssv.getSgMainImgSearching(scvo);
-         log.info("test : " + sgList.toString());
-         model.addAttribute("sgList", sgList);
-         return "/category/categorymain";
-      }
+	@GetMapping("/categorymain")
+	public String categorymain(Model model,SearchVO scvo) {
+      List<SgMainVO> sgList = ssv.getSgMainImgSearching(scvo);
+	  log.info("test : " + sgList.toString());
+	  model.addAttribute("sgList", sgList);
+	     
+	  return "/category/categorymain";
+	}
 	
 	//소모임 카테고리별 불러오기
 	@GetMapping("/categoryDetail")
@@ -61,6 +63,20 @@ public class CategoryController {
 		model.addAttribute("cList", cList);
 		model.addAttribute("cateList", cateList);
 		return "/category/categoryNameList";
+	}
+	
+	
+	//home.jsp 오늘의 추천 소모임 리스트 랜덤 추천
+	@GetMapping("/categoryRandom")
+	public String categoryRandom(Model model) {
+		List<SgMainVO> sList = ssv.getSgMainImg();
+		log.info("test : " + sList.toString());
+		// 랜덤출력
+		
+		
+		
+		model.addAttribute("sList", sList);
+		return "/";
 	}
 
 }

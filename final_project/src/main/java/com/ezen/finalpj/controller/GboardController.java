@@ -20,10 +20,16 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ezen.finalpj.domain.FileVO;
+import com.ezen.finalpj.domain.GPagingVO;
 import com.ezen.finalpj.domain.GboardDTO;
 import com.ezen.finalpj.domain.GboardVO;
+import com.ezen.finalpj.domain.GroupVO;
+import com.ezen.finalpj.domain.UserVO;
 import com.ezen.finalpj.handler.FileHandler;
+import com.ezen.finalpj.handler.GPagingHandler;
 import com.ezen.finalpj.service.GboardService;
+import com.ezen.finalpj.service.GroupService;
+import com.ezen.finalpj.service.UserService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -35,9 +41,17 @@ public class GboardController {
 	private GboardService gbsv;
 	@Inject
 	private FileHandler fh;
+	@Inject
+	private GroupService gsv;
+	@Inject
+	private UserService usv;
 	
 	@GetMapping("/register")
 	public String insertGbrdGet(@RequestParam("grno")int grno, Model model, HttpServletRequest req) {
+		List<UserVO> uList=usv.selectMemListUser(grno);
+		GroupVO gvo=gsv.selectGrp(grno);
+		model.addAttribute("gvo", gvo);
+		model.addAttribute("uList", uList);
 		model.addAttribute("grno", grno);
 		return "/gboard/register";
 	}
@@ -56,19 +70,30 @@ public class GboardController {
 				GboardDTO gbdto=new GboardDTO(gbvo, gfvo);
 				int isOk=gbsv.insertGbrd(gbdto);
 				log.info("그룹 게시글 등록 성공"+(isOk>0?"성공":"실패"));
+			}else {
+				int isOk=gbsv.insertGbrd(gbvo);
+				log.info("그룹 게시글 등록 성공"+(isOk>0?"성공":"실패"));
 			}
 		}
 		int grno=gbvo.getGrno();
-		//int isOk=gbsv.insertGbrd(gbvo);
 		reAttr.addAttribute("grno", grno);
 		return "redirect:/gboard/list";
 	}
 	
 	@GetMapping("/list")
-	public String selectListGbrdGet(@RequestParam("grno")int grno, Model model) {
-		List<GboardVO> gbList=gbsv.selectListGbrd(grno);
+	public String selectListGbrdGet(@RequestParam("grno")int grno, Model model, GPagingVO gpvo) {
+		gpvo.setGrno(grno);
+		List<GboardVO> gbList=gbsv.selectListGbrd(gpvo);
+		log.info(gbList.toString());
+		int totalPage=gbsv.getTotalPage(grno);
+		GPagingHandler gph=new GPagingHandler(gpvo, totalPage);
+		List<UserVO> uList=usv.selectMemListUser(grno);
+		GroupVO gvo=gsv.selectGrp(grno);
+		model.addAttribute("gvo", gvo);
+		model.addAttribute("uList", uList);
 		model.addAttribute("gbList", gbList);
 		model.addAttribute("grno", grno);
+		model.addAttribute("gph", gph);
 		return "/gboard/list";
 	}
 	
@@ -77,6 +102,12 @@ public class GboardController {
 		int isOk=gbsv.updateViewGbrd(gbno);
 		log.info("조회수"+(isOk>0?"성공":"실패"));
 		GboardDTO gbdto=gbsv.selectDetailFileGbrd(gbno);
+		int grno=gbdto.getGbvo().getGrno();
+		GroupVO gvo=gsv.selectGrp(grno);
+		List<UserVO> uList=usv.selectMemListUser(grno);
+		log.info("회원 리스트"+uList.toString());
+		model.addAttribute("uList", uList);
+		model.addAttribute("gvo", gvo);
 		//GboardVO gbvo=gbsv.selectDetailGbrd(gbno);
 		model.addAttribute("gbvo", gbdto.getGbvo());
 		model.addAttribute("gfvo", gbdto.getGfvo());
@@ -87,6 +118,11 @@ public class GboardController {
 	@GetMapping("/modify")
 	public String updateGbrdGet(@RequestParam("gbno")int gbno, Model model) {
 		GboardDTO gbdto=gbsv.selectDetailFileGbrd(gbno);
+		int grno=gbdto.getGbvo().getGrno();
+		GroupVO gvo=gsv.selectGrp(grno);
+		model.addAttribute("gvo", gvo);
+		List<UserVO> uList=usv.selectMemListUser(grno);
+		model.addAttribute("uList", uList);
 		//GboardVO gbvo=gbsv.selectDetailGbrd(gbno);
 		model.addAttribute("gbvo", gbdto.getGbvo());
 		model.addAttribute("gfvo", gbdto.getGfvo());

@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <jsp:include page="../layout/header.jsp"></jsp:include>
 <section>
 		<ul class="nav nav-tabs">
@@ -24,14 +23,9 @@
 		  <div class="col-sm-6">
 		    <div class="card">
 		      <div class="card-body">
-				<c:if test="${pvo.uuid == null}">
-					<img src="/upload/blank-profile.png" class="rounded-circle mx-auto d-block" alt="..." style="width: 140px; height: 140px">
-				</c:if>
-				<c:if test="${pvo.uuid != null}">
-					<img src="/upload/${fn:replace(pvo.dir,'\\','/')}/${pvo.uuid}_${pvo.name}" class="rounded-circle mx-auto d-block" alt="..." style="width: 140px; height: 140px"> 
-				</c:if>
+				<img src="https://m.colettemung.com/web/product/big/202009/5b2194624e6fbe01f2bf3541b4935dd4.jpg" class="rounded-circle mx-auto d-block" alt="..." style="width: 140px;">		        
 		        <div class="text-center">
-		        	<span>${ses.name }</span>
+		        	<span>윤승희</span>
 		        	<span>님</span>
 		        </div>
 		      </div>

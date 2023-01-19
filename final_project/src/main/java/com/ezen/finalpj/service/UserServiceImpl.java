@@ -8,11 +8,13 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.ezen.finalpj.domain.FavoriteDTO;
 import com.ezen.finalpj.domain.FavoriteVO;
 import com.ezen.finalpj.domain.ManagerDTO;
 import com.ezen.finalpj.domain.ProfileVO;
 import com.ezen.finalpj.domain.UserDTO;
 import com.ezen.finalpj.domain.UserVO;
+import com.ezen.finalpj.domain.WaitingVO;
 import com.ezen.finalpj.repository.ProfileDAO;
 import com.ezen.finalpj.repository.UserDAO;
 
@@ -25,6 +27,7 @@ public class UserServiceImpl implements UserService {
 	private UserDAO udao;
 	@Inject
 	private ProfileDAO pdao;
+	
 	@Inject
 	BCryptPasswordEncoder passwordEncoder;
 
@@ -74,7 +77,7 @@ public class UserServiceImpl implements UserService {
 		UserVO uvo = udao.getUser(email);
 		log.info(">>>ServiceImpl : "+uvo.toString());
 		if(uvo == null) return null;
-
+		
 		if(passwordEncoder.matches(pw, uvo.getPw())) {
 			return uvo;
 		}else {
@@ -168,16 +171,32 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<FavoriteVO> countFavoriteList(String email) {
+	public List<FavoriteVO> selectFList(String email) {
 		log.info("찜 목록 개수");
-		return udao.likeListCount(email);
+		return udao.selectFList(email);
 	}
 
 	@Override
-	public int getMyCtno(String email) {
-		log.info("내 ctno_1 가져오기");
-		return udao.getMyCtno(email);
+	public List<FavoriteDTO> selectUList(String email) {
+		log.info("내가 가입한 소모임들");
+		return udao.selectUList(email);
 	}
 
-
+	@Override
+	public String selectmyGname(String email) {
+		log.info("내가 방장인 소모임 이름");
+		return udao.selectmyGname(email);
+	}
+	
+	
+   @Override
+   public List<WaitingVO> getWaitingList(UserVO user) {
+      return udao.getWaitingList(user);
+   }
+   
+   @Override
+   public UserVO modifyCt(String email) {
+      log.info("카테고리 수정값 가져오기");
+      return udao.getUser(email);
+   }
 }

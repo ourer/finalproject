@@ -42,20 +42,7 @@ public class HomeController {
 		Collections.shuffle(RandomList);
 		log.info("random : "+RandomList.toString());
 		
-		model.addAttribute("RandomList", RandomList);
-//		
-//		log.info("ctno >>> "+ctno_1);		          
-//          // 내 관심사 리스트 만들기
-//		if(ctno_1 != null) {
-//			int myCtno = Integer.parseInt(ctno_1);
-//			List<CategoryVO> MyCtnoList = csv.getMyList(myCtno);
-//			log.info("내 관심사 리스트 : "+MyCtnoList.toString());
-//			model.addAttribute("MyCtnoList", MyCtnoList);
-//		}
-//		
-		
-		
-		
+		model.addAttribute("RandomList", RandomList);		
 		return "home";
 	}
 	

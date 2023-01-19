@@ -10,12 +10,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select S.uuid, S.dir, S.name, SG.grno, SG.name AS sg_name, SG.detail, SG.city, SG.county from smallgroup SG left join sgmain S on S.grno = SG.grno
 	</select>
 	
-	<select id="getSgMainImgSearching" resultType="com.ezen.finalpj.domain.SgMainVO">
-      	select S.uuid, S.dir, S.name, SG.grno, SG.name AS sg_name, SG.detail, SG.city, SG.county 
-      	from smallgroup SG left join sgmain S on S.grno = SG.grno where sg.grno is not null
-      	<include refid="search"></include>
+	   <select id="getSgMainImgSearching" resultType="com.ezen.finalpj.domain.SgMainVO">
+      select S.uuid, S.dir, S.name, SG.grno, SG.name AS sg_name, SG.detail, SG.city, SG.county 
+      from smallgroup SG left join sgmain S on S.grno = SG.grno where sg.grno is not null
+      <include refid="search"></include>
    </select>
-    
+   
+   
    <sql id="search">
       <if test="type !=null">
          <trim prefix="and (" suffix=")" prefixOverrides="OR">
@@ -38,5 +39,4 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          </trim>
       </if>
    </sql>
-   
 </mapper>

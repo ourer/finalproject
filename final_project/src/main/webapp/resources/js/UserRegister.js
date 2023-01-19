@@ -73,21 +73,28 @@ function emailCheck(){
     }
 };
 
-// 비밀번호 일치 체크
-	$('.pw').keyup(function(){
-    	let pass1 = $("#pw").val();
+// 비밀번호 일치 체크 & 정규식
+// 숫자, 특문 각 1회 이상, 영문은 2개 이상 사용하여 8자리 이상 입력
+var regExpPw = /(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/; 
+   $('.pw').keyup(function(){
+        let pattern = /\s/g;
+       let pass1 = $("#pw").val();
         let pass2 = $("#pw2").val();
         console.log(pass1);
         console.log(pass2);
         
-        if (pass1 != "" || pass2 != ""){
-        	if (pass1 == pass2){
-            	$("#checkPw").html('비밀번호가 일치합니다.');
-            	$("#checkPw").attr('color','green');
-            } else {
-            	$("#checkPw").html('비밀번호가 일치하지 않습니다.');
+        if ((pass1 != "" || pass2 != "") && regExpPw.test(pass1) == true){
+           if (pass1 == pass2){
+               $("#checkPw").html('비밀번호가 일치합니다.');
+               $("#checkPw").attr('color','green');
+            } else if (pass1 != pass2) {
+                $("#checkPw").html('비밀번호가 일치하지 않습니다.');
                 $("#checkPw").attr('color','red');
-            }
+            } 
+            
+        }else if (regExpPw.test(pass1) == false){
+            $("#checkPw").html('비밀번호가 형식에 맞지 않습니다.');
+            $("#checkPw").attr('color','red');
         }
     
     })

@@ -29,12 +29,11 @@ public class SgmainServiceImpl implements SgmainService {
 		log.info(">>> sgmain 이미지 가져오기");
 		return sdao.getSgMainImg();
 	}
-
-   @Override
-   public List<SgMainVO> getSgMainImgSearching(SearchVO scvo) {
-      log.info(">>> sgmainNoPaging 가져오기");
-      return sdao.getSgMainImgSearching(scvo);
-   }
-
+	
+	@Override
+	   public List<SgMainVO> getSgMainImgSearching(SearchVO scvo) {
+	      log.info(">>> sgmainNoPaging 가져오기");
+	      return sdao.getSgMainImgSearching(scvo);
+	   }
 
 }

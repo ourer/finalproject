@@ -33,7 +33,6 @@ import com.ezen.finalpj.domain.WaitingVO;
 import com.ezen.finalpj.handler.SgMainHandler;
 import com.ezen.finalpj.service.FavoriteService;
 import com.ezen.finalpj.service.GroupService;
-import com.ezen.finalpj.service.JoinPersonService;
 import com.ezen.finalpj.service.ProfileService;
 import com.ezen.finalpj.service.ScheduleService;
 import com.ezen.finalpj.service.UserService;
@@ -49,8 +48,9 @@ public class GroupController {
 	private GroupService gsv;
 	@Inject
 	private ScheduleService ssv;
-	@Inject
-	private JoinPersonService jpsv;
+	/*
+	 * @Inject private JoinPersonService jpsv;
+	 */
 	@Inject
 	private WaitingService wsv;
 	@Inject
@@ -100,6 +100,9 @@ public class GroupController {
 				}
 			}
 		}
+		List<UserVO> uList=usv.selectMemListUser(grno);
+		log.info("회원 리스트"+uList.toString());
+		model.addAttribute("uList", uList);
 		model.addAttribute("gvo", gvo);
 		model.addAttribute("sList", sList);
 		model.addAttribute("smvo", smvo);
@@ -133,20 +136,7 @@ public class GroupController {
 	
 	@GetMapping("/memberList")
 	public void selectMemListGrpGet(RedirectAttributes reAttr, @RequestParam(name="grno", required=false)int grno, Model model, HttpServletRequest req) {
-		//방장 가져오기
-//		UserVO capUvo=usv.selectCapGet(grno);
-//		log.info(capUvo.toString());
-//		model.addAttribute("capUvo", capUvo);
-//		List<UserVO> uList=usv.selectMemListUserGet(grno);
-//		model.addAttribute("uList", uList);
-		
-		
-		//CapUserDTO capUdto=usv.selectCapGet(grno);
-		//log.info(capUdto.toString());
-		//log.info("uName:  "+capUdto.getUName());
-		//req.setAttribute("cdto", capUdto);
-		//model.addAttribute("cdto", capUdto);
-		
+		GroupVO gvo=gsv.selectGrp(grno);
 		UserVO uvo=usv.selectCapGet(grno);
 		model.addAttribute("capUvo", uvo);
 		ProfileVO pvo=psv.selectProfile(uvo.getEmail());
@@ -159,12 +149,17 @@ public class GroupController {
 			pList.add(memPvo);
 		}
 		model.addAttribute("pList", pList);
+		model.addAttribute("gvo", gvo);
 		
 	}
 	
 	@GetMapping("/join")
 	public String joinGrpGet(@RequestParam("grno")int grno, Model model, HttpServletRequest req) {
 		model.addAttribute("grno", grno);
+		List<UserVO> uList=usv.selectMemListUser(grno);
+		GroupVO gvo=gsv.selectGrp(grno);
+		model.addAttribute("gvo", gvo);
+		model.addAttribute("uList", uList);
 		return "/group/join";
 	}
 	
@@ -180,7 +175,17 @@ public class GroupController {
 	@GetMapping("/grouplist")
 	public String listGrpGet(Model model) {
 		List<GroupVO> gList=gsv.selectGrpList();
+		List<Integer> wList=new ArrayList<Integer>(); 
+		
+		for(GroupVO gvo:gList) {
+			int wvo=wsv.selectGrpCount(gvo.getGrno());
+			wList.add(wvo);
+		}
+		
+		log.info("grno 제발 나와라 "+wList.toString());
+		log.info("그룹리스트 뽑기 "+gList.toString());
 		model.addAttribute("gList", gList);
+		model.addAttribute("wList", wList);
 		return "/supervisor/grouplist";
 	}
 	
@@ -189,5 +194,14 @@ public class GroupController {
 		log.info("supervisor's remove group");
 		int isOk=gsv.removeGrp(grno);
 		return isOk>0? new ResponseEntity<String>("1",HttpStatus.OK): new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	
+	@PostMapping("/modify")
+	public String modifyDetailGrp(GroupVO gvo, RedirectAttributes reAttr) {
+		log.info(gvo.toString());
+		int isOk=gsv.modifyDetailGrp(gvo);
+		log.info("그룹 소개 수정"+(isOk>0?"성공":"실패"));
+		reAttr.addAttribute("grno", gvo.getGrno());
+		return "redirect:/group/main";
 	}
 }

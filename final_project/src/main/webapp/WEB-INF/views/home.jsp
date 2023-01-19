@@ -5,9 +5,15 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 <jsp:include page="./layout/header.jsp"></jsp:include>
 <style>
+.categoryall{
+	width: 10%;
+	float: left;
+	margin-bottom: 100px;
+}
 .likecategory{
 	width:90%;
-	margin: 0 auto 100px auto;
+	float:right;
+	margin-bottom: 100px;
 }
 .icon{
 	width: 130px;
@@ -17,7 +23,19 @@
 	border: none;
 	border-radius: 20px;
 }
-.fa-solid{
+.keyicon{
+	width: 90px;
+	height: 280px;
+	margin:10px;
+	background: #f2f2e1;
+	border: none;
+	border-radius: 20px;
+}
+.categoryall > .keyicon >.fa-file{
+	font-size: 2em;
+	margin: 10px auto;
+}
+.likecategory>.icon>.fa-solid{
 	font-size: 2em;
 	margin: 10px auto;
 }
@@ -28,11 +46,35 @@
 	-webkit-line-clamp: 3;
 	-webkit-box-orient: vertical;
 }
-.icon{
+.icon, .keyicon{
 	transition: all 0.2s ease-in-out;
 }
-.icon:hover {
+.icon:hover, .keyicon:hover {
 	transform: scale(1.07);
+}
+.likecategory{
+	margin-bottom: 50px;
+}
+.randomList{
+	text-align: center;
+	margin-top: 50px;
+}
+.like{
+	text-align: center;
+	margin: 40px 0;
+}
+.recommend{
+   clear: both;
+}
+.test1{
+   clear: both;
+}
+.card-body>.detail{
+   overflow: hidden;
+     text-overflow: ellipsis;
+     display: -webkit-box;
+     -webkit-line-clamp: 2;
+     -webkit-box-orient: vertical;
 }
 </style>
 <section>
@@ -58,7 +100,13 @@
 		  </button>
 		 </div>
 		  
-	<h3 style="margin: 30px auto">관심사</h3>
+		   <h3 class="like" style="margin: 30px auto; text-align: center">관심사</h3>
+		   <div class="categoryall">
+           <button type="button" class="keyicon" id="category_All" onclick="location.href='/category/categorymain'">
+              <i class="fa-solid fa-file"></i>
+              <span class="icontext">전체</span>
+           </button>
+		   </div>
         <div class="likecategory">
            <button type="button" class="icon" id="category_A" onclick="location.href='/category/categoryDetail?code=A'">
               <i class="fa-solid fa-person-running"></i>
@@ -108,53 +156,27 @@
               <i class="fa-solid fa-dog"></i>
               <span class="icontext">반려동물</span>
            </button>
-       </div>
-       
-	<h3 style="margin: 30px auto">오늘의 추천 소모임</h3>
-		<div class="row row-cols-1 row-cols-md-4 g-4" style="margin-bottom: 100px">
-			<c:forEach items="${RandomList }" var="rList" begin="0" end="7" varStatus="status">
-				<div class="col">
-					<div class="card h-100">
-						<c:if test="${rList.uuid == null}">
-							<img alt="sgMain" src="/upload/sgmain_null.jpg">
-						</c:if>
-						<c:if test="${rList.uuid != null}">
-							<img alt="sgMain" src="/upload/sgMainUpload/${fn:replace(rList.dir,'\\','/')}/${rList.uuid}_${rList.sm_name}" class="card-img-top">
-						</c:if>
-						<div class="card-body">
-							<h5 class="card-title">${rList.sg_name }</h5>
-							<p class="card-text">${rList.detail }</p>
-							<p class="card-text">${rList.city}  ${rList.county }</p>
-							<a href="/group/main?grno=${rList.grno}" class="btn btn-warning">구경하기</a>
-						</div>
-					</div>
-				</div>
-			</c:forEach>
-		</div>
-		
-	<%-- <c:if test="${ses.email != null }">
-		<h3 style="margin: 30px auto">${ses.name }님을 위한 추천 소모임</h3>
-		<div class="row row-cols-1 row-cols-md-4 g-4" style="margin-bottom: 100px">
-			<c:forEach items="${MyCtnoList }" var="List" begin="0" end="3" varStatus="status">
-				<div class="col">
-					<div class="card h-100">
-						<c:if test="${List.uuid == null}">
-							<img alt="sgMain" src="/upload/sgmain_null.jpg">
-						</c:if>
-						<c:if test="${List.uuid != null}">
-							<img alt="sgMain" src="/upload/sgMainUpload/${fn:replace(List.dir,'\\','/')}/${List.uuid}_${List.sm_name}" class="card-img-top">
-						</c:if>
-						<div class="card-body">
-							<h5 class="card-title">${List.sg_name }</h5>
-							<p class="card-text">${List.detail }</p>
-							<p class="card-text">${List.city}  ${List.county }</p>
-							<a href="/group/main?grno=${List.grno}" class="btn btn-warning">구경하기</a>
-						</div>
-					</div>
-				</div>
-			</c:forEach>
-		</div>
-	</c:if> --%>
-
+        </div>
+		<h3 style="margin: 30px auto; text-align: center" class="recommend">오늘의 추천 소모임</h3>
+      <div class="row row-cols-1 row-cols-md-4 g-4 randomList" style="margin-bottom: 100px">
+         <c:forEach items="${RandomList }" var="rList" begin="0" end="7" varStatus="status">
+            <div class="col">
+               <div class="card h-100">
+                  <c:if test="${rList.uuid == null}">
+                     <img alt="sgMain" src="/upload/sgMain_default.jpg" class="card-img-top object-fit-cover" style="height: 250px">
+                  </c:if>
+                  <c:if test="${rList.uuid != null}">
+                     <img alt="sgMain" src="/upload/sgMainUpload/${fn:replace(rList.dir,'\\','/')}/${rList.uuid}_${rList.sm_name}" class="card-img-top object-fit-cover sgmain" style="height: 250px">
+                  </c:if>
+                  <div class="card-body">
+                     <h5 class="card-title" style="font-weight: 600;">${rList.sg_name }</h5>
+                     <p class="card-text detail">${rList.detail }</p>
+                     <p class="card-text">${rList.city}  ${rList.county }</p>
+                     <a href="/group/main?grno=${rList.grno}" class="btn btn-warning">구경하기</a>
+                  </div>
+               </div>
+            </div>
+         </c:forEach>
+      </div>
 </section>
 <jsp:include page="./layout/footer.jsp"></jsp:include>

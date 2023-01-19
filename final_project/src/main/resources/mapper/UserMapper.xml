@@ -47,7 +47,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from user join waiting on user.email=waiting.email where isOk=1 and grno=#{isCap}
 	</select>
 	<update id="updateMyinfo">
-		update user set area=#{area}, phone=#{phone}, ctno_1=#{ctno_1}, ctno_2=#{ctno_2}, ctno_3=#{ctno_3}, ctcode_1=#{ctcode_1}, ctcode_2=#{ctcode_2}, ctcode_3=#{ctcode_3} where email=#{email}
+		update user set area=#{area}, phone=#{phone}, ctno_1=#{ctno_1}, ctno_2=#{ctno_2}, ctno_3=#{ctno_3} where email=#{email}
 	</update>
 	
 	<select id="selectCap" resultType="com.ezen.finalpj.domain.UserVO">
@@ -73,13 +73,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		delete from user where email=#{email}
 	</delete>
 	
-	<select id="likeListCount" resultType="com.ezen.finalpj.domain.FavoriteVO">
-		select count(fno) as cntFav from favorite where email=#{email} group by email
-	</select>
 	
-	<select id="getMyCtno" parameterType="String" resultType="int">
-		select ctno_1 from user where email = #{email}
+	<select id="selectFList" resultType="com.ezen.finalpj.domain.FavoriteVO">
+		select * from favorite where email=#{email}
 	</select>
-	
-
+	<select id="selectUList" resultType="com.ezen.finalpj.domain.FavoriteDTO">
+		select smallgroup.grno as grno, category.name as ctname, smallgroup.name as gname, waiting.grade as wgrade from category
+		join smallgroup on category.ctno = smallgroup.ctno
+		join waiting on smallgroup.grno = waiting.grno
+		where waiting.email=#{email}
+	</select>
+	<select id="selectmyGname" resultType="String">
+		select name from smallgroup where email=#{email}
+	</select>
+	   <select id="getWaitingList" resultType="com.ezen.finalpj.domain.WaitingVO">
+      select * from user join waiting on user.email=waiting.email where isOk=1 and grno=#{isCap}
+   </select>
 </mapper>

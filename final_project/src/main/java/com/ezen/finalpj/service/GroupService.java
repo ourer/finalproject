@@ -29,4 +29,6 @@ public interface GroupService {
 	List<GroupVO> selectGrpList();
 
 	int removeGrp(String grno);
+
+	int modifyDetailGrp(GroupVO gvo);
 }
