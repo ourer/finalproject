@@ -5,7 +5,6 @@ import java.util.List;
 import com.ezen.finalpj.domain.GroupVO;
 import com.ezen.finalpj.domain.PagingVO;
 import com.ezen.finalpj.domain.SgMainVO;
-import com.ezen.finalpj.domain.WaitingVO;
 
 public interface GroupService {
 
@@ -21,10 +20,15 @@ public interface GroupService {
 
 	int deleteSgMain(int grno);
 
+	List<GroupVO> getAllList(PagingVO pgvo);
+
 	List<GroupVO> CategoryOne(String code);
+
+	int getPageCount(PagingVO pgvo);
 
 	List<GroupVO> selectGrpList();
 
 	int removeGrp(String grno);
 
+	int modifyDetailGrp(GroupVO gvo);
 }

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.ezen.finalpj.domain.FavoriteDTO;
 import com.ezen.finalpj.domain.FavoriteVO;
 import com.ezen.finalpj.domain.ManagerDTO;
 import com.ezen.finalpj.domain.ProfileVO;
@@ -170,14 +171,32 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<FavoriteVO> countFavoriteList(String email) {
+	public List<FavoriteVO> selectFList(String email) {
 		log.info("찜 목록 개수");
-		return udao.likeListCount(email);
+		return udao.selectFList(email);
 	}
 
 	@Override
-	public List<WaitingVO> getWaitingList(UserVO user) {
-		return udao.getWaitingList(user);
+	public List<FavoriteDTO> selectUList(String email) {
+		log.info("내가 가입한 소모임들");
+		return udao.selectUList(email);
 	}
 
+	@Override
+	public String selectmyGname(String email) {
+		log.info("내가 방장인 소모임 이름");
+		return udao.selectmyGname(email);
+	}
+	
+	
+   @Override
+   public List<WaitingVO> getWaitingList(UserVO user) {
+      return udao.getWaitingList(user);
+   }
+   
+   @Override
+   public UserVO modifyCt(String email) {
+      log.info("카테고리 수정값 가져오기");
+      return udao.getUser(email);
+   }
 }

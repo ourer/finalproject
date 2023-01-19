@@ -19,7 +19,7 @@ public class PagingHandler {
 		this.pgvo = pgvo;
 		this.totalCount = totalCount;
 		this.endPage = (int)Math.ceil(pgvo.getPageNo()/(pgvo.getQty()*1.0))*pgvo.getQty();
-		this.startPage = endPage-9;
+		this.startPage = endPage-7;
 		
 		int realEndPage = (int)Math.ceil((totalCount*1.0)/pgvo.getQty());
 		

@@ -20,6 +20,7 @@ document.getElementById('cmtPostBtn').addEventListener('click', ()=>{
             //화면 출력
             getCommentList(cmtData.gbno);
         })
+        cmtText.value='';
     }
 })
 
@@ -64,22 +65,26 @@ function getCommentList(gbno){
             ul.innerHTML='';
             for(let cvo of result){
                 let li=`<li data-cno="${cvo.cno}" class="list-group-item d-flex justify-content-between align-items-start">`;
-                li+=`<div class="ms-2 me-auto"> <div class="fw-bold">${cvo.writer}</div>`;
+                li+=`<div class="ms-2 me-auto">`;
+                li+=`<div class="upperBox">`;
+                li+=`<div class="fw-bold writer">${cvo.writer}</div>`;
+                if(nickVal==cvo.writer){
+                    
+                    li+=`<div class="dropdown">
+                    <button class="btn btn-outline-secondary dropdown-toggle btn-sm dropBtn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa-solid fa-ellipsis"></i>
+                    </button>`;
+                    li+=`<ul class="dropdown-menu">
+                    <li class="dropdown-item mod" data-cno="${cvo.cno}">수정</li>
+                    <li class="dropdown-item del" data-cno="${cvo.cno}">삭제</li>
+                    </ul></div>`;
+                    
+                }
+
+                li+=`</div>`;
                 li+=`<div class="cmtTextVal" id='cmtTextVal${cvo.cno}'>${cvo.content}</div>`;
+                li+=`<p class="text-body-tertiary">${cvo.regdate}</p>`;
                 //li+=`<input type="text" class="form-control" id="cmtTextMod" value="${cvo.content}"> </div>`;
-                li+=`<span class="badge bg-dark rounded-pill">${cvo.regdate}</span>`;
-                li+=`<div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Dropdown button
-                </button>
-                <ul class="dropdown-menu">
-                  <li class="dropdown-item mod" data-cno="${cvo.cno}">수정</li>
-                  <li class="dropdown-item del" data-cno="${cvo.cno}">삭제</li>
-                </ul>
-              </div>`;
-                li+=`<button class="btn btn-sm btn-outline-warning mod" type="button">%</button>`;
-                li+=`<button class="btn btn-sm btn-outline-danger del" type="button">X</button>`;
-                li+=`</li>`;
                 ul.innerHTML+=li;
             }
         }else{
@@ -101,7 +106,7 @@ document.addEventListener('click', (e)=>{
         let cnoVal=li.dataset.cno;
         let cmtTextDiv=document.getElementById(`cmtTextVal${cnoVal}`);
         let cmtTextVal=cmtTextDiv.innerText;
-        cmtTextDiv.innerHTML=`<input type="text" class="form-control" id="cmtTextMod" value="${cmtTextVal}"> <button class="modBtn">수정</button>`;
+        cmtTextDiv.innerHTML=`<input type="text" class="form-control cmtInput" id="cmtTextMod" value="${cmtTextVal}"> <button class="modBtn  btn btn-outline-warning btn-sm float-end">수정</button>`;
     }else if(e.target.classList.contains('modBtn')){
         let li=e.target.closest('li');
         let cnoVal=li.dataset.cno;

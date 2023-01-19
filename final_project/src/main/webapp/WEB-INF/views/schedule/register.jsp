@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.2/dist/umd/popper.min.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/gh/Eonasdan/tempus-dominus@master/dist/js/tempus-dominus.js" crossorigin="anonymous"></script>
 <link href="https://cdn.jsdelivr.net/gh/Eonasdan/tempus-dominus@master/dist/css/tempus-dominus.css" rel="stylesheet" crossorigin="anonymous">
@@ -20,22 +22,47 @@
     border-top-color: rgba(0, 0, 0, 0.2);
 }
 </style>
+<link rel="stylesheet" type="text/css" href="/resources/css/schRegister.css">
+
 <jsp:include page="../layout/header.jsp"></jsp:include>
 <section>
+<div class="firstBox">
+    	<ul class="nav nav-tab">
+            	<li class="grpNavLi nav-item"><a href="/group/main?grno=${gvo.grno }"><h1 class="grpName">${gvo.name }</h1></a></li>
+                <li class="grpNavLi nav-item"><a class="nav-link groupNav" href="/group/main?grno=${gvo.grno }">소모임 홈</a></li>
+                <li class="grpNavLi nav-item"><a class="nav-link groupNav" href="/gboard/list?grno=${gvo.grno }">게시판</a></li>
+                <li class="grpNavLi nav-item"><a class="nav-link groupNav" href="/group/memberList?grno=${gvo.grno }">멤버(${fn:length(uList)+1} / ${gvo.max_member })</a></li>
+                <c:if test="${ses.email eq gvo.email }">
+                <li class="grpNavLi nav-item"><a class="nav-link groupNav" href="/schedule/register?grno=${gvo.grno }">스케줄 생성</a></li>
+                </c:if>
+            </ul>
+        </div>
     <div class="outerBox">
     	<form action="/schedule/register" method="post">
     		<input type="hidden" name="grno" value="${grno }">
 	        <div class='input-group' id='datetimepicker1' data-td-target-input='nearest' data-td-target-toggle='nearest'>
-	            <input id='datetimepicker1Input' name="meetdate" type='text' class='form-control' data-td-target='#datetimepicker1'/>
+	            <input id='datetimepicker1Input' name="meetdate" type='text' class='form-control' data-td-target='#datetimepicker1' placeholder="언제 만나나요?"/>
 	            <span class='input-group-text' data-td-target='#datetimepicker1' data-td-toggle='datetimepicker'>
 	                <span class='fa-solid fa-calendar'></span>
 	            </span>
 	        </div>
-	        <span>제목: </span><input type="text" name="title" id="schTitle"><br>
-            <span>장소: </span><input type="text" name="spot" id="schSpot"><br>
-            <span>비용: </span><input type="text" name="cost" id="schCost" placeholder="ex- 나중에 정산/무료"><br>
-            <span>최대 인원: </span><input type="number" name="max_member" id="schMax_member" min="2" value="2"><br>
-            <button type="submit">스케줄 생성</button>
+	        <div class="form-floating mb-3">
+		        <input type="text" class="form-control" name="title" id="schTitle" placeholder="어떤 스케줄인가요?">
+		        <label for="schTitle">어떤 스케줄인가요?</label>
+			</div>
+			<div class="form-floating mb-3">
+            	<input type="text" class="form-control" name="spot" id="schSpot" placeholder="어디서 만나나요?">
+            	<label for="schSpot">어디서 만나나요?</label>
+            </div>
+            <div class="form-floating mb-3">
+            <input type="text" class="form-control" name="cost" id="schCost" placeholder="ex- 나중에 정산/무료">
+            	<label for="schCost">비용(ex- 만나서 정산, 무료, 10000원 ...)</label>
+            </div>
+            <div class="form-floating mb-3">
+            <input type="number" class="form-control" name="max_member" id="schMax_member" min="2" value="2" max="${fn:length(uList)+1}">
+            	<label for="schMax_member">인원수</label>
+            </div>
+            <button class="btn btn-outline-warning" type="submit">스케줄 생성</button>
         </form>
  </div>
 </section>
@@ -45,7 +72,7 @@ new tempusDominus.TempusDominus(document.getElementById('datetimepicker1'), {
     display: { 
         components: {
             seconds: false,
-            useTwentyfourHour: false,
+            useTwentyfourHour: true,
         },
         icons: {
             type: 'icons',

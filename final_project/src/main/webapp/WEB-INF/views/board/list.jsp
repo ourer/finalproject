@@ -42,6 +42,7 @@
 			</tbody>
 		</table>
 			<div class="text-end">
+				<a href="/board/register"><button class="btn btn-outline-warning" type="button">작성</button></a>
 		<c:if test="${ses.name eq '관리자'}">
 				<a href="/board/register"><button class="btn btn-outline-warning" type="button">작성</button></a>
 		</c:if>

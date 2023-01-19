@@ -5,7 +5,6 @@ import java.util.List;
 import com.ezen.finalpj.domain.GroupVO;
 import com.ezen.finalpj.domain.PagingVO;
 import com.ezen.finalpj.domain.SgMainVO;
-import com.ezen.finalpj.domain.WaitingVO;
 
 public interface GroupDAO {
 
@@ -34,5 +33,8 @@ public interface GroupDAO {
 	List<GroupVO> selectGrpList();
 
 	int deleteGrpList(String grno);
+
+	int updateDetailGrp(GroupVO gvo);
+
 
 }

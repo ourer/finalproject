@@ -12,10 +12,10 @@
 	</div>
 	<div class="rightBox">
 		<ul class="rightUl">
-			<li class="rightLi"><a href="#">아울러 소개</a></li>
-			<li class="rightLi"><a href="#">공지사항</a></li>
-			<li class="rightLi"><a href="#">개인정보취급방침</a></li>
-		</ul>
+         <li class="rightLi"><a href="/board/introduce">아울러 소개</a></li>
+         <li class="rightLi"><a href="/board/list">공지사항</a></li>
+         <li class="rightLi"><a href="/board/data">아울러 이용안내</a></li>
+      	</ul>
 		<div class="rightInner">
 			<span>아울러는 통신판매중개자이며 모임에 대한 당사자 및 주최자가 아닙니다. 따라서 아울러는 등록된 모임에 대하여 책임을 지지 않습니다.</span><br>
 			<span>copyright © OURER.COM, All Rights Reserved.</span>

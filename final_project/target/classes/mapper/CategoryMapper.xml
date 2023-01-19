@@ -36,4 +36,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			on S.grno = SG.grno 
 			where C.name = #{name}
 	</select>
+	<select id="getCategoryOneRandom" resultType="com.ezen.finalpj.domain.CategoryVO">
+		select 
+			S.uuid, S.dir, S.name AS sm_name, SG.grno, SG.name AS sg_name, SG.detail, SG.city, SG.county, C.code
+			from  smallgroup SG 
+			left join category C
+			on C.ctno = SG.ctno 
+			left join sgmain S 
+			on S.grno = SG.grno 
+	</select>
 </mapper>

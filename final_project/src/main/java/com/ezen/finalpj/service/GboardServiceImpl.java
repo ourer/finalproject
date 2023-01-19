@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
+import com.ezen.finalpj.domain.GPagingVO;
 import com.ezen.finalpj.domain.GboardDTO;
 import com.ezen.finalpj.domain.GboardVO;
 import com.ezen.finalpj.repository.FileDAO;
@@ -22,9 +23,9 @@ public class GboardServiceImpl implements GboardService {
 	private FileDAO gfdao;
 
 	@Override
-	public List<GboardVO> selectListGbrd(int grno) {
+	public List<GboardVO> selectListGbrd(GPagingVO gpvo) {
 		log.info("그룹 게시판 호출");
-		return gbdao.selectListGbrd(grno);
+		return gbdao.selectListGbrd(gpvo);
 	}
 
 	@Override
@@ -90,5 +91,10 @@ public class GboardServiceImpl implements GboardService {
 			isOk*=gfdao.insertFile(gbdto.getGfvo());
 		}
 		return isOk;
+	}
+
+	@Override
+	public int getTotalPage(int grno) {
+		return gbdao.getTotalPage(grno);
 	}
 }

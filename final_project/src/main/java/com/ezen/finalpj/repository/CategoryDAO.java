@@ -16,5 +16,5 @@ public interface CategoryDAO {
 
 	List<CategoryVO> getCategoryOne(String name);
 
-
+	List<CategoryVO> getCategoryOneRandom();
 }

@@ -21,12 +21,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ezen.finalpj.domain.GroupVO;
 import com.ezen.finalpj.domain.JoinPersonDTO;
 import com.ezen.finalpj.domain.JoinPersonVO;
 import com.ezen.finalpj.domain.ScheduleVO;
 import com.ezen.finalpj.domain.UserVO;
+import com.ezen.finalpj.service.GroupService;
 import com.ezen.finalpj.service.JoinPersonService;
 import com.ezen.finalpj.service.ScheduleService;
+import com.ezen.finalpj.service.UserService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -38,9 +41,18 @@ public class ScheduleController {
 	private ScheduleService ssv;
 	@Inject
 	private JoinPersonService jsv;
+	@Inject
+	private UserService usv;
+	@Inject
+	private GroupService gsv;
 	
 	@GetMapping("/register")
 	public String insertSchGet(@RequestParam("grno")int grno, Model model) {
+		GroupVO gvo=gsv.selectGrp(grno);
+		model.addAttribute("gvo", gvo);
+		List<UserVO> uList=usv.selectMemListUser(grno);
+		log.info("회원 리스트"+uList.toString());
+		model.addAttribute("uList", uList);
 		model.addAttribute("grno", grno);
 		return "/schedule/register";
 	}
@@ -48,8 +60,8 @@ public class ScheduleController {
 	@PostMapping("/register")
 	public String insertSchPost(ScheduleVO svo, RedirectAttributes reAttr, HttpServletRequest req) {
 		log.info(svo.toString());		
-		 if(svo.getCost()==null||svo.getMax_member() < 2||svo.getMeetdate()==null||
-		     svo.getSpot()==null||svo.getTitle()==null) {
+		 if(svo.getCost()==""||svo.getMax_member() < 2||svo.getMeetdate()==""||
+		     svo.getSpot()==""||svo.getTitle()=="") {
 			 reAttr.addFlashAttribute("schMsg", "0");
 			 reAttr.addAttribute("grno", svo.getGrno());
 			 return "redirect:/schedule/register";
@@ -84,10 +96,10 @@ public class ScheduleController {
 	
 	@PostMapping(value = "/join", consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> insertJpPost(@RequestBody JoinPersonVO jvo, HttpServletRequest req) {
-		log.info(jvo.toString());
 		HttpSession ses=req.getSession();
 		UserVO uvo=(UserVO)ses.getAttribute("ses");
 		jvo.setEmail(uvo.getEmail());
+		log.info("jvo"+jvo.toString());
 		int isOk=jsv.insertJpPost(jvo);
 		isOk*=ssv.updateJoinMemPost(jvo.getSno());
 		if(isOk>0) {

@@ -1,7 +1,10 @@
 package com.ezen.finalpj.controller;
 
+import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -52,16 +55,23 @@ public class WaitingController {
 	
 	@PutMapping(value = "/cancellation/{email}",consumes = "application/json",produces = {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> cancellationUser(@PathVariable("email")String email, @RequestBody WaitingVO wvo){
-		log.info("user appointment : "+email);
+		log.info("user cancellation : "+email);
 		int isOk=wsv.cancellation(wvo);
 		return isOk>0? new ResponseEntity<String>("1",HttpStatus.OK): new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
-	@DeleteMapping(value = "/remove/{email}",consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
-	public ResponseEntity<String> removeUser(@PathVariable("email")String email, @RequestBody WaitingVO wvo) {
+	@DeleteMapping(value = "/remove/{email}",consumes = "application/json" , produces = {MediaType.TEXT_PLAIN_VALUE})
+	public ResponseEntity<String> removeUser(@PathVariable("email")String email,@RequestBody WaitingVO wvo) {
 		log.info("my user remove email : "+email);
-		int isOk=wsv.remove(wvo);
+		int isOk=wsv.quit(wvo);
 		return isOk>0? new ResponseEntity<String>("1",HttpStatus.OK): new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	
+	@DeleteMapping(value = "/quit/", produces = {MediaType.TEXT_PLAIN_VALUE})
+	public ResponseEntity<String> quitGroup(@RequestBody WaitingVO wvo){
+		log.info("quit a smallgroup : "+wvo.toString());
+		int isOk = wsv.quit(wvo);
+		return isOk>0 ? new ResponseEntity<String>("1", HttpStatus.OK) : new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 }

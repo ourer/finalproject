@@ -40,54 +40,52 @@
                 </li>
              </c:if>
              <li class="nav-item">
-             <c:choose>
-	             <c:when test="${ses.email != null }">
-	                <div>
-					<c:if test="${sespvo.uuid ==null }">
-						<img src="/upload/blank-profile.png" class="rounded-circle mx-auto d-block" alt="..." style="width: 140px; height: 140px">                
-						</c:if>
-	                
-	                <c:if test="${sespvo.uuid !=null }">
-	                    <img src="/upload/${fn:replace(sespvo.dir,'\\','/')}/${sespvo.uuid}_${sespvo.name}" class="rounded-circle mx-auto d-block" alt="..." style="width: 150px;">
-	                </c:if>                   
-	                  <div class="imgname">
-	                  <span id="imgname">${ses.name }</span>
-	                  <span>님</span></div>
-	                </div>
-	             </c:when>
-	             <c:when test="${ses.email == null || ses.email =='' }">
-	             </c:when>
-             </c:choose>
-             </li>
-             <c:if test="${ses.email != null }">
-	             <li class="nav-item">
-	               <a class="nav-link" aria-current="page" href="/user/logout">로그아웃</a>
-	             </li>
-             </c:if>
              
-             <c:choose>
-	             <c:when test="${ses.email != null }">
-		             <li class="nav-item dropdown">
+			<c:choose>
+				<c:when test="${ses.email != null }">
+					<div>
+						<c:if test="${sespvo.uuid ==null }">
+							<img src="/upload/blank-profile.png" class="rounded-circle mx-auto d-block" alt="..." style="width: 140px; height: 140px">                
+						</c:if>
+					
+						<c:if test="${sespvo.uuid !=null }">
+							<img src="/upload/${fn:replace(sespvo.dir,'\\','/')}/${sespvo.uuid}_${sespvo.name}" class="rounded-circle mx-auto d-block" alt="..." style="width: 140px; height:140px">
+						</c:if>                   
+					<div class="imgname">
+						<span id="imgname">${ses.name }</span>
+						<span>님</span></div>
+					</div>
+				</c:when>
+					<c:when test="${ses.email == null || ses.email =='' }">
+				</c:when>
+			</c:choose>
+			
+             </li>
+             
+             
+              <c:if test="${ses.email != null }">
+             <li class="nav-item">
+               <a class="nav-link" aria-current="page" href="/user/logout">로그아웃</a>
+             </li>
+             <li class="nav-item dropdown">
                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                  마이 페이지
                </a>
                <ul class="dropdown-menu">
-                 <li><a class="dropdown-item" href="/user/mypage" >내가 활동하는 소모임</a></li>
-		                 <li><a class="dropdown-item" href="/user/management/${ses.email }" >내 소모임 관리</a></li>
+                 <li><a class="dropdown-item" href="/user/mypage/${ses.email }" >내가 활동하는 소모임</a></li>
+                 <li><a class="dropdown-item" href="/user/management/${ses.email }" >내 소모임 관리</a></li>
                  <li><a class="dropdown-item" href="/favorite/mylike/${ses.email }">내가 찜한 소모임</a></li>
                </ul>
              </li>
-	             </c:when>
-	             <c:otherwise></c:otherwise>
-             </c:choose>
+             </c:if>
              
              <li class="nav-item">
                <a class="nav-link" aria-current="page" href="/board/list">공지사항</a>
              </li>
-             <li class="nav-item">
-               <a class="nav-link" aria-current="page" href="#">사이트 소개</a>
+              <li class="nav-item">
+               <a class="nav-link" aria-current="page" href="/board/introduce">아울러 소개</a>
              </li>
-             <c:if test="${wvo.grade=='S' }">
+              <c:if test="${ses.email == 'super@naver.com' &&  ses.nickname == '관리자' }">
 	             <li class="nav-item">
 	               <a class="nav-link" aria-current="page" href="/category/categorymain">소모임 리스트</a>
 	             </li>
@@ -101,7 +99,6 @@
 	               </ul>
 	             </li>
              </c:if>
-             
            </ul>
          </div>
        </div>
@@ -118,9 +115,10 @@
           <a class="nav-link" href="/user/register">회원가입</a>
         </li>
       </c:if>
+      
       <c:if test="${ses.email != null }">
          <li class="nav-item">
-             <a class="nav-link" aria-current="page" href="/user/mypage">${ses.name } 마이페이지</a>
+             <a class="nav-link" aria-current="page" href="/user/mypage/${ses.email }">${ses.name } 마이페이지</a>
           </li>
           <li class="nav-item">
              <a class="nav-link active" aria-current="page" href="/user/logout">로그아웃</a>
@@ -131,21 +129,18 @@
           <a class="nav-link" href="/board/list">공지사항</a>
         </li>
       </ul>
-      <!-- search 라인 -->
-      
-	<div class="input-group mb-3">
-		<form class="d-flex" role="search" action="/category/categorymain" method="get">
-			<c:set value="${scvo.type }" var="typed"/>
-				<select name="type" id="seachBtn" aria-expanded="false">
-					<option id="testo" value="a" ${typed eq 'a' ? 'selected':'' }>통합 검색</option>
-					<option id="testo" value="n" ${typed eq 'n' ? 'selected':'' }>제목</option>
-					<option id="testo" value="d" ${typed eq 'd' ? 'selected':'' }>내용</option>
-				</select>
-					<input class="form-control me-2" id="seachInput" type="search" placeholder="관심사를 검색해보세요"  aria-label="Search" name="keyword" value="${scvo.keyword }">
-						<button class="btn btn-outline-warning" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-		</form>
-	</div>
-  
+        <div class="input-group mb-3">
+      <form class="d-flex" role="search" action="/category/categorymain" method="get">
+         <c:set value="${scvo.type }" var="typed"/>
+            <select class="form-select" name="type" id="seachBtn" aria-label="Default select example">
+               <option selected value="a" ${typed eq 'a' ? 'selected':'' }>통합 검색</option>
+               <option value="n" ${typed eq 'n' ? 'selected':'' }>제목</option>
+               <option value="d" ${typed eq 'd' ? 'selected':'' }>내용</option>
+            </select>
+               <input class="form-control me-2" id="seachInput" type="search" placeholder="관심사를 검색해보세요"  aria-label="Search" name="keyword" value="${scvo.keyword }">
+                  <button class="btn btn-outline-warning" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+      </form>
+   </div>
    </nav>
 
 <script src="https://kit.fontawesome.com/0466d36352.js" crossorigin="anonymous"></script>
