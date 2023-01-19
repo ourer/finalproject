@@ -2,6 +2,23 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <jsp:include page="../layout/header.jsp"></jsp:include>
+<style>
+.innerGroup{
+	margin-top: 20px;
+}
+
+#checkDiv{
+	width: 100%;
+}
+
+.form-check-input:checked{
+	background-color: #FFD34A;
+	border-color: #FFD34A;
+}
+#grpRegBtn{
+	width: 100%;
+}
+</style>
 <section>
 		<div class="outerBox">
 	        <div class="innerGroup">
@@ -82,22 +99,22 @@
 	        </div>
 	        <div class="innerGroup">
 	            <div class="innerFirst">
-	                <h3>소모임 특징?</h3>
+	                <h3>소모임 특징</h3>
 	            </div>
-	            <div class="innerSecond input-group mb-3">
-	            	<div class="checkBox freeCheck input-group-text">
-		                <label for="free">
+	            <div class="innerSecond mb-3" id="checkDiv">
+	            	<div class="checkBox freeCheck input-group-text justify-content-between" style="width: 120px; float: left; margin-right: 5px;">
+		                <label for="free" class="d-flex align-items-center">
 		                    <input class="form-check-input mt-0" aria-label="Checkbox for following text input" type="checkbox" name="isFree" id="free" value=0 onclick="checkOnlyOne(this)">무료
 		                </label>
-		                <label for="nfree">
+		                <label for="nfree" class="d-flex align-items-center">
 		                    <input class="form-check-input mt-0" aria-label="Checkbox for following text input" type="checkbox" name="isFree" id="nfree" value=1 onclick="checkOnlyOne(this)">유료
 		                </label>
 	            	</div>
-	            	<div class="checkBox faceCheck input-group-text">
-		                <label for="face">
+	            	<div class="checkBox faceCheck input-group-text justify-content-between" style="width: 140px;">
+		                <label for="face" class="d-flex align-items-center">
 		                    <input class="form-check-input mt-0" aria-label="Checkbox for following text input" type="checkbox" name="isFace" id="face" value=1 onclick="checkOnlyOne(this)">대면
 		                </label>
-		                <label for="nface">
+		                <label for="nface" class="d-flex align-items-center">
 		                    <input class="form-check-input mt-0" aria-label="Checkbox for following text input" type="checkbox" name="isFace" id="nface" value=0 onclick="checkOnlyOne(this)">비대면
 		                </label>
 	            	</div>
@@ -113,7 +130,7 @@
 	            </div>
 	        </div>
 			<div class="innerGroup">
-				<button type="button" id="grpRegBtn">소모임 생성</button>
+				<button class="btn btn-outline-warning" type="button" id="grpRegBtn">소모임 생성</button>
 			</div>
 	    </div>
 	    <input type="hidden" name="email" id="email" value="${ses.email }">

@@ -10,7 +10,7 @@
 }
 </style>
 <section>
-		<ul class="nav nav-tabs">
+		<ul class="nav nav-tabs" style="margin: 30px auto">
 		 <li class="nav-item dropdown"><h3>마이페이지</h3></li>
 		  <li class="nav-item dropdown">
 		    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">나의 소모임</a>
@@ -30,11 +30,11 @@
 		  <div class="col-sm-6">
 		    <div class="card">
 		      <div class="card-body">
-				<c:if test="${pvo.uuid == null}">
+				<c:if test="${sespvo.uuid == null}">
 					<img src="/upload/blank-profile.png" class="rounded-circle mx-auto d-block" alt="..." style="width: 140px; height: 140px">
 				</c:if>
-				<c:if test="${pvo.uuid != null}">
-					<img src="/upload/${fn:replace(pvo.dir,'\\','/')}/${pvo.uuid}_${pvo.name}" class="rounded-circle mx-auto d-block" alt="..." style="width: 140px; height: 140px"> 
+				<c:if test="${sespvo.uuid != null}">
+					<img src="/upload/${fn:replace(sespvo.dir,'\\','/')}/${sespvo.uuid}_${sespvo.name}" class="rounded-circle mx-auto d-block" alt="..." style="width: 140px; height: 140px"> 
 				</c:if>
 		        <div class="text-center">
 		        	<span>${ses.name }</span>
@@ -47,15 +47,25 @@
 		    <div class="card">
 		      <div class="card-body text-center">
 		        <h3>내 소모임 관리</h3>
-		        <a href="/user/management/${ses.email }">내 소모임이름</a>
+		        <c:if test="${name eq null }">
+		        <a style="text-decoration: none; font-weight: bold;" href="/group/register">내 모임 생성하기</a>		        
+		        </c:if>
+		        <c:if test="${name ne null }">
+		        <a style="text-decoration: none; font-weight: bold;" href="/group/main?grno=${ses.isCap }">${name }</a>
+		        </c:if>
 		      </div>
 		    </div>
 		    <div class="card">
 		      <div class="card-body text-center">
 		      	<h3>내가 찜한 소모임</h3>
-		      	<c:forEach items="${fList }" var="fvo">
-		        <a href="/favorite/mylike/${ses.email }">${fvo.cntFav } 개</a>
-		      	</c:forEach>
+		      	<c:choose>
+		      	<c:when test="${fList ne null }">
+		        <a style="text-decoration: none; font-weight: bold;" href="/favorite/mylike/${ses.email }">${fn:length(fList) }개</a>	
+		      	</c:when>
+		      	<c:when test="${fList eq null }">
+		        <a style="text-decoration: none; font-weight: bold;" href="/favorite/mylike/${ses.email }">0개</a>
+		      	</c:when>
+		      	</c:choose>
 		      </div>
 		    </div>
 		  </div>

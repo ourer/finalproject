@@ -47,6 +47,10 @@ public class CategoryServiceImpl implements CategoryService {
 		return cdao.getCategoryOne(name);
 	}
 	
-
+	@Override
+	public List<CategoryVO> getCategoryOneRandom() {
+		log.info("category 소분류 List 불러오기");
+		return cdao.getCategoryOneRandom();
+	}
 
 }

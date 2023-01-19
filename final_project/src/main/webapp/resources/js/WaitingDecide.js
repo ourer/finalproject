@@ -1,12 +1,12 @@
-async function acceptUserToServer(email){
+async function acceptUserToServer(waitData){
     try {
-        const url='/wait/accept/'+email;
+        const url='/wait/accept/'+waitData.email;
         const config={
             method: 'put',
             headers:{
             	'content-type': 'application/json; charset=utf-8'
             },
-        	body: JSON.stringify(email)
+        	body: JSON.stringify(waitData)
         }
         const resp=await fetch(url,config);
         const result=await resp.text();
@@ -16,11 +16,15 @@ async function acceptUserToServer(email){
     }
 };
 
-async function refuseUserToServer(email){
+async function refuseUserToServer(waitData){
     try {
-        const url='/wait/refuse/'+email;
+        const url='/wait/refuse/'+waitData.email;
         const config={
-            method: 'delete'
+            method: 'delete',
+            headers:{
+            	'content-type': 'application/json; charset=utf-8'
+            },
+        	body: JSON.stringify(waitData)
         };
         const resp=await fetch(url,config);
         const result=await resp.text();
@@ -35,12 +39,19 @@ document.addEventListener('click',(e)=>{
         let tr=e.target.closest('tr');
         let emailVal=tr.dataset.email;
         console.log(emailVal);
-        acceptUserToServer(emailVal).then(result=>{
+        console.log(grnoVal);
+        let waitData={
+        email: emailVal,
+        grno: grnoVal
+        };
+        acceptUserToServer(waitData).then(result=>{
             if(result>0){
-                alert('승인 완료');
+                alert("가입 승인");
+                location.reload();
             }
-            location.href="/user/management/"+sesemailVal;
-        });
+        })
+        
+        
     }
 });
 
@@ -49,11 +60,15 @@ document.addEventListener('click',(e)=>{
         let tr=e.target.closest('tr');
         let emailVal=tr.dataset.email;
         console.log(emailVal);
-        refuseUserToServer(emailVal).then(result=>{
+        let waitData={
+            email: emailVal,
+            grno: grnoVal
+        };
+        refuseUserToServer(waitData).then(result=>{
             if(result>0){
                 alert('거절 완료');
             }
-            location.href="/user/management/"+sesemailVal;
+            location.reload();
         });
     }
 });

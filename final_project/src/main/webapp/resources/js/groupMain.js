@@ -263,7 +263,7 @@ window.addEventListener('load', ()=>{
     for(let d of scheDateLi){
         let date=d.innerText;
         console.log(date);
-        date=date.substring(0, 12);
+        date=date.substring(0, 13);
         console.log(date);
         date=new Date(date);
         console.log("스케줄 날짜: "+date.toLocaleDateString());

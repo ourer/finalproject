@@ -50,14 +50,16 @@ public class FavoriteController {
 	
 	@GetMapping(value="/mylike/{email}")
 	public String likeListGet(@PathVariable("email")String email, Model model) {
-//		List<GroupVO> gList = fsv.groupList(email);
-//		model.addAttribute("gList", gList);
 
 		List<FavoriteDTO> gList = fsv.favoriteList(email);
-		List<FavoriteVO> fList = fsv.countFavoriteList(email);
-		log.info(gList.toString());
+		List<FavoriteVO> fList=fsv.selectFList(email);
+		String name = fsv.selectmyGname(email);
+		log.info("내가 찜한 소모임 리스트 >>> "+gList.toString());
+		log.info("찜 db >>> "+fList.toString());
+		log.info("소모임명 >>> "+name);
 		model.addAttribute("gList", gList);
 		model.addAttribute("fList", fList);
+		model.addAttribute("name", name);
 		
 		return "/favorite/mylike";
 	}

@@ -5,9 +5,15 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 <jsp:include page="../layout/header.jsp"></jsp:include>
 <style>
+.categoryall{
+	width: 10%;
+	float: left;
+	margin-bottom: 100px;
+}
 .likecategory{
 	width:90%;
-	margin: 0 auto 100px auto;
+	float:right;
+	margin-bottom: 100px;
 }
 .icon{
 	width: 130px;
@@ -17,7 +23,19 @@
 	border: none;
 	border-radius: 20px;
 }
-.fa-solid{
+.keyicon{
+	width: 90px;
+	height: 280px;
+	margin:10px;
+	background: #f2f2e1;
+	border: none;
+	border-radius: 20px;
+}
+.categoryall > .keyicon >.fa-file{
+	font-size: 2em;
+	margin: 10px auto;
+}
+.likecategory>.icon>.fa-solid{
 	font-size: 2em;
 	margin: 10px auto;
 }
@@ -34,9 +52,40 @@
 .icon:hover {
 	transform: scale(1.07);
 }
+.cList{
+	padding: 10px 30px;
+	margin: 0 20px 70px 0;
+}
+section{
+	text-align: center;
+}
+.likecategory{
+	margin-bottom: 50px;
+}
+.sgmain{
+	width : 100%;
+	height: 160px;
+	display: block;
+	margin-left: auto;
+  	margin-right: auto;
+}
+.card-body>.detail{
+   overflow: hidden;
+     text-overflow: ellipsis;
+     display: -webkit-box;
+     -webkit-line-clamp: 2;
+     -webkit-box-orient: vertical;
+}
 </style>
+
 <section>
- <h3 style="margin: 30px auto">관심사</h3>
+ <h3 class="like" style="margin: 30px auto">관심사</h3>
+ <div class="categoryall">
+           <button type="button" class="keyicon" id="category_All" onclick="location.href='/category/categorymain'">
+              <i class="fa-solid fa-file"></i>
+              <span class="icontext">전체</span>
+           </button>
+		   </div>
 		  <div class="likecategory">
 		  	<button type="button" class="icon" id="category_A" onclick="location.href='/category/categoryDetail?code=A'">
 		  		<i class="fa-solid fa-person-running"></i>
@@ -89,9 +138,9 @@
 		  </div>
 		  
 	<!-- 카테고리 name -->
-	<div class="d-grid gap-2 d-md-block">
+	<div class="d-grid gap-2 d-md-block" style="clear: both">
 		<c:forEach items="${cList }" var="cvo" begin="0">
-  			<button class="btn btn-outline-warning" type="button" onclick="location.href='/category/categoryName?name=${cvo.name }'">${cvo.name }</button>
+  			<button class="btn btn-outline-warning cList" type="button" onclick="location.href='/category/categoryName?name=${cvo.name }'">${cvo.name }</button>
 		</c:forEach>
 	</div>
 	<br>
@@ -101,14 +150,14 @@
 		<div class="col">
 			<div class="card h-100">
 				<c:if test="${cavo.uuid == null}">
-					<img alt="sgMain" src="/resources/img/sgmain_null.jpg">
+                     <img alt="sgMain" src="/upload/sgMain_default.jpg" class="card-img-top object-fit-cover" style="height: 250px">
 				</c:if>
 				<c:if test="${cavo.uuid != null}">
-					<img alt="sgMain" src="/upload/sgMainUpload/${fn:replace(cavo.dir,'\\','/')}/${cavo.uuid}_${cavo.sm_name}" class="card-img-top">
+					<img alt="sgMain" src="/upload/sgMainUpload/${fn:replace(cavo.dir,'\\','/')}/${cavo.uuid}_${cavo.sm_name}" class="card-img-top object-fit-cover sgmain" style="height: 250px">
 				</c:if>
 				<div class="card-body">
-					<h5 class="card-title">${cavo.sg_name }</h5>
-					<p class="card-text">${cavo.detail }</p>
+					<h5 class="card-title" style="font-weight: 600;">${cavo.sg_name }</h5>
+					<p class="card-text detail">${cavo.detail }</p>
 					<p class="card-text">${cavo.city}  ${cavo.county }</p>
 					<a href="/group/main?grno=${cavo.grno}" class="btn btn-warning">구경하기</a>
 				</div>

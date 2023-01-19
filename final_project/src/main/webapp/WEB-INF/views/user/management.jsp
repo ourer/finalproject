@@ -14,7 +14,7 @@
 		    </ul>
 		  </li>
 		  <li class="nav-item">
-		    <a class="nav-link" href="/user/like">찜</a>
+		    <a class="nav-link" href="/favorite/mylike/${ses.email }">찜</a>
 		  </li>
 		  <li class="nav-item">
 		    <a class="nav-link" href="/user/myinfo">개인정보수정</a>
@@ -24,7 +24,12 @@
 		  <div class="col-sm-6">
 		    <div class="card">
 		      <div class="card-body">
-					<img src="/upload/${fn:replace(sespvo.dir,'\\','/')}/${sespvo.uuid}_th_${sespvo.name}" class="rounded-circle mx-auto d-block" alt="..." style="width: 140px;">		        
+				<c:if test="${sespvo.uuid == null}">
+					<img src="/upload/blank-profile.png" class="rounded-circle mx-auto d-block" alt="..." style="width: 140px; height: 140px">
+				</c:if>
+				<c:if test="${sespvo.uuid != null}">
+					<img src="/upload/${fn:replace(sespvo.dir,'\\','/')}/${sespvo.uuid}_${sespvo.name}" class="rounded-circle mx-auto d-block" alt="..." style="width: 140px; height: 140px"> 
+				</c:if>		        
 		        <div class="text-center">
 		        	<span>${ses.name }</span>
 		        	<span>님</span>
@@ -36,15 +41,25 @@
 		    <div class="card">
 		      <div class="card-body text-center">
 		        <h3>내 소모임 관리</h3>
-		        <a href="/user/management/${ses.email }"> 개</a>
+		        <c:if test="${name eq null }">
+		        <a style="text-decoration: none; font-weight: bold;" href="/group/register">내 모임 생성하기</a>		        
+		        </c:if>
+		        <c:if test="${name ne null }">
+		        <a style="text-decoration: none; font-weight: bold;" href="/group/main?grno=${ses.isCap }">${name }</a>
+		        </c:if>
 		      </div>
 		    </div>
 		    <div class="card">
 		      <div class="card-body text-center">
 		      	<h3>내가 찜한 소모임</h3>
-		        <c:forEach items="${fList }" var="fvo">
-		        <a href="/favorite/mylike/${ses.email }">${fvo.cntFav } 개</a>
-		      	</c:forEach>
+		        <c:choose>
+		      	<c:when test="${fList ne null }">
+		        <a style="text-decoration: none; font-weight: bold;" href="/favorite/mylike/${ses.email }">${fn:length(fList) }개</a>	
+		      	</c:when>
+		      	<c:when test="${fList eq null }">
+		        <a style="text-decoration: none; font-weight: bold;" href="/favorite/mylike/${ses.email }">0개</a>
+		      	</c:when>
+		      	</c:choose>
 		      </div>
 		    </div>
 		  </div>
@@ -80,11 +95,11 @@
 							<c:set var="pvo" value="${profileList1[status.index]}"/>
 							
 							<c:if test="${profileList1[status.index] == null}">
-								<img src="/upload/blank-profile.png" style="width: 75px; height: 75px;">
+								<img src="/upload/blank-profile.png" class="rounded-circle mx-auto d-block" style="width: 75px; height: 75px;">
 							</c:if>
 							
 							<c:if test="${profileList1[status.index] != null}">
-							<img src="/upload/${fn:replace(pvo.dir,'\\','/')}/${pvo.uuid}_th_${pvo.name}"> 
+							<img src="/upload/${fn:replace(pvo.dir,'\\','/')}/${pvo.uuid}_${pvo.name}" class="rounded-circle mx-auto d-block" style="width: 75px; height: 75px"> 
 							</c:if>
 						</td>
 					<td>${user.name }</td>
@@ -134,13 +149,13 @@
 				<tr data-email="${user.email }">
 						<td>	
 							<c:set var="pvo" value="${profileList2[status.index]}"/>
-							
+							<c:set var="wvo" value="${wList[status.index]}" />
 							<c:if test="${profileList2[status.index] == null}">
-								<img src="/upload/blank-profile.png" style="width: 75px; height: 75px;">
+								<img src="/upload/blank-profile.png" class="rounded-circle mx-auto d-block" style="width: 75px; height: 75px;">
 							</c:if>
 							
 							<c:if test="${profileList2[status.index] != null}">
-							<img src="/upload/${fn:replace(pvo.dir,'\\','/')}/${pvo.uuid}_th_${pvo.name}"> 
+							<img src="/upload/${fn:replace(pvo.dir,'\\','/')}/${pvo.uuid}_${pvo.name}" class="rounded-circle mx-auto d-block" style="width: 75px; height: 75px;"> 
 							</c:if>
 						</td>
 					<td>${user.name }</td>
@@ -153,10 +168,17 @@
 					<td>여자</td>
 					</c:if>
 					<td>
-						<button class="btn btn-sm btn-outline-success special" type="button">임명</button>
-						<button class="btn btn-sm btn-outline-danger normal" type="button">해제</button>
+						<c:choose>
+                  <c:when test="${wvo.grade=='C' }">
+                     <button class="btn btn-sm btn-outline-success special appointment" type="button" id="appointment">임명</button>
+                  </c:when>
+                  
+                  <c:when test="${wvo.grade=='B' }">
+                     <button class="btn btn-sm btn-outline-danger normal cancellation" type="button" id="cancellation">해제</button>
+                  </c:when>
+               </c:choose>
 					</td>					
-					<td><button class="btn btn-sm btn-outline-success special del" type="button">강퇴</button></td>					
+					<td><button class="btn btn-sm btn-outline-danger special del" type="button">강퇴</button></td>					
 				</tr>
 			</c:forEach>
 			</tbody>
@@ -168,7 +190,10 @@
 
 <script type="text/javascript" src="/resources/js/UserDelete.js">
 </script>
+<script type="text/javascript" src="/resources/js/Operator.js">
+</script>
 <script type="text/javascript">
+const grnoVal='<c:out value="${grno}"/>';
 const emailVal='<c:out value="${user.email}"/>';
 const sesemailVal='<c:out value="${ses.email}"/>';
 console.log(emailVal);

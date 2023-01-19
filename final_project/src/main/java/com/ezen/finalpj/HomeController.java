@@ -1,48 +1,48 @@
 package com.ezen.finalpj;
 
-import java.text.DateFormat;
-import java.util.Date;
-import java.util.Locale;
+
+import java.util.Collections;
+import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import com.ezen.finalpj.domain.PagingVO;
-import com.ezen.finalpj.handler.PagingHandler;
-import com.ezen.finalpj.service.GroupService;
+import com.ezen.finalpj.domain.CategoryVO;
+import com.ezen.finalpj.domain.UserVO;
+import com.ezen.finalpj.service.CategoryService;
+import com.ezen.finalpj.service.UserService;
 
 import lombok.extern.slf4j.Slf4j;
+
 @Slf4j
 @Controller
+@RequestMapping("/")
 public class HomeController {
-	
 	@Inject
-	private GroupService gsv;
+	private CategoryService csv;
+	@Inject
+	private UserService usv;
 	
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model,PagingVO pgvo) {
-		logger.info("Welcome home! The client locale is {}.", locale);
-		log.info("pgvo : "+pgvo.toString());
+	//home.jsp 오늘의 추천 소모임 리스트 랜덤 추천
+	@GetMapping("/")
+	public String categoryRandom(Model model) {
+		// 리스트 출력(전체)
+		List<CategoryVO> RandomList = csv.getCategoryOneRandom();
+		log.info(RandomList.toString());
 		
-		int totalCount=gsv.getPageCount(pgvo);
-		PagingHandler pgh=new PagingHandler(pgvo, totalCount);
-		model.addAttribute("pgh", pgh);
+		// 랜덤으로 섞기
+		Collections.shuffle(RandomList);
+		log.info("random : "+RandomList.toString());
 		
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-		
-		String formattedDate = dateFormat.format(date);
-		
-		model.addAttribute("serverTime", formattedDate );
-		
+		model.addAttribute("RandomList", RandomList);		
 		return "home";
 	}
 	

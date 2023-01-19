@@ -59,8 +59,14 @@ public class FavoriteServiceImpl implements FavoriteService {
 	}
 
 	@Override
-	public List<FavoriteVO> countFavoriteList(String email) {
+	public List<FavoriteVO> selectFList(String email) {
 		log.info("찜 개수 확인");
-		return fdao.countFavoriteList(email);
+		return fdao.selectFList(email);
+	}
+
+	@Override
+	public String selectmyGname(String email) {
+		log.info("내가 방장인 소모임 이름");
+		return fdao.selectmyGname(email);
 	}
 }

@@ -33,7 +33,6 @@ import com.ezen.finalpj.domain.WaitingVO;
 import com.ezen.finalpj.handler.SgMainHandler;
 import com.ezen.finalpj.service.FavoriteService;
 import com.ezen.finalpj.service.GroupService;
-import com.ezen.finalpj.service.JoinPersonService;
 import com.ezen.finalpj.service.ProfileService;
 import com.ezen.finalpj.service.ScheduleService;
 import com.ezen.finalpj.service.UserService;
@@ -49,8 +48,9 @@ public class GroupController {
 	private GroupService gsv;
 	@Inject
 	private ScheduleService ssv;
-	@Inject
-	private JoinPersonService jpsv;
+	/*
+	 * @Inject private JoinPersonService jpsv;
+	 */
 	@Inject
 	private WaitingService wsv;
 	@Inject
@@ -156,6 +156,10 @@ public class GroupController {
 	@GetMapping("/join")
 	public String joinGrpGet(@RequestParam("grno")int grno, Model model, HttpServletRequest req) {
 		model.addAttribute("grno", grno);
+		List<UserVO> uList=usv.selectMemListUser(grno);
+		GroupVO gvo=gsv.selectGrp(grno);
+		model.addAttribute("gvo", gvo);
+		model.addAttribute("uList", uList);
 		return "/group/join";
 	}
 	
@@ -171,7 +175,17 @@ public class GroupController {
 	@GetMapping("/grouplist")
 	public String listGrpGet(Model model) {
 		List<GroupVO> gList=gsv.selectGrpList();
+		List<Integer> wList=new ArrayList<Integer>(); 
+		
+		for(GroupVO gvo:gList) {
+			int wvo=wsv.selectGrpCount(gvo.getGrno());
+			wList.add(wvo);
+		}
+		
+		log.info("grno 제발 나와라 "+wList.toString());
+		log.info("그룹리스트 뽑기 "+gList.toString());
 		model.addAttribute("gList", gList);
+		model.addAttribute("wList", wList);
 		return "/supervisor/grouplist";
 	}
 	

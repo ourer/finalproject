@@ -20,6 +20,8 @@ public interface FavoriteDAO {
 
 	List<FavoriteDTO> selectFavoriteList(String email);
 
-	List<FavoriteVO> countFavoriteList(String email);
+	List<FavoriteVO> selectFList(String email);
+
+	String selectmyGname(String email);
 
 }

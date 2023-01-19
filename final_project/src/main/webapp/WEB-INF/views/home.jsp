@@ -1,13 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 <jsp:include page="./layout/header.jsp"></jsp:include>
 <style>
+.categoryall{
+	width: 10%;
+	float: left;
+	margin-bottom: 100px;
+}
 .likecategory{
 	width:90%;
-	margin: 0 auto 100px auto;
+	float:right;
+	margin-bottom: 100px;
 }
 .icon{
 	width: 130px;
@@ -17,7 +23,19 @@
 	border: none;
 	border-radius: 20px;
 }
-.fa-solid{
+.keyicon{
+	width: 90px;
+	height: 280px;
+	margin:10px;
+	background: #f2f2e1;
+	border: none;
+	border-radius: 20px;
+}
+.categoryall > .keyicon >.fa-file{
+	font-size: 2em;
+	margin: 10px auto;
+}
+.likecategory>.icon>.fa-solid{
 	font-size: 2em;
 	margin: 10px auto;
 }
@@ -33,6 +51,30 @@
 }
 .icon:hover {
 	transform: scale(1.07);
+}
+.likecategory{
+	margin-bottom: 50px;
+}
+.randomList{
+	text-align: center;
+	margin-top: 50px;
+}
+.like{
+	text-align: center;
+	margin: 40px 0;
+}
+.recommend{
+   clear: both;
+}
+.test1{
+   clear: both;
+}
+.card-body>.detail{
+   overflow: hidden;
+     text-overflow: ellipsis;
+     display: -webkit-box;
+     -webkit-line-clamp: 2;
+     -webkit-box-orient: vertical;
 }
 </style>
 <section>
@@ -58,7 +100,13 @@
 		  </button>
 		 </div>
 		  
-		   <h3 style="margin: 30px auto">관심사</h3>
+		   <h3 class="like" style="margin: 30px auto; text-align: center">관심사</h3>
+		   <div class="categoryall">
+           <button type="button" class="keyicon" id="category_All" onclick="location.href='/category/categorymain'">
+              <i class="fa-solid fa-file"></i>
+              <span class="icontext">전체</span>
+           </button>
+		   </div>
         <div class="likecategory">
            <button type="button" class="icon" id="category_A" onclick="location.href='/category/categoryDetail?code=A'">
               <i class="fa-solid fa-person-running"></i>
@@ -109,49 +157,26 @@
               <span class="icontext">반려동물</span>
            </button>
         </div>
-		 
-		 <h3 style="margin: 30px auto">오늘의 추천 소모임</h3>
-		 <div class="row row-cols-1 row-cols-md-4 g-4" style="margin-bottom: 100px">
-		  <div class="col">
-		    <div class="card h-100">
-		  		<img src="/resources/img/java.jpg" class="card-img-top">
-		  <div class="card-body">
-		    <h5 class="card-title">개발자</h5>
-		    <p class="card-text">자바 웹 개발을 공부하는 사람들 모두 모여라!!<br>비전공자, 전공자 상관없어요~</p>
-		    <a href="#" class="btn btn-warning">구경하기</a>
-		   </div>
-		  </div>
-		 </div>
-		  <div class="col">
-		    <div class="card h-100">
-		  		<img src="/resources/img/museum.jpg" class="card-img-top">
-		  <div class="card-body">
-		    <h5 class="card-title">전시회</h5>
-		    <p class="card-text">우리나라 곳곳에 숨어있는 전시회를 찾아다니자~</p>
-		    <a href="#" class="btn btn-warning">구경하기</a>
-		   </div>
-		  </div>
-		 </div>
-		  <div class="col">
-		    <div class="card h-100">
-		  		<img src="/resources/img/drink.jpg" class="card-img-top">
-		  <div class="card-body">
-		    <h5 class="card-title">먹고마셔</h5>
-		    <p class="card-text">다양한 주종을 즐겨보는 모임..!<br>이 지역의 핫플은 우리가 선도한다!</p>
-		    <a href="#" class="btn btn-warning">구경하기</a>
-		   </div>
-		  </div>
-		 </div>
-		  <div class="col">
-		    <div class="card h-100">
-		  		<img src="/resources/img/ball.jpg" class="card-img-top">
-		  <div class="card-body">
-		    <h5 class="card-title">야유회</h5>
-		    <p class="card-text">주말에 모여서 운동할 사람 모여라!<br>간단한 조깅부터 축구, 발야구, 배드민턴 등</p>
-		    <a href="#" class="btn btn-warning">구경하기</a>
-		   </div>
-		  </div>
-		 </div>
-		</div>
+		<h3 style="margin: 30px auto; text-align: center" class="recommend">오늘의 추천 소모임</h3>
+      <div class="row row-cols-1 row-cols-md-4 g-4 randomList" style="margin-bottom: 100px">
+         <c:forEach items="${RandomList }" var="rList" begin="0" end="7" varStatus="status">
+            <div class="col">
+               <div class="card h-100">
+                  <c:if test="${rList.uuid == null}">
+                     <img alt="sgMain" src="/upload/sgMain_default.jpg" class="card-img-top object-fit-cover" style="height: 250px">
+                  </c:if>
+                  <c:if test="${rList.uuid != null}">
+                     <img alt="sgMain" src="/upload/sgMainUpload/${fn:replace(rList.dir,'\\','/')}/${rList.uuid}_${rList.sm_name}" class="card-img-top object-fit-cover sgmain" style="height: 250px">
+                  </c:if>
+                  <div class="card-body">
+                     <h5 class="card-title" style="font-weight: 600;">${rList.sg_name }</h5>
+                     <p class="card-text detail">${rList.detail }</p>
+                     <p class="card-text">${rList.city}  ${rList.county }</p>
+                     <a href="/group/main?grno=${rList.grno}" class="btn btn-warning">구경하기</a>
+                  </div>
+               </div>
+            </div>
+         </c:forEach>
+      </div>
 </section>
 <jsp:include page="./layout/footer.jsp"></jsp:include>
