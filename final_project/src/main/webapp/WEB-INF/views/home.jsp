@@ -66,7 +66,13 @@
 	text-align: center;
 	margin: 40px 0;
 }
-
+.card-body>.detail{
+   overflow: hidden;
+     text-overflow: ellipsis;
+     display: -webkit-box;
+     -webkit-line-clamp: 2;
+     -webkit-box-orient: vertical;
+}
 </style>
 <section>
 	<div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel" style="margin-top: 50px; margin-bottom: 100px">
@@ -91,7 +97,7 @@
 		  </button>
 		 </div>
 		  
-		   <h3 style="margin: 30px auto; text-align: center">관심사</h3>
+		   <h3 class="like" style="margin: 30px auto; text-align: center">관심사</h3>
 		   <div class="categoryall">
            <button type="button" class="keyicon" id="category_All" onclick="location.href='/category/categorymain'">
               <i class="fa-solid fa-file"></i>
@@ -160,8 +166,8 @@
                      <img alt="sgMain" src="/upload/sgMainUpload/${fn:replace(rList.dir,'\\','/')}/${rList.uuid}_${rList.sm_name}" class="card-img-top object-fit-cover sgmain" style="height: 250px">
                   </c:if>
                   <div class="card-body">
-                     <h5 class="card-title">${rList.sg_name }</h5>
-                     <p class="card-text">${rList.detail }</p>
+                     <h5 class="card-title" style="font-weight: 600;">${rList.sg_name }</h5> 
+                     <p class="card-text detail">${rList.detail }</p>
                      <p class="card-text">${rList.city}  ${rList.county }</p>
                      <a href="/group/main?grno=${rList.grno}" class="btn btn-warning">구경하기</a>
                   </div>

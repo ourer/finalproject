@@ -75,19 +75,19 @@
              <li class="nav-item">
                <a class="nav-link" aria-current="page" href="/board/introduce">아울러 소개</a>
              </li>
-              <c:if test="${wvo.grade=='S' }">
-	             <li class="nav-item">
-	               <a class="nav-link" aria-current="page" href="/category/categorymain">소모임 리스트</a>
-	             </li>
-	             <li class="nav-item dropdown">
-	               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-	                 관리자용 버튼
-	               </a>
-	               <ul class="dropdown-menu">
-	                 <li><a class="dropdown-item" href="/group/grouplist" >소모임 전체 리스트</a></li>
-	                 <li><a class="dropdown-item" href="/user/userlist">전체 회원 조회</a></li>
-	               </ul>
-	             </li>
+               <c:if test="${ses.email == 'super@ourer.com' &&  ses.nickname == '관리자' }">
+                <li class="nav-item">
+                  <a class="nav-link" aria-current="page" href="/category/categorymain">소모임 리스트</a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    관리자용 버튼
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="/group/grouplist" >소모임 전체 리스트</a></li>
+                    <li><a class="dropdown-item" href="/user/userlist">전체 회원 조회</a></li>
+                  </ul>
+                </li>
              </c:if>
            </ul>
          </div>

@@ -69,10 +69,17 @@ section{
 	margin-left: auto;
   	margin-right: auto;
 }
+.card-body>.detail{
+   overflow: hidden;
+     text-overflow: ellipsis;
+     display: -webkit-box;
+     -webkit-line-clamp: 2;
+     -webkit-box-orient: vertical;
+}
 </style>
 
 <section>
- <h3 style="margin: 30px auto">관심사</h3>
+ <h3 class="like" style="margin: 30px auto">관심사</h3>
  <div class="categoryall">
            <button type="button" class="keyicon" id="category_All" onclick="location.href='/category/categorymain'">
               <i class="fa-solid fa-file"></i>
@@ -149,8 +156,8 @@ section{
 					<img alt="sgMain" src="/upload/sgMainUpload/${fn:replace(cavo.dir,'\\','/')}/${cavo.uuid}_${cavo.sm_name}" class="card-img-top object-fit-cover sgmain" style="height: 250px">
 				</c:if>
 				<div class="card-body">
-					<h5 class="card-title">${cavo.sg_name }</h5>
-					<p class="card-text">${cavo.detail }</p>
+					<h5 class="card-title"  style="font-weight: 600;">${cavo.sg_name }</h5>
+					<p class="card-text detail">${cavo.detail }</p>
 					<p class="card-text">${cavo.city}  ${cavo.county }</p>
 					<a href="/group/main?grno=${cavo.grno}" class="btn btn-warning">구경하기</a>
 				</div>
