@@ -137,9 +137,9 @@
 		<form class="d-flex" role="search" action="/category/categorymain" method="get">
 			<c:set value="${scvo.type }" var="typed"/>
 				<select name="type" id="seachBtn" aria-expanded="false">
-					<option value="a" ${typed eq 'a' ? 'selected':'' }>통합 검색</option>
-					<option value="n" ${typed eq 'n' ? 'selected':'' }>제목</option>
-					<option value="d" ${typed eq 'd' ? 'selected':'' }>내용</option>
+					<option id="testo" value="a" ${typed eq 'a' ? 'selected':'' }>통합 검색</option>
+					<option id="testo" value="n" ${typed eq 'n' ? 'selected':'' }>제목</option>
+					<option id="testo" value="d" ${typed eq 'd' ? 'selected':'' }>내용</option>
 				</select>
 					<input class="form-control me-2" id="seachInput" type="search" placeholder="관심사를 검색해보세요"  aria-label="Search" name="keyword" value="${scvo.keyword }">
 						<button class="btn btn-outline-warning" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>

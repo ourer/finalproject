@@ -24,9 +24,9 @@ public class WaitingServiceImpl implements WaitingService {
 	}
 
 	@Override
-	public int remove(String email) {
+	public int remove(WaitingVO wvo) {
 		log.info("waiting user remove");
-		return wdao.deleteUser(email);
+		return wdao.deleteUser(wvo);
 	}
 
 	@Override

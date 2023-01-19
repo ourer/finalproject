@@ -166,9 +166,6 @@
 						<c:when test="${wvo.grade=='B' }">
 							<button class="btn btn-sm btn-outline-danger normal cancellation" type="button" id="cancellation">해제</button>
 						</c:when>
-						<c:otherwise>
-							<div>누구냐 너;;;</div>
-						</c:otherwise>
 					</c:choose>
 					</td>					
 					<td><button class="btn btn-sm btn-outline-danger special del" type="button">강퇴</button></td>					
@@ -178,12 +175,11 @@
 		</table>
 </section>
 <jsp:include page="../layout/footer.jsp"></jsp:include>
+
 <script type="text/javascript" src="/resources/js/WaitingDecide.js">
 </script>
-
 <script type="text/javascript" src="/resources/js/Operator.js">
 </script>
-
 <script type="text/javascript" src="/resources/js/UserDelete.js">
 </script>
 

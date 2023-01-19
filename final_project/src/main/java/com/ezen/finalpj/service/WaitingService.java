@@ -1,15 +1,13 @@
 package com.ezen.finalpj.service;
 
-import java.util.List;
 
-import com.ezen.finalpj.domain.UserVO;
 import com.ezen.finalpj.domain.WaitingVO;
 
 public interface WaitingService {
 	
 	int insertMemWaitPost(WaitingVO wvo);
 
-	int remove(String email);
+	int remove(WaitingVO wvo);
 
 	int acceptWaiting(WaitingVO wvo);
 

@@ -9,7 +9,7 @@ public interface WaitingDAO {
 	
 	int insertMemWaitPost(WaitingVO wvo);
 
-	int deleteUser(String email);
+	int deleteUser(WaitingVO wvo);
 
 	int appointment(WaitingVO wvo);
 

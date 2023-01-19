@@ -9,7 +9,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<delete id="deleteUser">
-		delete from waiting where email=#{email}
+		delete from waiting where email=#{email} and grno=#{grno}
 	</delete>
 	
 	<update id="appointment">
