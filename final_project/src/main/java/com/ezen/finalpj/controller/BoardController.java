@@ -76,4 +76,14 @@ public class BoardController {
 		return "redirect:/board/list";
 	}
 	
+	@GetMapping("/introduce")
+	   public String introduceGet() {
+	      return "/board/introduce";
+	   }
+	   
+	   @GetMapping("/data")
+	   public String dataGet() {
+	      return "/board/data";
+	   }
+	
 }

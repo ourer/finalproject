@@ -44,14 +44,11 @@
 </section>
 
 <script type="text/javascript">
-	const msglogin = '<c:out value="${msglogin}"/>';
-	if(msglogin==='0'){
-		console.log(msglogin);
-		alert("로그인에 실패했습니다.");
-	}else(msglogin=='1') {
-		console.log(msglogin);
-		alert("로그인에 성공했습니다.");
-	}
-	</script>
+   const msglogin = '<c:out value="${msglogin}"/>';
+   if(msglogin==='0'){
+      console.log(msglogin);
+      alert("로그인에 실패했습니다.");
+   }
+</script>
 
 <jsp:include page="../layout/footer.jsp"></jsp:include>

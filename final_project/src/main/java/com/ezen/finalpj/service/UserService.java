@@ -6,10 +6,10 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.ezen.finalpj.domain.FavoriteDTO;
 import com.ezen.finalpj.domain.FavoriteVO;
-import com.ezen.finalpj.domain.GroupVO;
 import com.ezen.finalpj.domain.ManagerDTO;
 import com.ezen.finalpj.domain.UserDTO;
 import com.ezen.finalpj.domain.UserVO;
+import com.ezen.finalpj.domain.WaitingVO;
 
 public interface UserService {
 
@@ -50,6 +50,10 @@ public interface UserService {
 	List<FavoriteDTO> selectUList(String email);
 
 	String selectmyGname(String email);
+	
+	   List<WaitingVO> getWaitingList(UserVO user);
+
+	   UserVO modifyCt(String email);
 
 
 }

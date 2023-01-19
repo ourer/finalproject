@@ -24,7 +24,7 @@
 		  <div class="col-sm-6">
 		    <div class="card">
 		      <div class="card-body">
-					<c:if test="${sespvo.uuid == null}">
+				<c:if test="${sespvo.uuid == null}">
 					<img src="/upload/blank-profile.png" class="rounded-circle mx-auto d-block" alt="..." style="width: 140px; height: 140px">
 				</c:if>
 				<c:if test="${sespvo.uuid != null}">
@@ -95,11 +95,11 @@
 							<c:set var="pvo" value="${profileList1[status.index]}"/>
 							
 							<c:if test="${profileList1[status.index] == null}">
-								<img src="/upload/blank-profile.png" style="width: 75px; height: 75px;">
+								<img src="/upload/blank-profile.png" class="rounded-circle mx-auto d-block" style="width: 75px; height: 75px;">
 							</c:if>
 							
 							<c:if test="${profileList1[status.index] != null}">
-							<img src="/upload/${fn:replace(pvo.dir,'\\','/')}/${pvo.uuid}_${pvo.name}" style="width: 75px; height: 75px;"> 
+							<img src="/upload/${fn:replace(pvo.dir,'\\','/')}/${pvo.uuid}_${pvo.name}" class="rounded-circle mx-auto d-block" style="width: 75px; height: 75px"> 
 							</c:if>
 						</td>
 					<td>${user.name }</td>
@@ -112,9 +112,8 @@
 					<td>여자</td>
 					</c:if>
 					<td>
-					<button class="btn btn-sm btn-outline-success accept" type="button">승인</button>
-                    <button class="btn btn-sm btn-outline-danger refuse" type="button">거절</button>
-
+						<button class="btn btn-sm btn-outline-success accept" type="button">승인</button>
+						<button class="btn btn-sm btn-outline-danger refuse" type="button">거절</button>
 					</td>					
 					<td></td>
 				</tr>
@@ -150,13 +149,13 @@
 				<tr data-email="${user.email }">
 						<td>	
 							<c:set var="pvo" value="${profileList2[status.index]}"/>
-							
+							<c:set var="wvo" value="${wList[status.index]}" />
 							<c:if test="${profileList2[status.index] == null}">
-								<img src="/upload/blank-profile.png" style="width: 75px; height: 75px;">
+								<img src="/upload/blank-profile.png" class="rounded-circle mx-auto d-block" style="width: 75px; height: 75px;">
 							</c:if>
 							
 							<c:if test="${profileList2[status.index] != null}">
-							<img src="/upload/${fn:replace(pvo.dir,'\\','/')}/${pvo.uuid}_${pvo.name}" style="width: 75px; height: 75px;"> 
+							<img src="/upload/${fn:replace(pvo.dir,'\\','/')}/${pvo.uuid}_${pvo.name}" class="rounded-circle mx-auto d-block" style="width: 75px; height: 75px;"> 
 							</c:if>
 						</td>
 					<td>${user.name }</td>
@@ -169,22 +168,32 @@
 					<td>여자</td>
 					</c:if>
 					<td>
+						<c:choose>
+                  <c:when test="${wvo.grade=='C' }">
                      <button class="btn btn-sm btn-outline-success special appointment" type="button" id="appointment">임명</button>
+                  </c:when>
+                  
+                  <c:when test="${wvo.grade=='B' }">
                      <button class="btn btn-sm btn-outline-danger normal cancellation" type="button" id="cancellation">해제</button>
-               </td>               
-               <td>
-               <button class="btn btn-sm btn-outline-success special del" type="button">강퇴</button>
-               </td>					
+                  </c:when>
+               </c:choose>
+					</td>					
+					<td><button class="btn btn-sm btn-outline-danger special del" type="button">강퇴</button></td>					
 				</tr>
 			</c:forEach>
 			</tbody>
 		</table>
 </section>
 <jsp:include page="../layout/footer.jsp"></jsp:include>
-<script type="text/javascript" src="/resources/js/WaitingDecide.js"></script>
-<script type="text/javascript" src="/resources/js/Operator.js"></script>
-<script type="text/javascript" src="/resources/js/UserDelete.js"></script>
+<script type="text/javascript" src="/resources/js/WaitingDecide.js">
+</script>
+
+<script type="text/javascript" src="/resources/js/UserDelete.js">
+</script>
+<script type="text/javascript" src="/resources/js/Operator.js">
+</script>
 <script type="text/javascript">
+const grnoVal='<c:out value="${grno}"/>';
 const emailVal='<c:out value="${user.email}"/>';
 const sesemailVal='<c:out value="${ses.email}"/>';
 console.log(emailVal);

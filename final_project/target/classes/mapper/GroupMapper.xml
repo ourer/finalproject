@@ -64,4 +64,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="deleteGrpList">
 		delete from smallgroup where grno=#{grno}
 	</delete>
+	
+	<update id="updateDetailGrp">
+		update smallgroup set detail=#{detail} where grno=#{grno}
+	</update>
 </mapper>

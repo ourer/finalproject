@@ -58,7 +58,6 @@ public class FavoriteServiceImpl implements FavoriteService {
 		return fdao.selectFavoriteList(email);
 	}
 
-
 	@Override
 	public List<FavoriteVO> selectFList(String email) {
 		log.info("찜 개수 확인");
@@ -70,5 +69,4 @@ public class FavoriteServiceImpl implements FavoriteService {
 		log.info("내가 방장인 소모임 이름");
 		return fdao.selectmyGname(email);
 	}
-
 }

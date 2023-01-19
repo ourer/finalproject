@@ -44,10 +44,10 @@
                 <div>
                 <c:choose>
                 <c:when test="${sespvo ne null }">
-                   <img src="/upload/${fn:replace(sespvo.dir,'\\','/')}/${sespvo.uuid}_${sespvo.name}" class="rounded-circle mx-auto d-block" alt="..." style="width: 140px; height: 140px">                
+                   <img src="/upload/${fn:replace(sespvo.dir,'\\','/')}/${sespvo.uuid}_${sespvo.name}" class="rounded-circle mx-auto d-block" alt="..." style="width: 150px;">                
                 </c:when>
                 <c:otherwise>
-					<img src="/upload/blank-profile.png" class="rounded-circle mx-auto d-block" alt="..." style="width: 140px; height: 140px">
+					<img src="/upload/blank-profile.png" class="rounded-circle mx-auto d-block" alt="..." style="width: 140px; height: 140px;">
 				</c:otherwise>
                 </c:choose>
                   <div class="imgname">
@@ -73,20 +73,22 @@
                <a class="nav-link" aria-current="page" href="/board/list">공지사항</a>
              </li>
              <li class="nav-item">
-               <a class="nav-link" aria-current="page" href="/category/categorymain">소모임 리스트</a>
+               <a class="nav-link" aria-current="page" href="/board/introduce">아울러 소개</a>
              </li>
-             <li class="nav-item">
-               <a class="nav-link" aria-current="page" href="#">사이트 소개</a>
-             </li>
-             <li class="nav-item dropdown">
-               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                 관리자용 버튼
-               </a>
-               <ul class="dropdown-menu">
-                 <li><a class="dropdown-item" href="/group/grouplist" >소모임 전체 리스트</a></li>
-                 <li><a class="dropdown-item" href="/user/userlist">전체 회원 조회</a></li>
-               </ul>
-             </li>
+              <c:if test="${wvo.grade=='S' }">
+	             <li class="nav-item">
+	               <a class="nav-link" aria-current="page" href="/category/categorymain">소모임 리스트</a>
+	             </li>
+	             <li class="nav-item dropdown">
+	               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+	                 관리자용 버튼
+	               </a>
+	               <ul class="dropdown-menu">
+	                 <li><a class="dropdown-item" href="/group/grouplist" >소모임 전체 리스트</a></li>
+	                 <li><a class="dropdown-item" href="/user/userlist">전체 회원 조회</a></li>
+	               </ul>
+	             </li>
+             </c:if>
            </ul>
          </div>
        </div>
@@ -115,16 +117,15 @@
           <a class="nav-link" href="/board/list">공지사항</a>
         </li>
       </ul>
-   <!-- search 라인 -->
-   <div class="input-group mb-3">
+        <div class="input-group mb-3">
       <form class="d-flex" role="search" action="/category/categorymain" method="get">
          <c:set value="${scvo.type }" var="typed"/>
-            <select name="type" class="btn btn-outline-secondary" aria-expanded="false">
-               <option value="a" ${typed eq 'a' ? 'selected':'' }>제목+내용</option>
+            <select class="form-select" name="type" id="seachBtn" aria-label="Default select example">
+               <option value="a" ${typed eq 'a' ? 'selected':'' }>통합 검색</option>
                <option value="n" ${typed eq 'n' ? 'selected':'' }>제목</option>
                <option value="d" ${typed eq 'd' ? 'selected':'' }>내용</option>
             </select>
-               <input class="form-control me-2" type="search" placeholder="관심사를 검색해보세요"  aria-label="Search" name="keyword" value="${scvo.keyword }">
+               <input class="form-control me-2" id="seachInput" type="search" placeholder="관심사를 검색해보세요"  aria-label="Search" name="keyword" value="${scvo.keyword }">
                   <button class="btn btn-outline-warning" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
       </form>
    </div>

@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ezen.finalpj.domain.FavoriteDTO;
 import com.ezen.finalpj.domain.FavoriteVO;
-import com.ezen.finalpj.domain.GroupVO;
 import com.ezen.finalpj.service.FavoriteService;
 
 import lombok.extern.slf4j.Slf4j;

@@ -11,6 +11,5 @@ public interface SgmainDAO {
 
 	List<SgMainVO> getSgMainImg();
 	
-	List<SgMainVO> getSgMainImgSearching(SearchVO scvo);
-
+   List<SgMainVO> getSgMainImgSearching(SearchVO scvo);
 }

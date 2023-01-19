@@ -56,51 +56,28 @@ async function likeFavorite(favData){
 
 function showJoinPeople(sno){
 	const joinPeople=document.getElementById(`joinPeople${sno}`);
+	console.log(joinPeople);
     console.log(joinPeople.style.display);
-    if(joinPeople.style.display=='block'){
+    if(joinPeople.style.display=='flex'){
         joinPeople.style.display='none';
     } else{
-     joinPeople.style.display='block';
+     joinPeople.style.display='flex';
+     joinPeople.style.justifyContent='space-between';
+     joinPeople.style.flexWrap='wrap';
+     
     }
     console.log(joinPeople.style.display);
 }
 
-// const schJoinBtn=document.getElementById('schJoinBtn');
-// if(schJoinBtn!=null){
-// schJoinBtn.addEventListener('click', ()=>{
-//     console.log(nowUrl);
-//     let grno=nowUrl.substring(nowUrl.lastIndexOf('=')+1);
-//     console.log(grno);
-//     let sno=document.getElementById("sno").value;
-//     console.log(sno);
-//     if(grno!=null||sno!=null){
-//         joinData={
-//             sno: sno,
-//             grno: grno
-//         }
-//     }
-//     console.log(joinData);
-//     addJoinPerson(joinData).then(result=>{
-//         console.log(result);
-//         if(result=="1"){
-//             alert("스케줄 참가 성공!");
-//             location.reload();
-//         }else if(result=="2"){
-//             alert("스케줄 참가 실패");
-//             location.href="/group/main?grno="+grno;
-//         }
-//        //getJoinPersonList();
-//     })
-// })
-// }
 
 document.addEventListener('click', (e)=>{
     if(e.target.classList.contains('schJoinBtn')&&e.target!=null){
         console.log(nowUrl);
     let grno=nowUrl.substring(nowUrl.lastIndexOf('=')+1);
     console.log(grno);
-    let sno=document.getElementById("sno").value;
-    console.log(sno);
+    let sno=e.target.id;
+    sno=sno.substring(sno.lastIndexOf('n')+1);
+    console.log("참가버튼 눌렀을 때"+sno);
     if(grno!=null||sno!=null){
         joinData={
             sno: sno,
@@ -156,29 +133,32 @@ function getJoinPersonList(){
     spreadJoinPerson().then(result=>{
         console.log(result);
         for(let r of result){
-            console.log(r);
-            console.log(r.sno);
+            //console.log(r);
+            //console.log(r.sno);
             let divJP=document.getElementById(`joinPeople${r.sno}`);
             if(divJP != null){
-                console.log(divJP);
+                //console.log(divJP);
                 //console.log(r.pdir);
                 let pDir=r.pdir.replace(/\\/g, '/');
-                console.log(pDir);
-                console.log(divJP.dataset.sno);
+                //console.log(pDir);
+                //console.log(divJP.dataset.sno);
                 
                 let div='';
                 if(divJP.dataset.sno==r.sno){
                     div=`<div class="joinPerson" data-jno="${r.jno}">`;
-                    div+=`<img src="/upload/${pDir}/${r.puuid}_${r.pname}" class="rounded-circle mx-auto d-block" alt="..." style="width: 140px;">`;
-                    div+=`<span>${r.uname}</span>`;
+                    div+=`<img src="/upload/${pDir}/${r.puuid}_${r.pname}" class="rounded-circle object-fit-cover" alt="...">`;
+                    div+=`<span class="jpName fs-5 fw-semibold">${r.uname}</span>`;
                 }
-                console.log(emailVal);
+                //console.log(emailVal);
                 if(emailVal == r.uemail){
                     console.log(r.uemail);
-                    div+=`<button class="schCancelBtn">참가 취소</button>`;
+                    div+=`<button class="schCancelBtn btn btn-outline-danger btn-sm">참가 취소</button>`;
                     const joinBtn=document.getElementById(`schJoinBtn${r.sno}`);
                     console.log(joinBtn);
                     joinBtn.disabled=true;
+                    joinBtn.classList.remove('btn-outline-warning');
+                    joinBtn.classList.add('text-decoration-line-through');
+                    joinBtn.classList.add('btn-outline-secondary');
                 }
                 div+=`</div>`;
                 divJP.innerHTML+=div;
@@ -202,6 +182,15 @@ document.addEventListener('click', (e)=>{
                 location.reload();
             }
         })
+    }else if(e.target.classList.contains('editDetail')){ 
+        const div=document.getElementById('editDetail');
+        console.log(div);
+        div.style.display='block';
+    }else if(e.target.classList.contains('editFin')){
+        const div=document.getElementById('editDetail');
+        console.log(div);
+        div.style.display='none';
+        // div.innerHTML='';
     }
 })
 
@@ -258,7 +247,7 @@ document.addEventListener('change',(e)=>{
             ul+=`${validResult?'<div class="fw-bold">업로드 가능':'<div class="fw-bold text-danger">업로드 불가'}</div>`;
             ul+=`${file.name}`;
             ul+=`<span class="badge bg-${validResult?'success':'danger'} rounded-pill">${file.size} Bytes</span>`;
-            ul+=`<button type="submit">등록</button>`;
+            ul+=`<button class="btn btn-outline-warning" type="submit">등록</button>`;
         }
         ul+=`</ul>`;
         div.innerHTML=ul;
@@ -273,7 +262,8 @@ window.addEventListener('load', ()=>{
     let scheDateLi=document.querySelectorAll('.scheDate');
     for(let d of scheDateLi){
         let date=d.innerText;
-        date=date.substring(4, 16);
+        console.log(date);
+        date=date.substring(0, 13);
         console.log(date);
         date=new Date(date);
         console.log("스케줄 날짜: "+date.toLocaleDateString());

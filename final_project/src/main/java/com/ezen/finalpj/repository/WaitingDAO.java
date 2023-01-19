@@ -1,5 +1,7 @@
 package com.ezen.finalpj.repository;
 
+import java.util.List;
+
 import com.ezen.finalpj.domain.UserVO;
 import com.ezen.finalpj.domain.WaitingVO;
 
@@ -9,14 +11,20 @@ public interface WaitingDAO {
 
 	int deleteUser(String email);
 
-	int acceptUser(String email);
+	int appointment(WaitingVO wvo);
 
-	int refuseUser(String email);
+	int cancellation(WaitingVO wvo);
+	
+	WaitingVO selectGetWaiting(String email);
+	
+	int acceptWaiting(WaitingVO wvo);
 
-	int appointment(String email);
-
-	int cancellation(String email);
-
+	int refuseWaiting(WaitingVO wvo);
+	
+	int selectGrpCount(int grno);
+	
 	int quit(WaitingVO wvo);
+	
+  
 	
 }

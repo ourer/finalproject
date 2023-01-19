@@ -11,6 +11,6 @@ public interface SgmainService {
 
 	List<SgMainVO> getSgMainImg();
 	
-	List<SgMainVO> getSgMainImgSearching(SearchVO scvo);
+   List<SgMainVO> getSgMainImgSearching(SearchVO scvo);
 
 }
