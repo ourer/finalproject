@@ -11,7 +11,7 @@ document.getElementById('grpJoinBtn').addEventListener('click',()=>{
     if(isOk==0){
         document.getElementById('joinForm').submit();
     }else{
-        alert("유의사항을 모두 체크해주세요!");
-
+       alert("유의사항을 모두 체크해주세요!");
+	
     }
 })

@@ -76,6 +76,12 @@ section{
      -webkit-line-clamp: 2;
      -webkit-box-orient: vertical;
 }
+.icon, .keyicon{
+   transition: all 0.2s ease-in-out;
+}
+.icon:hover, .keyicon:hover {
+   transform: scale(1.07);
+}
 </style>
 
 <section>

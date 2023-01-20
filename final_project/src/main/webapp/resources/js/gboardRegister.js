@@ -50,9 +50,8 @@ document.addEventListener('click', (e)=>{
         console.log(uuid);
         deleteFile(uuid).then(result=>{
             if(result>0){
-                alert("파일 삭제 성공");
-            }
-        })
+                alert("파일이 삭제되었습니다.");
+                
         div.remove();
         addUploadBtn();
 

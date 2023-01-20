@@ -44,5 +44,7 @@ public interface UserDAO {
 	
 	 List<WaitingVO> getWaitingList(UserVO user);
 
+	int insertBlankProf(String email);
+
 
 }

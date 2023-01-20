@@ -35,8 +35,15 @@ input[type="checkbox"]{
 	width: 100%;
 }
 
-
+.btn-outline-warning{
+   width: none;
+}
+#grpJoinBtn{
+   width: 100%;
+}
 </style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 <section>
 <div class="firstBox">
     	<ul class="nav nav-tab">

@@ -75,6 +75,12 @@ section{
      -webkit-line-clamp: 2;
      -webkit-box-orient: vertical;
 }
+.icon, .keyicon{
+   transition: all 0.2s ease-in-out;
+}
+.icon:hover, .keyicon:hover {
+   transform: scale(1.07);
+}
 </style>
 <section>
  	<h3 class="like" style="margin: 30px auto">관심사</h3>

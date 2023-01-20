@@ -2,7 +2,8 @@ document.getElementById('cmtPostBtn').addEventListener('click', ()=>{
     const cmtText=document.getElementById('cmtText');
     console.log(cmtText);
     if(cmtText.value==null||cmtText.value==""){
-        alert("내용을 작성해주세요.")
+        alert("댓글 내용을 작성해주세요.")
+        
         cmtText.focus();
         return false;
     }else{
@@ -16,6 +17,7 @@ document.getElementById('cmtPostBtn').addEventListener('click', ()=>{
         postComment(cmtData).then(result=>{
             if(result>0){
                 alert("댓글이 등록되었습니다.");
+                
             }
             //화면 출력
             getCommentList(cmtData.gbno);
@@ -88,6 +90,7 @@ function getCommentList(gbno){
                 ul.innerHTML+=li;
             }
         }else{
+        	ul.innerHTML='';
             let li=`<li class="list-group-item d-flex justify-content-between align-items-start">댓글을 작성해보세요!</li>`;
             ul.innerHTML+=li;
         }
@@ -118,6 +121,7 @@ document.addEventListener('click', (e)=>{
         modifyComment(cmtData).then(result=>{
             if(result>0){
                 alert("댓글이 수정되었습니다.")
+                
             }
             li.innerHTML='';
             getCommentList(gbnoVal);
@@ -130,7 +134,9 @@ document.addEventListener('click', (e)=>{
         deleteComment(cnoVal).then(result=>{
             if(result>0){
                 alert("댓글이 삭제되었습니다.")
+                
             }
+            
             getCommentList(gbnoVal);
         })
     }

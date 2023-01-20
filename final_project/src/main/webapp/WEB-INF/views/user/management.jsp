@@ -24,9 +24,6 @@
 		  <div class="col-sm-6">
 		    <div class="card">
 		      <div class="card-body">
-				<c:if test="${sespvo.uuid == null}">
-					<img src="/upload/blank-profile.png" class="rounded-circle mx-auto d-block" alt="..." style="width: 140px; height: 140px">
-				</c:if>
 				<c:if test="${sespvo.uuid != null}">
 					<img src="/upload/${fn:replace(sespvo.dir,'\\','/')}/${sespvo.uuid}_${sespvo.name}" class="rounded-circle mx-auto d-block" alt="..." style="width: 140px; height: 140px"> 
 				</c:if>		        
@@ -94,9 +91,6 @@
 						<td>	
 							<c:set var="pvo" value="${profileList1[status.index]}"/>
 							
-							<c:if test="${profileList1[status.index] == null}">
-								<img src="/upload/blank-profile.png" class="rounded-circle mx-auto d-block" style="width: 75px; height: 75px;">
-							</c:if>
 							
 							<c:if test="${profileList1[status.index] != null}">
 							<img src="/upload/${fn:replace(pvo.dir,'\\','/')}/${pvo.uuid}_${pvo.name}" class="rounded-circle mx-auto d-block" style="width: 75px; height: 75px"> 
@@ -150,9 +144,6 @@
 						<td>	
 							<c:set var="pvo" value="${profileList2[status.index]}"/>
 							<c:set var="wvo" value="${wList[status.index]}" />
-							<c:if test="${profileList2[status.index] == null}">
-								<img src="/upload/blank-profile.png" class="rounded-circle mx-auto d-block" style="width: 75px; height: 75px;">
-							</c:if>
 							
 							<c:if test="${profileList2[status.index] != null}">
 							<img src="/upload/${fn:replace(pvo.dir,'\\','/')}/${pvo.uuid}_${pvo.name}" class="rounded-circle mx-auto d-block" style="width: 75px; height: 75px;"> 

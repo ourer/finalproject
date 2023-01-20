@@ -58,9 +58,6 @@
 							<c:when test="${capPvo ne null }">
 								<img src="/upload/${fn:replace(capPvo.dir, '\\', '/')}/${capPvo.uuid}_${capPvo.name}" class="rounded-circle mx-auto d-block" alt="..." style="width: 140px; height: 140px;">
 							</c:when>
-							<c:otherwise>
-								<img src="/upload/blank-profile.png" class="rounded-circle mx-auto d-block" alt="..." style="width: 140px; height: 140px;">
-							</c:otherwise>
 						</c:choose>	
 					</td>
 					<td>${capUvo.nickname }(${capUvo.name })</td>
@@ -84,9 +81,6 @@
 						<c:when test="${pvo ne null }">
 							<img src="/upload/${fn:replace(pvo.dir, '\\', '/')}/${pvo.uuid}_${pvo.name}" class="rounded-circle mx-auto d-block" alt="..." style="width: 140px; height: 140px;">
 						</c:when>
-						<c:otherwise>
-							<img src="/upload/blank-profile.png" class="rounded-circle mx-auto d-block" alt="..." style="width: 140px; height: 140px;">
-						</c:otherwise>
 						</c:choose>
 					</td>
 					<td>${uvo.nickname }(${uvo.name })</td>

@@ -59,8 +59,8 @@ public class ScheduleController {
 	
 	@PostMapping("/register")
 	public String insertSchPost(ScheduleVO svo, RedirectAttributes reAttr, HttpServletRequest req) {
-		log.info(svo.toString());		
-		 if(svo.getCost()==""||svo.getMax_member() < 2||svo.getMeetdate()==""||
+		log.info("스케줄:"+svo.toString());		
+		 if(svo.getCost()==""||svo.getMax_member() < 1||svo.getMeetdate()==""||
 		     svo.getSpot()==""||svo.getTitle()=="") {
 			 reAttr.addFlashAttribute("schMsg", "0");
 			 reAttr.addAttribute("grno", svo.getGrno());
@@ -112,7 +112,7 @@ public class ScheduleController {
 	@GetMapping(value = "/list", produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<List<JoinPersonDTO>> selectListJpGet(){
 		List<JoinPersonDTO> jList=jsv.selectListJp();
-		log.info(jList.toString());
+		log.info("참가"+jList.toString());
 		return new ResponseEntity<List<JoinPersonDTO>>(jList, HttpStatus.OK);
 	}
 

@@ -98,7 +98,9 @@ public class UserController {
 		 isOK = usv.register(udto); 
 		 }else {
 		 log.info("file null"); 
-		 isOK = usv.register(uvo); 
+		 isOK = usv.register(uvo);
+		 isOK*=usv.insertBlankProf(uvo.getEmail());
+		 
 		 }
 			 
 		 reAttr.addFlashAttribute("msg", isOK > 0 ? "0" : "1");
