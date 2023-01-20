@@ -55,7 +55,7 @@
             <c:when test="${ses.email != null }">
                <div>
                   <c:if test="${sespvo.uuid !=null }">
-                     <img src="/upload/${fn:replace(sespvo.dir,'\\','/')}/${sespvo.uuid}_${sespvo.name}" class="rounded-circle mx-auto d-block" alt="..." style="width: 140px; height: 140px">
+                     <img src="/upload/${sespvo}/${sespvo.uuid}_${sespvo.name}" class="rounded-circle mx-auto d-block" alt="..." style="width: 140px; height: 140px">
                   </c:if>                   
                <div class="imgname">
                   <span id="imgname">${ses.name }</span>

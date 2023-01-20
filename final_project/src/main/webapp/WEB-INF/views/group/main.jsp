@@ -39,7 +39,7 @@
        <div class="imgBox">
         <c:choose>
            <c:when test="${smvo ne null }">
-               <img src="/upload/sgMainUpload/${fn:replace(smvo.dir, '\\', '/')}/${smvo.uuid}_${smvo.name}" alt="" class="object-fit-contain border rounded">
+               <img src="/upload/sgMainUpload/${smvo.dir}/${smvo.uuid}_${smvo.name}" alt="" class="object-fit-contain border rounded">
                <form action="/group/image" method="post" enctype="multipart/form-data">
                   <input type="hidden" name="grno" value="${gvo.grno }">
                   <input class="form-control" type="file" style="display: none;" id="files" name="files">

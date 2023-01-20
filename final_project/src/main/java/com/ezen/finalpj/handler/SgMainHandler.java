@@ -19,7 +19,7 @@ import net.coobird.thumbnailator.Thumbnails;
 @AllArgsConstructor
 @Component
 public class SgMainHandler {
-	private final String UP_DIR = "C:\\_finalweb\\_profile\\profileUpload";
+	private final String UP_DIR = "/seunee/tomcat/webapps/_finalweb/_profile/profileUpload";
 	
 	
 	public SgMainVO uploadMainFile(MultipartFile mainfile) {
@@ -42,7 +42,7 @@ public class SgMainHandler {
 		
 		String originalFileName=mainfile.getOriginalFilename();
 		
-		String onlyFileName=originalFileName.substring(originalFileName.lastIndexOf("\\")+1);
+		String onlyFileName=originalFileName.substring(originalFileName.lastIndexOf("/")+1);
 		smvo.setName(onlyFileName);
 		
 		UUID uuid=UUID.randomUUID();

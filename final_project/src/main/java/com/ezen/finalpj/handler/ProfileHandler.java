@@ -21,7 +21,7 @@ import net.coobird.thumbnailator.Thumbnails;
 @AllArgsConstructor
 @Component
 public class ProfileHandler {
-	private final String UP_DIR = "C:\\_finalweb\\_profile\\profileUpload";
+	private final String UP_DIR = "/seunee/tomcat/webapps/_finalweb/_profile/profileUpload";
 
 	public List<ProfileVO> uploadFiles(MultipartFile[] files){
 		// 파일경로 설정
@@ -47,7 +47,7 @@ public class ProfileHandler {
 			String originalFileName = file.getOriginalFilename();
 			log.info("originalFileName : " + originalFileName);
 			
-			String onlyFilName = originalFileName.substring(originalFileName.lastIndexOf("\\")+1);
+			String onlyFilName = originalFileName.substring(originalFileName.lastIndexOf("/")+1);
 			log.info("onlyFileName : "+onlyFilName);
 			pvo.setName(onlyFilName);
 			

@@ -56,7 +56,7 @@
 					<td>
 						<c:choose>
 							<c:when test="${capPvo ne null }">
-								<img src="/upload/${fn:replace(capPvo.dir, '\\', '/')}/${capPvo.uuid}_${capPvo.name}" class="rounded-circle mx-auto d-block" alt="..." style="width: 140px; height: 140px;">
+								<img src="/upload/${capPvo}/${capPvo.uuid}_${capPvo.name}" class="rounded-circle mx-auto d-block" alt="..." style="width: 140px; height: 140px;">
 							</c:when>
 						</c:choose>	
 					</td>
@@ -79,7 +79,7 @@
 						<c:set value="${pList[status.index] }" var="pvo"/>
 						<c:choose>
 						<c:when test="${pvo ne null }">
-							<img src="/upload/${fn:replace(pvo.dir, '\\', '/')}/${pvo.uuid}_${pvo.name}" class="rounded-circle mx-auto d-block" alt="..." style="width: 140px; height: 140px;">
+							<img src="/upload/${pvo.dir}/${pvo.uuid}_${pvo.name}" class="rounded-circle mx-auto d-block" alt="..." style="width: 140px; height: 140px;">
 						</c:when>
 						</c:choose>
 					</td>
