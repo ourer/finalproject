@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <jsp:include page="../layout/header.jsp"></jsp:include>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <style>
 .loginbox{
 	width: 500px;
@@ -47,7 +48,11 @@
    const msglogin = '<c:out value="${msglogin}"/>';
    if(msglogin==='0'){
       console.log(msglogin);
-      alert("로그인에 실패했습니다.");
+      Swal.fire({
+        icon: 'error',
+        title: '로그인에 실패했습니다.',
+        text: '다시 시도해주세요.',
+      });
    }
 </script>
 

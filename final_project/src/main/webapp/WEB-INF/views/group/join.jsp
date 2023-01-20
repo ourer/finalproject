@@ -32,7 +32,10 @@ input[type="checkbox"]{
 }
 
 .btn-outline-warning{
-	width: 100%;
+   width: none;
+}
+#grpJoinBtn{
+   width: 100%;
 }
 
 

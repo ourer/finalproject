@@ -2,43 +2,81 @@ console.log("user register.js ");
 
 function joinCheck(obj){
     if(!obj.email.value || obj.email.value.trim().length == 0){
-        alert("아이디가 입력되지 않았습니다.");
+        Swal.fire({
+        icon: 'error',
+        title: '회원가입 실패',
+        text: '아이디가 입력되지 않았습니다.',
+      });
         obj.email.value = "";
         obj.email.focus();
         return false;
     }
     if(!obj.name.value || obj.name.value.trim().length == 0){
-        alert("이름이 입력되지 않았습니다.");
+        Swal.fire({
+        icon: 'error',
+        title: '회원가입 실패',
+        text: '이름이 입력되지 않았습니다.',
+      });
         obj.name.value = "";
         obj.name.focus();
         return false;
     }
     if(!obj.pw.value || obj.pw.value.trim().length == 0){
-        alert("비밀번호가 입력되지 않았습니다.");
+        Swal.fire({
+        icon: 'error',
+        title: '회원가입 실패',
+        text: '비밀번호가 입력되지 않았습니다.',
+      });
         obj.pw.value = "";
         obj.pw.focus();
         return false;
     }
     if(!obj.area.value || obj.area.value.trim().length == 0){
-        alert("주소가 입력되지 않았습니다.");
+        Swal.fire({
+        icon: 'error',
+        title: '회원가입 실패',
+        text: '주소가 입력되지 않았습니다.',
+      });
         obj.area.value = "";
         obj.area.focus();
         return false;
     }
     if(!obj.age.value || obj.age.value.trim().length == 0){
-        alert("나이가 입력되지 않았습니다.");
+        Swal.fire({
+        icon: 'error',
+        title: '회원가입 실패',
+        text: '나이가 입력되지 않았습니다.',
+      });
         obj.age.value = "";
         obj.age.focus();
         return false;
     }
     if(!obj.phone.value || obj.phone.value.trim().length == 0){
-        alert("전화번호가 입력되지 않았습니다.");
+        Swal.fire({
+        icon: 'error',
+        title: '회원가입 실패',
+        text: '전화번호가 입력되지 않았습니다.',
+      });
         obj.phone.value = "";
         obj.phone.focus();
         return false;
     }
+    if(!obj.code.value || obj.code.value.trim().length == 0){
+        Swal.fire({
+        icon: 'error',
+        title: '회원가입 실패',
+        text: '관심사 대분류를 최소 1개 선택해주세요.',
+      });
+        obj.ctno1.value = "";
+        obj.ctno1.focus();
+        return false;
+    }
     if(!obj.ctno1.value || obj.ctno1.value.trim().length == 0){
-        alert("관심사를 최소 1개 선택해주세요.");
+        Swal.fire({
+        icon: 'error',
+        title: '회원가입 실패',
+        text: '관심사 중분류를 최소 1개 선택해주세요.',
+      });
         obj.ctno1.value = "";
         obj.ctno1.focus();
         return false;
@@ -50,26 +88,30 @@ function joinCheck(obj){
 function emailCheck(){
     var email = $('#email').val();  // 받아온 email값 저장
     if(email!="") {
-	    $.ajax({
-	        url:'/user/emailCheck',  // Controller에서 요청받을 주소
-	        type : 'post',
-	        data : {email : email},
-	        dataType: 'json',
-	        success:function(cnt) {
-	            if(cnt == 0){
-	                $('.email_OK').css("display", "inline-block");
-	                $('.email_NO').css("display","none");
-	            }else{  // cnt 가 1 일 경우 => 이미 있는 이메일
-	                $('.email_NO').css("display", "inline-block");
-	                $('.email_OK').css("display", "none");
-	                alert("아이디를 다시 입력해주세요!");
-	                $('#email').val('');
-	            }
-	        },
-	        error:function() {
-	            alert("에러났다..");
-	        }
-	    });
+       $.ajax({
+           url:'/user/emailCheck',  // Controller에서 요청받을 주소
+           type : 'post',
+           data : {email : email},
+           dataType: 'json',
+           success:function(cnt) {
+               if(cnt == 0){
+                   $('.email_OK').css("display", "inline-block");
+                   $('.email_NO').css("display","none");
+               }else{  // cnt 가 1 일 경우 => 이미 있는 이메일
+                   $('.email_NO').css("display", "inline-block");
+                   $('.email_OK').css("display", "none");
+                   Swal.fire({
+                    icon: 'error',
+                    title: '이미 사용중인 아이디입니다.',
+                    text: '아이디를 다시입력해주세요.',
+                  });
+                   $('#email').val('');
+               }
+           },
+           error:function() {
+               alert("에러났다..");
+           }
+       });
     }
 };
 
@@ -115,7 +157,11 @@ function checkNickName(){
             } else { // cnt가 1일 경우 -> 이미 존재하는 아이디
                 $('.nickName_NO').css("display","inline-block");
                 $('.nickName_OK').css("display", "none");
-                alert("닉네임을 다시 입력해주세요");
+                Swal.fire({
+              icon: 'error',
+              title: '이미 사용중인 닉네임입니다.',
+              text: '닉네임을 다시 입력해주세요.',
+            });
                 $('#nickname').val('');
             }
         },
@@ -136,12 +182,12 @@ document.addEventListener('change',(e)=>{
         index = e.target.selectedIndex;
         console.log(index);
         for (i=sel.length-1; i>=0; i--){
-	        sel.options[i] = null
+           sel.options[i] = null
         }
         //console.log(ctnoList[index]);
-	    for(let i=0; i<ctnoList[index].length;i++){
-	        sel.options[i]=new Option(ctnoList[index][i], ctnoNum(ctnoList[index][i]));
-	    }
+       for(let i=0; i<ctnoList[index].length;i++){
+           sel.options[i]=new Option(ctnoList[index][i], ctnoNum(ctnoList[index][i]));
+       }
     }
 })
 

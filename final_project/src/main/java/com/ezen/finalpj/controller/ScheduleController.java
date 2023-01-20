@@ -60,7 +60,7 @@ public class ScheduleController {
 	@PostMapping("/register")
 	public String insertSchPost(ScheduleVO svo, RedirectAttributes reAttr, HttpServletRequest req) {
 		log.info(svo.toString());		
-		 if(svo.getCost()==""||svo.getMax_member() < 2||svo.getMeetdate()==""||
+		 if(svo.getCost()==""||svo.getMax_member() < 1||svo.getMeetdate()==""||
 		     svo.getSpot()==""||svo.getTitle()=="") {
 			 reAttr.addFlashAttribute("schMsg", "0");
 			 reAttr.addAttribute("grno", svo.getGrno());

@@ -6,7 +6,7 @@
 .innerGroup{
 	margin-top: 20px;
 }
-.innerGroup> #grpRegBtn{
+#grpRegBtn{
 	width: 100%;
 }
 

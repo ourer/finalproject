@@ -6,6 +6,13 @@
 .row{
 	margin-top: 10px;
 }
+p{
+	font-size: 12px;
+	color: red;
+}
+span{
+	color: red;
+}
 </style>
 <section>
 		<ul class="nav nav-tabs">
@@ -25,7 +32,8 @@
 		  </li>
 		</ul>
 		 <form action="/user/modify" style="margin: 30px auto" method="post">
-		  <h4>개인정보수정</h4>
+			<h4>개인정보수정</h4>
+		  	<p>* 항목만 수정가능합니다.</p>
 			<div class="form">
 			    <label for="email" class="col-sm-1 col-form-label">아이디</label>
 			    <input type="text" class="form-control" id="email" name="email" value="${ses.email }" readonly="readonly">
@@ -35,7 +43,7 @@
 			    <input type="text" class="form-control" id="name" name="name" value="${ses.name }" readonly="readonly">
 		    </div>
 			<div class="form">
-			    <label for="area" class="col-sm-1 col-form-label">지역</label>
+			    <label for="area" class="col-sm-1 col-form-label"><span>*</span>지역</label>
 			    <input type="text" class="form-control" id="area" name="area" value="${ses.area }">
 		    </div>
 			<div class="form">
@@ -48,14 +56,21 @@
 		    </div>
 			<div class="form">
 			    <label for="gender" class="col-sm-1 col-form-label">성별</label>
-			    <input type="text" class="form-control" id="gender" name="gender" value="${ses.gender }" readonly="readonly">
+			    <c:if test="${ses.gender eq 0 }">
+			    <input type="text" class="form-control"value="남자" readonly="readonly">
+			    <input type="hidden" class="form-control" id="gender" name="gender" value="${ses.gender }" readonly="readonly">
+			    </c:if>
+			    <c:if test="${ses.gender eq 1 }">
+			    <input type="text" class="form-control" value="여자" readonly="readonly">
+			    <input type="hidden" class="form-control" id="gender" name="gender" value="${ses.gender }" readonly="readonly">
+			    </c:if>
 		    </div>
 			<div class="form">
-			    <label for="phone" class="col-sm-1 col-form-label">연락처</label>
+			    <label for="phone" class="col-sm-1 col-form-label"><span>*</span>연락처</label>
 			    <input type="text" class="form-control" id="Phone" name="phone" oninput="hypenTel(this)" maxlength="13" value="${ses.phone }">
 		    </div>
 		    <div class="row g-3">
-				<div class="innerSecond col-auto">관심사1:
+				<div class="innerSecond col-auto"><span>*</span>관심사1:
                    <select class="form-select" name="code" id="code1" onchange="spreadCtno(this.selectedIndex)">
                        <option value="대분류">대분류</option>
                        <option value="A">운동</option>
@@ -75,7 +90,7 @@
                        <option value="0">중분류</option>
                    </select>
                    </div>
-			<div class="innerSecond2 col-auto">관심사2:
+			<div class="innerSecond2 col-auto"><span>*</span>관심사2:
                    <select class="form-select" name="code" id="code2" onchange="spreadCtno(this.selectedIndex)">
                       <option value="대분류">대분류</option>
                       <option value="A">운동</option>
@@ -95,7 +110,7 @@
                        <option value="0">중분류</option>
                    </select>
                </div>
-			<div class="innerSecond3 col-auto">관심사3: 
+			<div class="innerSecond3 col-auto"><span>*</span>관심사3: 
                  <select class="form-select" name="code" id="code3" onchange="spreadCtno(this.selectedIndex)">
                       <option value="대분류">대분류</option>
                       <option value="A">운동</option>

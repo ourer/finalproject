@@ -43,7 +43,7 @@
 		    </div>
 			<div class="form">
 			    <label for="gender" class="col-sm-1 col-form-label">성별</label>
-			    <input type="text" class="form-control" id="gender" name="gender" value="${ses.gender == 0? "남자":"여자" }" readonly="readonly">
+			    <input type="text" class="form-control" id="gender" name="gender" value="${ses.gender == 0 ? "남자":"여자" }" readonly="readonly">
 		    </div>
 			<div class="form">
 			    <label for="phone" class="col-sm-1 col-form-label">연락처</label>
