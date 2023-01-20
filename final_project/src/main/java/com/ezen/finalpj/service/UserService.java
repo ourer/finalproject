@@ -55,5 +55,7 @@ public interface UserService {
 
 	   UserVO modifyCt(String email);
 
+	int insertBlankProf(String email);
+
 
 }

@@ -88,6 +88,7 @@ function getCommentList(gbno){
                 ul.innerHTML+=li;
             }
         }else{
+        	ul.innerHTML='';
             let li=`<li class="list-group-item d-flex justify-content-between align-items-start">댓글을 작성해보세요!</li>`;
             ul.innerHTML+=li;
         }

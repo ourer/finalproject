@@ -199,4 +199,10 @@ public class UserServiceImpl implements UserService {
       log.info("카테고리 수정값 가져오기");
       return udao.getUser(email);
    }
+
+@Override
+public int insertBlankProf(String email) {
+	log.info("프로필 기본이미지 가져오기");
+	return udao.insertBlankProf(email);
+}
 }

@@ -27,7 +27,10 @@ input[type="checkbox"]{
 	margin-right: 8px;
 }
 .btn-outline-warning{
-	width: 100%;
+   width: none;
+}
+#grpJoinBtn{
+   width: 100%;
 }
 
 

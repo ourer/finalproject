@@ -23,13 +23,13 @@ document.getElementById('heartBtn').addEventListener('click', ()=>{
     console.log(favData);
     const heartBtnTag=document.getElementById('heartBtn');
     likeFavorite(favData).then(result=>{
-    	console.log(result)
+       console.log(result)
         if(result==1){
-            alert("찜 삭제");
-	    heartBtnTag.innerHTML=`<i class="fa-regular fa-heart"></i>`;
+            alert("찜을 취소했어요!");
+       heartBtnTag.innerHTML=`<i class="fa-regular fa-heart"></i>`;
         }else if(result==2){
-        	alert("찜 추가");
-	    heartBtnTag.innerHTML=`<i class="fa-solid fa-heart"></i>`;   
+           alert("이 소모임을 찜했어요!");
+       heartBtnTag.innerHTML=`<i class="fa-solid fa-heart"></i>`;   
         }
     })
 })
@@ -55,8 +55,8 @@ async function likeFavorite(favData){
 
 
 function showJoinPeople(sno){
-	const joinPeople=document.getElementById(`joinPeople${sno}`);
-	console.log(joinPeople);
+   const joinPeople=document.getElementById(`joinPeople${sno}`);
+   console.log(joinPeople);
     console.log(joinPeople.style.display);
     if(joinPeople.style.display=='flex'){
         joinPeople.style.display='none';
@@ -263,16 +263,16 @@ window.addEventListener('load', ()=>{
     for(let d of scheDateLi){
         let date=d.innerText;
         console.log(date);
-        date=date.substring(0, 13);
+        //date=date.substring(0, 13);
         console.log(date);
         date=new Date(date);
-        console.log("스케줄 날짜: "+date.toLocaleDateString());
+        console.log("스케줄 날짜: "+date.toLocaleString());
         const today=new Date();
-        console.log("오늘 날짜: "+today.toLocaleDateString());
+        console.log("오늘 날짜: "+today.toLocaleString());
         if(today>date){
             let sno=d.dataset.sno;
-            //let grno=d.dataset.grno;
-            console.log("지난스케줄: "+date.toLocaleDateString());
+            let grno=d.dataset.grno;
+            console.log("지난스케줄: "+date.toLocaleString());
             console.log("sno "+sno);
             updateIsDone(sno).then(result=>{
                 if(result>0){

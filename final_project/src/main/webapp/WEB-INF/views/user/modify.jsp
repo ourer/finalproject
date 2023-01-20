@@ -47,8 +47,15 @@
 			    <input type="text" class="form-control" id="age" name="age" value="${ses.age }" readonly="readonly">
 		    </div>
 			<div class="form">
-			    <label for="gender" class="col-sm-1 col-form-label">성별</label>
-			    <input type="text" class="form-control" id="gender" name="gender" value="${ses.gender }" readonly="readonly">
+			<label for="gender" class="col-sm-1 col-form-label">성별</label>
+	             <c:if test="${ses.gender eq 0 }">
+	            	 <input type="text" class="form-control"value="남자" readonly="readonly">
+	             	<input type="hidden" class="form-control" id="gender" name="gender" value="${ses.gender }" readonly="readonly">
+	             </c:if>
+	             <c:if test="${ses.gender eq 1 }">
+	             	<input type="text" class="form-control" value="여자" readonly="readonly">
+	             	<input type="hidden" class="form-control" id="gender" name="gender" value="${ses.gender }" readonly="readonly">
+	             </c:if>
 		    </div>
 			<div class="form">
 			    <label for="phone" class="col-sm-1 col-form-label">연락처</label>

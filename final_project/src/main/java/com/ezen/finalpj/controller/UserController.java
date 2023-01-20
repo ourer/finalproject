@@ -99,6 +99,7 @@ public class UserController {
 		 }else {
 		 log.info("file null"); 
 		 isOK = usv.register(uvo); 
+		 isOK*=usv.insertBlankProf(uvo.getEmail());
 		 }
 			 
 		 reAttr.addFlashAttribute("msg", isOK > 0 ? "0" : "1");
@@ -125,6 +126,7 @@ public class UserController {
 	          //그러므로 model에 넘겨주지 말고 ses로 넘겨줘서 해당 이메일에 따라 그 프로필을 볼 수 있게 하자!
 	          ProfileVO pvo=psv.selectPersonalProfile(email);
 	          ses.setAttribute("sespvo", pvo);
+	          
 	         //waiting 정보 가져오기
 	          WaitingVO wvo=wsv.selectUserGrp(email);
 	          ses.setAttribute("wvo", wvo);
@@ -132,7 +134,7 @@ public class UserController {
 	          mv.setViewName("redirect:/");
 	          mv.addObject("msglogin", "1");
 	       }else {
-	          mv.setViewName("user/login");
+	          mv.setViewName("/user/login");
 	          mv.addObject("msglogin","0");
 	       }
 	       

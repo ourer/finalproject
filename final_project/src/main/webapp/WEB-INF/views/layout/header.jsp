@@ -7,12 +7,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>OURER</title>
 <link rel="stylesheet" type="text/css" href="/resources/css/header.css">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
-
+<link rel="shortcut icon" href="/upload/rabbit_1.ico">
 </head>
 <body>
    <nav class="navbar">
@@ -28,9 +28,19 @@
          </div>
          <div class="offcanvas-body">
            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-             <li class="nav-item">
-               <a class="nav-link active d-grid gap-2 col-12 mx-auto" aria-current="page" href="/group/register"><button type="button" class="btn btn-outline-warning">소모임 생성</button></a>
-             </li>
+              <c:choose>
+              <c:when test="${ses.isCap != 0 && ses.email != null}">
+                <li class="nav-item">
+                  <a class="nav-link active d-grid gap-2 col-12 mx-auto" aria-current="page" href="/user/management/${ses.email }"><button type="button" class="btn btn-outline-warning">나의 소모임</button></a>
+                </li>
+              </c:when>
+              <c:when test="${ses.isCap == 0 && ses.email != null}">
+                <li class="nav-item">
+                  <a class="nav-link active d-grid gap-2 col-12 mx-auto" aria-current="page" href="/group/register"><button type="button" class="btn btn-outline-warning">소모임 생성</button></a>
+                </li>
+              </c:when>
+              <c:when test="${ses.isCap == 0 && ses.email == null }"></c:when>
+           </c:choose>
              <c:if test="${ses.email == null }">
                 <li class="nav-item">
                   <a class="nav-link" aria-current="page" href="/user/login">로그인</a>
@@ -44,10 +54,6 @@
              <c:choose>
             <c:when test="${ses.email != null }">
                <div>
-                  <c:if test="${sespvo.uuid ==null }">
-                     <img src="/upload/blank-profile.png" class="rounded-circle mx-auto d-block" alt="..." style="width: 140px; height: 140px">                
-                  </c:if>
-               
                   <c:if test="${sespvo.uuid !=null }">
                      <img src="/upload/${fn:replace(sespvo.dir,'\\','/')}/${sespvo.uuid}_${sespvo.name}" class="rounded-circle mx-auto d-block" alt="..." style="width: 140px; height: 140px">
                   </c:if>                   

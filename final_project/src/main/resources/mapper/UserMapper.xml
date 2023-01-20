@@ -77,16 +77,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectFList" resultType="com.ezen.finalpj.domain.FavoriteVO">
 		select * from favorite where email=#{email}
 	</select>
+	
 	<select id="selectUList" resultType="com.ezen.finalpj.domain.FavoriteDTO">
 		select smallgroup.grno as grno, category.name as ctname, smallgroup.name as gname, waiting.grade as wgrade from category
 		join smallgroup on category.ctno = smallgroup.ctno
 		join waiting on smallgroup.grno = waiting.grno
 		where waiting.email=#{email}
 	</select>
+	
 	<select id="selectmyGname" resultType="String">
 		select name from smallgroup where email=#{email}
 	</select>
-	   <select id="getWaitingList" resultType="com.ezen.finalpj.domain.WaitingVO">
+	
+	<select id="getWaitingList" resultType="com.ezen.finalpj.domain.WaitingVO">
       select * from user join waiting on user.email=waiting.email where isOk=1 and grno=#{isCap}
-   </select>
+   	</select>
+   
+	<insert id="insertBlankProf">
+	   insert into profile(email) values(#{email})
+	</insert>
+	
 </mapper>

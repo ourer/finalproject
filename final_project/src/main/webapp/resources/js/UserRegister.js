@@ -2,7 +2,7 @@ console.log("user register.js ");
 
 function joinCheck(obj){
     if(!obj.email.value || obj.email.value.trim().length == 0){
-        alert("아이디가 입력되지 않았습니다.");
+    	alert("아이디가 입력되지 않았습니다.");
         obj.email.value = "";
         obj.email.focus();
         return false;
@@ -25,6 +25,12 @@ function joinCheck(obj){
         obj.area.focus();
         return false;
     }
+    if(!obj.nickname.value || obj.nickname.value.trim().length == 0){
+        alert("닉네임이 입력되지 않았습니다.");
+        obj.area.value = "";
+        obj.area.focus();
+        return false;
+    }
     if(!obj.age.value || obj.age.value.trim().length == 0){
         alert("나이가 입력되지 않았습니다.");
         obj.age.value = "";
@@ -38,7 +44,7 @@ function joinCheck(obj){
         return false;
     }
     if(!obj.ctno1.value || obj.ctno1.value.trim().length == 0){
-        alert("관심사를 최소 1개 선택해주세요.");
+        alert("관심사 중분류가 입력되지 않았습니다.");
         obj.ctno1.value = "";
         obj.ctno1.focus();
         return false;
@@ -62,7 +68,7 @@ function emailCheck(){
 	            }else{  // cnt 가 1 일 경우 => 이미 있는 이메일
 	                $('.email_NO').css("display", "inline-block");
 	                $('.email_OK').css("display", "none");
-	                alert("아이디를 다시 입력해주세요!");
+	                alert("아이디를 다시 입력해주세요.");
 	                $('#email').val('');
 	            }
 	        },
@@ -115,7 +121,7 @@ function checkNickName(){
             } else { // cnt가 1일 경우 -> 이미 존재하는 아이디
                 $('.nickName_NO').css("display","inline-block");
                 $('.nickName_OK').css("display", "none");
-                alert("닉네임을 다시 입력해주세요");
+                alert("닉네임을 다시 입력해주세요.");
                 $('#nickname').val('');
             }
         },
