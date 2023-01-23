@@ -1,24 +1,16 @@
-package com.ezen.finalpj;
+package com.ezen.finalpj.controller;
 
 
 import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import com.ezen.finalpj.domain.CategoryVO;
-import com.ezen.finalpj.domain.UserVO;
 import com.ezen.finalpj.service.CategoryService;
-import com.ezen.finalpj.service.UserService;
-
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -27,8 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 public class HomeController {
 	@Inject
 	private CategoryService csv;
-	@Inject
-	private UserService usv;
+	
 	
 	
 	//home.jsp 오늘의 추천 소모임 리스트 랜덤 추천

@@ -18,8 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ezen.finalpj.domain.CommentVO;
 import com.ezen.finalpj.service.CommentService;
-import com.mysql.cj.jdbc.ha.BestResponseTimeBalanceStrategy;
-
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

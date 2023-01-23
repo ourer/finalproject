@@ -25,6 +25,7 @@ public class JoinPersonServiceImpl implements JoinPersonService {
 
 	@Override
 	public List<JoinPersonDTO> selectListJp() {
+		log.info("참가자 리스트");
 		return jpdao.selectList();
 	}
 

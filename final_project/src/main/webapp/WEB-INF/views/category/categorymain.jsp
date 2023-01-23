@@ -153,7 +153,7 @@ section{
                      <img alt="기본대표사진" src="/upload/sgMain_default.jpg" class="card-img-top object-fit-cover" style="height: 250px">
 	               </c:if>
 	               <c:if test="${svo.uuid != null}">
-	                  <img alt="소모임대표사진" src="/upload/sgMainUpload/${svo.dir}/${svo.uuid}_${svo.name}" class="card-img-top object-fit-cover" style="height: 250px">
+	                  <img alt="소모임대표사진" src="/upload/sgMainUpload/${fn:replace(svo.dir,'\\','/')}/${svo.uuid}_${svo.name}" class="card-img-top object-fit-cover" style="height: 250px">
 	               </c:if>
 	               <div class="card-body">
 	                  <h5 class="card-title" style="font-weight: 600;">${svo.sg_name }</h5>

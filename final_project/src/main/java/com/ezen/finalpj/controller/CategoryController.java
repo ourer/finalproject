@@ -14,7 +14,6 @@ import com.ezen.finalpj.domain.CategoryVO;
 import com.ezen.finalpj.domain.SearchVO;
 import com.ezen.finalpj.domain.SgMainVO;
 import com.ezen.finalpj.service.CategoryService;
-import com.ezen.finalpj.service.GroupService;
 import com.ezen.finalpj.service.SgmainService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -23,8 +22,6 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/category/*")
 @Controller
 public class CategoryController {
-	@Inject
-	private GroupService gsv;
 	@Inject
 	private SgmainService ssv;
 	@Inject

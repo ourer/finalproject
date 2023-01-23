@@ -37,11 +37,6 @@ public class UserServiceImpl implements UserService {
 		return udao.updateCap(managerDTO);
 	}
 
-//	@Override
-//	public List<UserVO> selectMemListUserGet(int grno) {
-//		log.info("소모임 멤버 리스트");
-//		return udao.selectMemListUser(grno);
-//	}
 
 	@Override
 	public UserVO selectCapGet(int grno) {

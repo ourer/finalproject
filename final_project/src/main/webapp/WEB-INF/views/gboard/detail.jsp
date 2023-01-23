@@ -43,7 +43,7 @@
 	</div>
 		<c:if test="${gfvo ne null }">
 		<div class="imgBox">
-			<img class="object-fit-contain border rounded" alt="" src="/upload/GbrdFileUpload/${gfvo.dir}/${gfvo.uuid}_${gfvo.name}">
+			<img class="object-fit-contain border rounded" alt="" src="/upload/GbrdFileUpload/${fn:replace(gfvo.dir, '\\', '/')}/${gfvo.uuid}_${gfvo.name}">
 		</div>
 		</c:if>
 		

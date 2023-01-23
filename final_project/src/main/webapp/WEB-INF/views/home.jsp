@@ -166,7 +166,7 @@
                      <img alt="sgMain" src="/upload/sgMain_default.jpg" class="card-img-top object-fit-cover" style="height: 250px">
                   </c:if>
                   <c:if test="${rList.uuid != null}">
-                     <img alt="sgMain" src="/upload/sgMainUpload/${rList.dir}/${rList.uuid}_${rList.sm_name}" class="card-img-top object-fit-cover sgmain" style="height: 250px">
+                     <img alt="sgMain" src="/upload/sgMainUpload/${fn:replace(rList.dir,'\\','/')}/${rList.uuid}_${rList.sm_name}" class="card-img-top object-fit-cover sgmain" style="height: 250px">
                   </c:if>
                   <div class="card-body">
                      <h5 class="card-title" style="font-weight: 600;">${rList.sg_name }</h5>

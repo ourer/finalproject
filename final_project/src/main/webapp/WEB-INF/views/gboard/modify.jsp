@@ -68,7 +68,7 @@
 			<c:choose>
 			<c:when test="${gfvo ne null }">
 				<div class='imgInner'>
-				<img alt="" src="/upload/GbrdFileUpload/${gfvo.dir}/${gfvo.uuid}_${gfvo.name}">
+				<img alt="" src="/upload/GbrdFileUpload/${fn:replace(gfvo.dir, '\\', '/')}/${gfvo.uuid}_${gfvo.name}">
 				<button type="button" data-uuid=${gfvo.uuid } class="btn btn-sm btn-danger py-0 file-x">X</button>
 				</div>
 			</c:when>

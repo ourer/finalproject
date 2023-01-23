@@ -1,14 +1,10 @@
 package com.ezen.finalpj.service;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
-import com.ezen.finalpj.domain.UserVO;
 import com.ezen.finalpj.domain.WaitingVO;
-import com.ezen.finalpj.repository.UserDAO;
 import com.ezen.finalpj.repository.WaitingDAO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -18,8 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 public class WaitingServiceImpl implements WaitingService {
 	@Inject
 	private WaitingDAO wdao;
-	@Inject
-	private UserDAO udao;
+	
 	
 	@Override
 	public int insertMemWaitPost(WaitingVO wvo) {
