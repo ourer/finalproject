@@ -50,8 +50,9 @@ document.addEventListener('click', (e)=>{
         console.log(uuid);
         deleteFile(uuid).then(result=>{
             if(result>0){
-                alert("파일이 삭제되었습니다.");
-                
+                alert("파일 삭제 성공");
+            }
+        })
         div.remove();
         addUploadBtn();
 
@@ -80,11 +81,11 @@ function addUploadBtn(){
     console.log(imgBox);
     imgBox.innerHTML=`<input class="form-control" type="file" style="display: none;" id="files" name="files">
     <button type="button" id="trigger" class="btn btn-outline-primary btn-block d-block">Files Upload</button>
-	<div class="col-12" id="fileZone">
-	</div>`;
-	document.getElementById('trigger').addEventListener('click', ()=>{
-	    document.getElementById('files').click();
-	})
+   <div class="col-12" id="fileZone">
+   </div>`;
+   document.getElementById('trigger').addEventListener('click', ()=>{
+       document.getElementById('files').click();
+   })
 }
 
 document.getElementById('trigger').addEventListener('click', ()=>{

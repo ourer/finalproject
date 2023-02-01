@@ -46,5 +46,5 @@ public interface UserDAO {
 
 	int insertBlankProf(String email);
 
-
+	 int userRemove(String email);
 }

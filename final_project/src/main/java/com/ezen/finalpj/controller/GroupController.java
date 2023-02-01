@@ -86,9 +86,7 @@ public class GroupController {
 	public String selectGrpGet(@RequestParam("grno")int grno, Model model, HttpServletRequest req) {
 		GroupVO gvo=gsv.selectGrp(grno);
 		List<ScheduleVO> sList=ssv.selectListSch(grno);
-		//int joinCnt=jsv.selectCntJp(sno);
 		SgMainVO smvo=gsv.selectSgMain(grno);
-		//GroupDTO gdto=new GroupDTO(gvo, sList, smvo);
 		List<FavoriteVO> fList=fsv.selectListFavorite(grno);
 		HttpSession ses=req.getSession();
 		UserVO uvo=(UserVO)ses.getAttribute("ses");

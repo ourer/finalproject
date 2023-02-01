@@ -217,12 +217,12 @@ public class UserController {
         return "/user/management";
      }
 	 
-	 @DeleteMapping(value = "/remove/{email}", produces = {MediaType.TEXT_PLAIN_VALUE})
-		public ResponseEntity<String> removeUser(@PathVariable("email")String email) {
-			log.info("my user remove email : "+email);
-			int isOk=wsv.remove(email);
-			return isOk>0? new ResponseEntity<String>("1",HttpStatus.OK): new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
-	}
+	  @DeleteMapping(value = "/remove/{email}", produces = {MediaType.TEXT_PLAIN_VALUE})
+      public ResponseEntity<String> removeUser(@PathVariable("email")String email) {
+         log.info("my user remove email : "+email);
+         int isOk=usv.userRemove(email);
+         return isOk>0? new ResponseEntity<String>("1",HttpStatus.OK): new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+   }
 	 
 	 @GetMapping("/modify")
 		public String userModifyMyinfoGet() {

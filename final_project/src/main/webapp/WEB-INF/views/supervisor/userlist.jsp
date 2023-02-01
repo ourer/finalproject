@@ -30,6 +30,9 @@
 						<td>${uvo.email }</td>
 						<td>${uvo.phone }</td>
 						<c:choose>
+							<c:when test="${uvo.email eq 'super@ourer.com' }">
+								<td>관리자</td>
+							</c:when>
 							<c:when test="${uvo.isCap != 0  }">
 								<td>방장</td>
 							</c:when>

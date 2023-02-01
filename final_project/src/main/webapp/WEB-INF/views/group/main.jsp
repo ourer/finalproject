@@ -71,7 +71,8 @@
         </div>
         <div class="descBox">
             <div class="detail">
-             <span class="fs-4">${gvo.detail }</span><br>
+            <textarea class="form-control-plaintext fs-4" id="detail" name="detail" readonly="readonly" style="width:1000px; height: 250px">${gvo.detail }</textarea>
+             <%-- <span class="fs-4">${gvo.detail }</span> --%><br>
              <c:if test="${ses.email eq gvo.email }">
                 <button type="button" class="btn btn-outline-warning editDetail float-end btn-sm">수정</button>
                 <div class="form-floating" id="editDetail" style="display: none;">

@@ -47,7 +47,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from user join waiting on user.email=waiting.email where isOk=1 and grno=#{isCap}
 	</select>
 	<update id="updateMyinfo">
-		update user set area=#{area}, phone=#{phone}, ctno_1=#{ctno_1}, ctno_2=#{ctno_2}, ctno_3=#{ctno_3}, ctcode_1=#{ctcode_1}, ctcode_2=#{ctcode_2}, ctcode_3=#{ctcode_3} where email=#{email}
+		update user set area=#{area}, phone=#{phone}, ctno_1=#{ctno_1}, ctno_2=#{ctno_2}, ctno_3=#{ctno_3} where email=#{email}
 	</update>
 	
 	<select id="selectCap" resultType="com.ezen.finalpj.domain.UserVO">
@@ -92,4 +92,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    <insert id="insertBlankProf">
    	insert into profile(email) values(#{email})
    </insert>
+   <delete id="userRemove">
+      delete from user where email=#{email}
+   </delete>
 </mapper>

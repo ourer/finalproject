@@ -200,4 +200,9 @@ public int insertBlankProf(String email) {
 	
 	return udao.insertBlankProf(email);
 }
+
+@Override
+public int userRemove(String email) {
+   return udao.userRemove(email);
+}
 }

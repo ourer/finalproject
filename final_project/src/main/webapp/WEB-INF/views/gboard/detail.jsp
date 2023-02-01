@@ -62,11 +62,14 @@
 			<a href="/gboard/list?grno=${gbvo.grno }" class="btn btn-outline-warning" >목록</a>
 		</div>
 		<div class="cmtOuter">
+		
+		<c:if test="${ses.email eq gvo.email or  fn:contains(uList, ses.email) }">
 		<div class="input-group my-3 form-floating">
 			<span class="input-group-text" id="cmtWriter">${ses.nickname }</span>
 			<input type="text" class="form-control" id="cmtText" placeholder="comment">
 			<button class="btn btn-warning" id="cmtPostBtn" type="button">등록</button>
 		</div>
+		</c:if>
 		<ul class="list-group list-group-flush" id="cmtListArea">
 		  
 		</ul>
