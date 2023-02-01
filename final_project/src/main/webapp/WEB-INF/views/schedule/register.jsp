@@ -7,6 +7,9 @@
 <script src='https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.2/dist/umd/popper.min.js' crossorigin='anonymous'></script>
 <script src='https://cdn.jsdelivr.net/gh/Eonasdan/tempus-dominus@master/dist/js/tempus-dominus.js' crossorigin='anonymous'></script>
 <link href='https://cdn.jsdelivr.net/gh/Eonasdan/tempus-dominus@master/dist/css/tempus-dominus.css' rel='stylesheet' crossorigin='anonymous'>
+
+
+
 <style>
     .tempus-dominus-widget.light .date-container-decades div:not(.no-highlight).active, .tempus-dominus-widget.light .date-container-years div:not(.no-highlight).active, .tempus-dominus-widget.light .date-container-months div:not(.no-highlight).active, .tempus-dominus-widget.light .date-container-days div:not(.no-highlight).active, .tempus-dominus-widget.light .time-container-clock div:not(.no-highlight).active, .tempus-dominus-widget.light .time-container-hour div:not(.no-highlight).active, .tempus-dominus-widget.light .time-container-minute div:not(.no-highlight).active, .tempus-dominus-widget.light .time-container-second div:not(.no-highlight).active {
     background-color: #FFD34A;
@@ -51,8 +54,22 @@
 		        <input type='text' class='form-control' name='title' id='schTitle' placeholder='어떤 스케줄인가요?'>
 		        <label for='schTitle'>어떤 스케줄인가요?</label>
 			</div>
-			<div class='form-floating mb-3'>
-            	<input type='text' class='form-control' name='spot' id='schSpot' placeholder='어디서 만나나요?'>
+			<div class="map_wrap">
+    			<div id="map" style="width:700px;height:500px;position:relative;overflow:hidden;"></div>
+				    <div id="menu_wrap" class="bg_white">
+				        <div class="option">
+						<div>
+			               	<input type="text" placeholder="장소를 검색해보세요!" id="keyword" style="width: 150px; height: 30px; font-size: 15px; border: 1px solid #aeaeae; border-radius: 0.375rem; padding-left: 3px;">
+			            	<button type="button" onclick="searchPlaces()" style="height: 30px;">검색</button>
+			            </div>
+				        </div>
+				        <hr>
+				        <ul id="placesList"></ul>
+				        <div id="pagination"></div>
+				    </div>
+				</div>
+            <div class='form-floating mb-3'>
+            	<input type='text' class='form-control' name='spot' id='schSpot' placeholder='어디서 만나나요?' readonly>
             	<label for='schSpot'>어디서 만나나요?</label>
             </div>
             <div class='form-floating mb-3'>
@@ -61,7 +78,7 @@
             </div>
             <div class='form-floating mb-3'>
             <fmt:parseNumber value="${fn:length(uList)+1 }" var="memNum"/>
-            <input type='number' class='form-control' name='max_member' id='schMax_member' min='1' max='${memNum }' >
+            <input type='number' class='form-control' name='max_member' id='schMax_member' min='1' max='${memNum }' value="1">
             	<label for='schMax_member'>인원수</label>
             </div>
             <%-- <div class='form-floating mb-3'>
@@ -108,4 +125,6 @@ if(schMsg==='0'){
 	alert('빈 칸을 모두 채워주세요!');
 }
 </script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=3a40e8c28b662316c1473d8a6546c6af&libraries=services,clusterer,drawing"></script>
+<script type="text/javascript" src="/resources/js/mapApi.js"></script>
 <jsp:include page='../layout/footer.jsp'></jsp:include>
