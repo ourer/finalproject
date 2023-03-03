@@ -178,5 +178,29 @@
             </div>
          </c:forEach>
       </div>
+      
+      <c:if test="${ses ne null }">
+      	<h3 style="margin: 30px auto; text-align: center" class="recommend">${fn:substring(ses.area,fn:indexOf(ses.area," "),fn:length(ses.area)) }에 사는 ${ses.name } 님을 위한 소모임</h3>
+     	<div class="row row-cols-1 row-cols-md-4 g-4 randomList" style="margin-bottom: 100px">
+         <c:forEach items="${RecoList }" var="reList" begin="0" end="7" varStatus="status">
+            <div class="col">
+               <div class="card h-100">
+                  <c:if test="${reList.uuid == null}">
+                     <img alt="sgMain" src="/upload/sgMain_default.jpg" class="card-img-top object-fit-cover" style="height: 250px">
+                  </c:if>
+                  <c:if test="${reList.uuid != null}">
+                     <img alt="sgMain" src="/upload/sgMainUpload/${fn:replace(reList.dir,'\\','/')}/${reList.uuid}_${reList.sm_name}" class="card-img-top object-fit-cover sgmain" style="height: 250px">
+                  </c:if>
+                  <div class="card-body">
+                     <h5 class="card-title" style="font-weight: 600;">${reList.sg_name }</h5>
+                     <p class="card-text detail">${reList.detail }</p>
+                     <p class="card-text">${reList.city}  ${reList.county }</p>
+                     <a href="/group/main?grno=${reList.grno}" class="btn btn-warning">구경하기</a>
+                  </div>
+               </div>
+            </div>
+         </c:forEach>
+      </div>
+      </c:if>
 </section>
 <jsp:include page="./layout/footer.jsp"></jsp:include>

@@ -53,4 +53,10 @@ public class CategoryServiceImpl implements CategoryService {
 		return cdao.getCategoryOneRandom();
 	}
 
+	@Override
+	public List<CategoryVO> selectRecoList(String county) {
+		log.info("지역별 추천 소모임 리스트");
+		return cdao.selectRecoList(county);
+	}
+
 }

@@ -17,4 +17,6 @@ public interface CategoryService {
 	List<CategoryVO> getCategoryOne(String name);
 
 	List<CategoryVO> getCategoryOneRandom();
+
+	List<CategoryVO> selectRecoList(String county);
 }
