@@ -139,14 +139,14 @@ function getJoinPersonList(){
             if(divJP != null){
                 //console.log(divJP);
                 //console.log(r.pdir);
-                let pDir=r.pdir.replace(/\\/g, '/');
+                //let pDir=r.pdir.replace(/\\/g, '/');
                 //console.log(pDir);
                 //console.log(divJP.dataset.sno);
                 
                 let div='';
                 if(divJP.dataset.sno==r.sno){
                     div=`<div class="joinPerson" data-jno="${r.jno}">`;
-                    div+=`<img src="/upload//${pDir}/${r.puuid}_${r.pname}" class="rounded-circle object-fit-cover" alt="...">`;
+                    div+=`<img src="/upload//${r.pdir}/${r.puuid}_${r.pname}" class="rounded-circle object-fit-cover" alt="...">`;
                     div+=`<span class="jpName fs-5 fw-semibold">${r.uname}</span>`;
                 }
                 //console.log(emailVal);

@@ -19,8 +19,11 @@ import net.coobird.thumbnailator.Thumbnails;
 @AllArgsConstructor
 @Component
 public class FileHandler {
-	private final String UP_DIR="C:\\_finalweb\\_profile\\profileUpload";
-	
+	private final String UP_DIR="/ourer/tomcat/webapps/_finalweb/_profile/profileUpload";
+
+	/*
+	 * private final String UP_DIR="C:\\_finalweb\\_profile\\profileUpload";
+	 */	
 	public FileVO uploadGbrdFile(MultipartFile gbrdfile) {
 		String dir="GbrdFileUpload";
 		File subfolder=new File(UP_DIR, dir);
@@ -41,7 +44,7 @@ public class FileHandler {
 		
 		String originalFileName=gbrdfile.getOriginalFilename();
 		
-		String onlyFileName=originalFileName.substring(originalFileName.lastIndexOf("\\")+1);
+		String onlyFileName=originalFileName.substring(originalFileName.lastIndexOf("/")+1);
 		gfvo.setName(onlyFileName);
 		
 		UUID uuid=UUID.randomUUID();

@@ -159,7 +159,8 @@ section{
                      <img alt="sgMain" src="/upload/sgMain_default.jpg" class="card-img-top object-fit-cover" style="height: 250px">
 				</c:if>
 				<c:if test="${cavo.uuid != null}">
-					<img alt="sgMain" src="/upload/sgMainUpload/${fn:replace(cavo.dir,'\\','/')}/${cavo.uuid}_${cavo.sm_name}" class="card-img-top object-fit-cover sgmain" style="height: 250px">
+					<img alt="sgMain" src="/upload/sgMainUpload/${cavo.dir}/${cavo.uuid}_${cavo.sm_name}" class="card-img-top object-fit-cover sgmain" style="height: 250px">
+<%-- 					<img alt="sgMain" src="/upload/sgMainUpload/${fn:replace(cavo.dir,'\\','/')}/${cavo.uuid}_${cavo.sm_name}" class="card-img-top object-fit-cover sgmain" style="height: 250px"> --%>
 				</c:if>
 				<div class="card-body">
 					<h5 class="card-title" style="font-weight: 600;">${cavo.sg_name }</h5>
