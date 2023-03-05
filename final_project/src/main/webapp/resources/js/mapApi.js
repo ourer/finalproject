@@ -23,6 +23,8 @@ if (navigator.geolocation) {
         
         var lat = position.coords.latitude, // 위도
             lon = position.coords.longitude; // 경도
+        console.log("위도: "+lat);
+        console.log("경도: "+lon);
         
 	    var imageSrc = '/upload/cur_Position.png', // 마커이미지의 주소입니다    
 	    imageSize = new kakao.maps.Size(40, 40), // 마커이미지의 크기입니다

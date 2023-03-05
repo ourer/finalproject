@@ -12,7 +12,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	   <select id="getSgMainImgSearching" resultType="com.ezen.finalpj.domain.SgMainVO">
       select S.uuid, S.dir, S.name, SG.grno, SG.name AS sg_name, SG.detail, SG.city, SG.county 
-      from smallgroup SG left join sgmain S on S.grno = SG.grno where sg.grno is not null
+      from smallgroup SG left join sgmain S on S.grno = SG.grno where SG.grno is not null
       <include refid="search"></include>
    </select>
    
@@ -24,13 +24,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                <trim prefix="OR">
                   <choose>
                      <when test="type =='n'.toString()">
-                        sg.name like concat('%',#{keyword},'%')  
+                        SG.name like concat('%',#{keyword},'%')  
                      </when>
                      <when test="type =='d'.toString()">
                         detail like concat('%',#{keyword},'%')  
                      </when>
                      <when test="type =='a'.toString()">
-                        sg.name like concat('%',#{keyword},'%')  
+                        SG.name like concat('%',#{keyword},'%')  
                         or detail like concat('%',#{keyword},'%') 
                      </when>
                   </choose>
