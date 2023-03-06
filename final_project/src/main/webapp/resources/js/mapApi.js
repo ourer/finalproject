@@ -169,19 +169,33 @@ function displayPlaces(places) {
 
            
         })(marker, places[i].place_name);
-        
-        //마커, el 클릭하면 장소와 주소 함께 input에 담기도록
-		(function(marker, title, addr){
-            kakao.maps.event.addListener(marker, 'click', function() {
-	            spot.value=title+" ("+addr+")";
-            });
-
-            itemEl.onclick =  function () {
-                spot.value=title+"("+addr+")";
-            };
+        if (places[i].road_address_name) {
+			(function(marker, title, addr){
+	            kakao.maps.event.addListener(marker, 'click', function() {
+		            spot.value=title+" ("+addr+")";
+	            });
+	
+	            itemEl.onclick =  function () {
+	                spot.value=title+"("+addr+")";
+	            };
+				
 			
-		
-		}) (marker, places[i].place_name, places[i].road_address_name);
+			}) (marker, places[i].place_name, places[i].road_address_name);
+        
+        }else{
+        	(function(marker, title, addr){
+	            kakao.maps.event.addListener(marker, 'click', function() {
+		            spot.value=title+" ("+addr+")";
+	            });
+	
+	            itemEl.onclick =  function () {
+	                spot.value=title+"("+addr+")";
+	            };
+				
+			
+			}) (marker, places[i].place_name, places[i].address_name);
+        }
+        //마커, el 클릭하면 장소와 주소 함께 input에 담기도록
         fragment.appendChild(itemEl);
     }
 
@@ -213,6 +227,8 @@ function getListItem(index, places) {
 
     el.innerHTML = itemStr;
     el.className = 'item';
+    console.log(places.road_address_name);
+    console.log(places.address_name);
 
     return el;
 }
